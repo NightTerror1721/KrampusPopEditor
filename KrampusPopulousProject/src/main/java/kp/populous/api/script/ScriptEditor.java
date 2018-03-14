@@ -104,6 +104,7 @@ public class ScriptEditor extends JFrame
         
         textArea.clearChanges();
         textArea.updateTabTitle();
+        //textArea.addParser(parser);
         
         return textArea;
     }

@@ -1,0 +1,283 @@
+if(GAME_TURN == 0) {
+    set($0, 0)
+    SetDrumTowerPos(6, 18)
+    SetAttackVariable($0)
+    ConstructBuilding(on)
+    FetchWood(on)
+    set(ATTR_ATTACK_PERCENTAGE, 125)
+    set(ATTR_PREF_SPY_TRAINS, 1)
+    set(ATTR_PREF_RELIGIOUS_TRAINS, 0)
+    set(ATTR_PREF_WARRIOR_TRAINS, 0)
+    set(ATTR_PREF_FIREWARRIOR_TRAINS, 0)
+    set(ATTR_PREF_BOAT_HUTS, 1)
+    set(ATTR_PREF_BALLON_HUTS, 0)
+    set(ATTR_MAX_BUILDINGS_ON_GO, 4)
+    set(ATTR_HOUSE_PERCENTAGE, 18)
+    ShamanGetWilds(on)
+    set(ATTR_EXPANSION, 20)
+    HouseAPerson(on)
+    BringNewPeopleBack(on)
+    PopulateDrumTower(on)
+    Defend(on)
+    FirewarriorDefend(on)
+    DefendBase(on)
+    SetDefenceRadius(7)
+    set(ATTR_DEFENSE_RAD_INCR, 2)
+    set(ATTR_MAX_DEFENSIVE_ACTIONS, 2)
+    set(ATTR_USE_PREACHER_FOR_DEFENSE, 1)
+    Preach(on)
+    set(ATTR_SHAMEN_BLAST, 64)
+    SpellDefense(6, 18, on)
+    SetSpellEntry(0, HYPNOTISM, 250000, 128, 4, 0)
+    set(ATTR_SPY_CHECK_FREQUENCY, 128)
+    set(ATTR_SPY_DISCOVER_CHANGE, 20)
+    set(ATTR_ENEMY_SPY_MAX_STAND, 128)
+    set(ATTR_RETREAT_VALUE, 20)
+    set(ATTR_RANDOM_BUILD_SIDE, 0)
+    BuildVehicle(on)
+    FetchLostPeople(on)
+    FetchLostVehicle(off)
+    FetchFarVehicle(on)
+    set(ATTR_PEOPLE_PER_BOAT, 8)
+    set(ATTR_PREF_BOAT_DRIVERS, 7)
+    TrainPeople(on)
+    set(ATTR_PREF_SPY_PEOPLE, 5)
+    set(ATTR_PREF_RELIGIOUS_PEOPLE, 20)
+    set(ATTR_PREF_WARRIOR_PEOPLE, 20)
+    set(ATTR_PREF_FIREWARRIOR_PEOPLE, 20)
+    set(ATTR_MAX_TRAIN_AT_ONCE, 4)
+    set(ATTR_GROUP_OPTION, 0)
+    AutoAttack(on)
+    set(ATTR_COUNT_PREACH_DAMAGE, 1)
+    set(ATTR_MAX_ATTACKS, 3)
+    set(ATTR_AWAY_BRAVE, 0)
+    set(ATTR_AWAY_WARRIOR, 30)
+    set(ATTR_AWAY_RELIGIOUS, 30)
+    set(ATTR_AWAY_SPY, 10)
+    set(ATTR_AWAY_FIREWARRIOR, 40)
+    set(ATTR_AWAY_SHAMAN, 100)
+    set(ATTR_BASE_UNDER_ATTACK_RETREAT, 1)
+    set($1, 0)
+    set($2, 0)
+    set($3, 0)
+    set($4, 0)
+    set($5, 0)
+    set($6, 0)
+    set($7, 0)
+    set($8, 0)
+    set($9, 0)
+    set($10, 0)
+    set($11, 0)
+    set($12, 0)
+    set($13, 0)
+    set($14, 0)
+} else {
+    every(64) {
+        if(MY_NUM_PEOPLE < 8 && MY_NUM_KILLED_BY_HUMAN > 10) {
+            if(M_BUILDING_HUT < 1 && M_BUILDING_FARM < 1) {
+                if(M_BUILDING_TEPEE < 1) {
+                    GiveUpAndSulk(on)
+                }
+            }
+        }
+    }
+    every(256, 133) {
+        if(MY_NUM_PEOPLE < 73) {
+            SetBucketUsage(on)
+            SetBucketCountForSpell(BLAST, 8)
+            SetBucketCountForSpell(CONVERT, 8)
+            SetBucketCountForSpell(INSECT_PLAGUE, 32)
+            SetBucketCountForSpell(INVISIBILITY, 40)
+            SetBucketCountForSpell(SHIELD, 48)
+            SetBucketCountForSpell(LAND_BRIDGE, 66)
+            SetBucketCountForSpell(LIGHTNING_BOLT, 64)
+            SetBucketCountForSpell(HYPNOTISM, 70)
+            SetBucketCountForSpell(WHIRLWIND, 72)
+            SetBucketCountForSpell(SWAMP, 80)
+            SetBucketCountForSpell(FLATTEN, 100)
+            SetBucketCountForSpell(EARTHQUAKE, 140)
+            SetBucketCountForSpell(EROSION, 168)
+            SetBucketCountForSpell(FIRESTORM, 320)
+            SetBucketCountForSpell(ANGEL_OF_DEAD, 408)
+            SetBucketCountForSpell(VOLCANO, 640)
+        } else {
+            SetBucketUsage(on)
+            SetBucketCountForSpell(BLAST, 4)
+            SetBucketCountForSpell(CONVERT, 4)
+            SetBucketCountForSpell(INSECT_PLAGUE, 16)
+            SetBucketCountForSpell(INVISIBILITY, 20)
+            SetBucketCountForSpell(SHIELD, 24)
+            SetBucketCountForSpell(LAND_BRIDGE, 33)
+            SetBucketCountForSpell(LIGHTNING_BOLT, 32)
+            SetBucketCountForSpell(HYPNOTISM, 35)
+            SetBucketCountForSpell(WHIRLWIND, 36)
+            SetBucketCountForSpell(SWAMP, 40)
+            SetBucketCountForSpell(FLATTEN, 50)
+            SetBucketCountForSpell(EARTHQUAKE, 70)
+            SetBucketCountForSpell(EROSION, 84)
+            SetBucketCountForSpell(FIRESTORM, 180)
+            SetBucketCountForSpell(ANGEL_OF_DEAD, 204)
+            SetBucketCountForSpell(VOLCANO, 320)
+        }
+    }
+    every(256) {
+        if(M_BUILDING_TEPEE > 3 && M_BUILDING_FIREWARRIOR_TRAIN < 1) {
+            set(ATTR_HOUSE_PERCENTAGE, 20)
+            set(ATTR_PREF_FIREWARRIOR_TRAINS, 1)
+            set(ATTR_PREF_RELIGIOUS_TRAINS, 1)
+        } else {
+            if(M_BUILDING_FARM > 0 && M_BUILDING_FIREWARRIOR_TRAIN < 1) {
+                set(ATTR_HOUSE_PERCENTAGE, 20)
+                set(ATTR_PREF_FIREWARRIOR_TRAINS, 1)
+                set(ATTR_PREF_RELIGIOUS_TRAINS, 1)
+            }
+        }
+        if(M_BUILDING_FIREWARRIOR_TRAIN > 0 && M_BUILDING_TEMPLE > 0) {
+            set(ATTR_HOUSE_PERCENTAGE, 30)
+            set(ATTR_PREF_WARRIOR_TRAINS, 1)
+            set(ATTR_MAX_BUILDINGS_ON_GO, 3)
+        }
+        if(M_BUILDING_FIREWARRIOR_TRAIN > 0 && M_BUILDING_WARRIOR_TRAIN > 0) {
+            set(ATTR_HOUSE_PERCENTAGE, 60)
+        }
+        if(MY_NUM_PEOPLE > 29) {
+            ShamanGetWilds(off)
+        } else {
+            if(MY_NUM_PEOPLE < 20) {
+                ShamanGetWilds(on)
+            }
+        }
+        if(ATTR_EXPANSION < 40) {
+            inc(ATTR_EXPANSION, 1)
+        }
+        if(M_BUILDING_FARM > 8) {
+            set(ATTR_PREF_RELIGIOUS_PEOPLE, 25)
+            set(ATTR_PREF_WARRIOR_PEOPLE, 30)
+            set(ATTR_PREF_FIREWARRIOR_PEOPLE, 30)
+        }
+    }
+    every(256, 128) {
+        if(M_PERSON_FIREWARRIOR > 1) {
+            PutPersonInDt(FIREWARRIOR, 246, 28)
+            PutPersonInDt(FIREWARRIOR, 8, 46)
+            PutPersonInDt(FIREWARRIOR, 254, 46)
+        }
+        CountPeopleInMarker(BLUE, 15, 8, $5)
+        if($5 > 8 && MY_NUM_PEOPLE < 20) {
+            SendAllPeopleToMarker(15)
+            TrainPeopleNow(3, WARRIOR)
+            TrainPeopleNow(3, RELIGIOUS)
+            TrainPeopleNow(3, FIREWARRIOR)
+        } else {
+            if($5 > 8) {
+                DefendShamen(6)
+                if(MY_MANA > M_SPEll_HYPNOTISM_COST) {
+                    Attack(BLUE, 0, ATTACK_MARKER, 15, $5, HYPNOTISM, BLAST, BLAST, ATTACK_NORMAL, 0, -1, -1, -1)
+                }
+            } else {
+                if($5 == 0) {
+                    SendShamenDefendersHome()
+                }
+            }
+        }
+    }
+    every(2048, 64) {
+        if(BLUE_PEOPLE > RED_PEOPLE && BLUE_PEOPLE > GREEN_PEOPLE) {
+            set($15, 0)
+        } else {
+            if(RED_PEOPLE > GREEN_PEOPLE && RED_PEOPLE > BLUE_PEOPLE) {
+                set($15, 1)
+            } else {
+                if(GREEN_PEOPLE > BLUE_PEOPLE && GREEN_PEOPLE > RED_PEOPLE) {
+                    set($15, 3)
+                } else {
+                    set($15, 0)
+                }
+            }
+        }
+        if($1 == 0 && CP_FREE_ENTRIES > 1) {
+            if(M_VEHICLE_BOAT_1 > 0 && M_PERSON_SPY > 0) {
+                set(ATTR_AWAY_WARRIOR, 0)
+                set(ATTR_AWAY_RELIGIOUS, 0)
+                set(ATTR_AWAY_FIREWARRIOR, 0)
+                set(ATTR_AWAY_SHAMAN, 0)
+                set(ATTR_AWAY_SPY, 100)
+                set(ATTR_AWAY_BRAVE, 0)
+                Attack(BLUE, 1, ATTACK_BUILDING, DRUM_TOWER, 10, NO_SPECIFIC_SPELL, NO_SPECIFIC_SPELL, NO_SPECIFIC_SPELL, ATTACK_BY_BOAT, 0, -1, -1, -1)
+                set(ATTR_AWAY_WARRIOR, 30)
+                set(ATTR_AWAY_RELIGIOUS, 30)
+                set(ATTR_AWAY_FIREWARRIOR, 40)
+                set(ATTR_AWAY_SHAMAN, 100)
+                set(ATTR_AWAY_SPY, 10)
+                set(ATTR_AWAY_BRAVE, 0)
+                set($1, 1)
+            }
+        } else {
+            if($1 == 1 && CP_FREE_ENTRIES > 2) {
+                set($14, M_SPEll_LAND_BRIDGE_COST)
+                inc($14, M_SPEll_INVISIBILITY_COST)
+                inc($14, M_SPEll_INVISIBILITY_COST)
+                if(M_PERSON_WARRIOR > 6 && MY_MANA > $14) {
+                    if(M_PERSON_SPY > 0 && M_PERSON_RELIGIOUS > 4) {
+                        set(ATTR_AWAY_WARRIOR, 100)
+                        set(ATTR_AWAY_RELIGIOUS, 100)
+                        set(ATTR_AWAY_FIREWARRIOR, 0)
+                        set(ATTR_AWAY_SHAMAN, 100)
+                        set(ATTR_AWAY_SPY, 20)
+                        Attack(BLUE, 5, ATTACK_BUILDING, NO_SPECIFIC_BUILDING, 81, LAND_BRIDGE, INVISIBILITY, INVISIBILITY, ATTACK_NORMAL, 0, 30, 31, -1)
+                        set(ATTR_AWAY_WARRIOR, 30)
+                        set(ATTR_AWAY_RELIGIOUS, 30)
+                        set(ATTR_AWAY_FIREWARRIOR, 40)
+                        set(ATTR_AWAY_SHAMAN, 100)
+                        set(ATTR_AWAY_SPY, 10)
+                        set($1, 2)
+                    }
+                }
+            } else {
+                if($1 == 2 && CP_FREE_ENTRIES > 2) {
+                    if(M_PERSON_RELIGIOUS > 4 && M_PERSON_WARRIOR > 4) {
+                        if(M_VEHICLE_BOAT_1 > 0 && M_PERSON_SPY > 0) {
+                            Attack(BLUE, 16, ATTACK_BUILDING, WARRIOR_TRAIN, 50, INSECT_PLAGUE, INSECT_PLAGUE, INSECT_PLAGUE, ATTACK_NORMAL, 0, -1, -1, -1)
+                            set(ATTR_AWAY_WARRIOR, 0)
+                            set(ATTR_AWAY_RELIGIOUS, 0)
+                            set(ATTR_AWAY_FIREWARRIOR, 0)
+                            set(ATTR_AWAY_SHAMAN, 0)
+                            set(ATTR_AWAY_SPY, 100)
+                            set(ATTR_AWAY_BRAVE, 0)
+                            Attack(BLUE, 1, ATTACK_BUILDING, DRUM_TOWER, 12, FIRESTORM, NO_SPECIFIC_SPELL, NO_SPECIFIC_SPELL, ATTACK_BY_BOAT, 0, -1, -1, -1)
+                            set(ATTR_AWAY_WARRIOR, 30)
+                            set(ATTR_AWAY_RELIGIOUS, 30)
+                            set(ATTR_AWAY_FIREWARRIOR, 40)
+                            set(ATTR_AWAY_SHAMAN, 100)
+                            set(ATTR_AWAY_SPY, 10)
+                            set(ATTR_AWAY_BRAVE, 0)
+                            set($1, 3)
+                        }
+                    }
+                } else {
+                    if($1 == 3 && CP_FREE_ENTRIES > 1) {
+                        if(M_PERSON_WARRIOR > 3 && MY_MANA > 120000) {
+                            if(M_PERSON_FIREWARRIOR > 1 && M_PERSON_RELIGIOUS > 2) {
+                                if(M_PERSON_SPY > 0) {
+                                    set(ATTR_AWAY_WARRIOR, 40)
+                                    set(ATTR_AWAY_RELIGIOUS, 30)
+                                    set(ATTR_AWAY_FIREWARRIOR, 20)
+                                    set(ATTR_AWAY_SHAMAN, 0)
+                                    set(ATTR_AWAY_SPY, 10)
+                                    set(ATTR_AWAY_BRAVE, 0)
+                                    Attack($15, 10, ATTACK_BUILDING, DRUM_TOWER, 83, INVISIBILITY, INVISIBILITY, NO_SPECIFIC_SPELL, ATTACK_NORMAL, 0, -1, -1, -1)
+                                    set(ATTR_AWAY_WARRIOR, 30)
+                                    set(ATTR_AWAY_RELIGIOUS, 30)
+                                    set(ATTR_AWAY_FIREWARRIOR, 40)
+                                    set(ATTR_AWAY_SHAMAN, 100)
+                                    set(ATTR_AWAY_SPY, 10)
+                                    set(ATTR_AWAY_BRAVE, 0)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
