@@ -1,0 +1,2562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE api PUBLIC 'SYSTEM:file:/D:/NetBeans 8.2/CompletionXml.dtd' 'null'>
+
+<api language="popscript">
+    
+    <environment paramStartChar="(" paramSeparator=", " paramEndChar=")" terminal=""/>
+    
+    <keywords>
+        <keyword name="if" type="other"/>
+        <keyword name="else" type="other"/>
+        <keyword name="every" type="other"/>
+        <keyword name="set" type="function">
+            <params>
+                <param name="var" type="Variable"/>
+                <param name="value" type="Field"/>
+            </params>
+            <desc>Set "value" value into variable "var".</desc>
+        </keyword>
+        <keyword name="inc" type="function">
+            <params>
+                <param name="var" type="Variable"/>
+                <param name="value" type="Field"/>
+            </params>
+            <desc>Add the "value" into variable "var".</desc>
+        </keyword>
+        <keyword name="dec" type="function">
+            <params>
+                <param name="var" type="Variable"/>
+                <param name="value" type="Field"/>
+            </params>
+            <desc>Subtract the "value" into variable "var".</desc>
+        </keyword>
+        <keyword name="mul" type="function">
+            <params>
+                <param name="var" type="Variable"/>
+                <param name="operand1" type="Field"/>
+                <param name="operand2" type="Field"/>
+            </params>
+            <desc>Multiply values "operand1" and "operand2" and save the result in variable "var".</desc>
+        </keyword>
+        <keyword name="div" type="function">
+            <params>
+                <param name="var" type="Variable"/>
+                <param name="operand1" type="Field"/>
+                <param name="operand2" type="Field"/>
+            </params>
+            <desc>Divide values "operand1" and "operand2" and save the result in variable "var".</desc>
+        </keyword>
+        <keyword name="on" type="constant" returnType="State">
+            <desc>Reserved word for ON token in ALACN's syntax.</desc>
+        </keyword>
+        <keyword name="off" type="constant" returnType="State">
+            <desc>Reserved word for OFF token in ALACN's syntax.</desc>
+        </keyword>
+        
+        
+        
+        
+        <!-- NORMAL FUNCTIONS -->
+        <keyword name="FlybyAllowInterrupt" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="AutoAttack" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetAutoBuild" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FetchLostVehicle" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetBaseMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CameraRotation" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgZoon" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetNoBlueReinc" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="StopCameraRotation" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgDeleteOnOk" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetTimerGoing" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="MarvellousHouseDeath" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TargetBlueShaman" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="RemovePlayerThing" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CountBlueInHouses" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CheckIfPersonPreachedTo" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsPrisionOnLevel" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GiveManaToPlayer" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FetchWood" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybyStart" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CreateMsgInformationZoon" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GuardBetweenMarkers" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="guardType">
+                    <desc>[GUARD_NORMAL, GUARD_WITH_GHOSTS]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GetNumPeopleConverted" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CountAngels" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybySetEventZoom" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ResetBaseMarker" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ExtraWoodCollection" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CountGuardFires" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TrainPeople" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FetchFarVehicle" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetBaseRadius" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetBuildingDirection" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TriggerThing" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BuildMainDrumTower" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="OpenDialog" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgAutoOpenDlg" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="KillAllMsgId" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BringNewPeopleBack" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TargetPlayerDtAndS" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FetchLostPeople" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlattenBase" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsShamanIconRightClicked" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetDrumTowerPos" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="OnlyStandAtMarkers" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="HasBlueKilledAGhost" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GetNumPeopleBeingPreached" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CreateMsgInformation" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetWoodCollectionRadii" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ClearAllMsg" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ZoomTo" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="PreachAtMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TrackShamanExtraBollocks" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgOkSaveExitDlg" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BuildWalls" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="MarkerEntries" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SpellOffensive" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ForceTooltip" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TrainPeopleNow" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BuildOuterDefences" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetConvertMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="MoveShamanToMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="HasTimerReachedZero" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DefendShamen" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DeselectAllBluePeople" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="PartialBuildingCount" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybySetEndTarget" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ResetConvertMarker" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="HasPlayerBeenInEncyc" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GetMsgId" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="Preach" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsShamanAvailableForAttack" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SendGhostPeople" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="HasHouseInfoBeenShown" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SpellDefense" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetReincarnation" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DontTargetBlueDrumTowers" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybySetEventIntPoint" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsShamanInArea" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DeleteSmokeStuff" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="RemoveHeadAtPos" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FixWildInArea" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TriggerLevelLost" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DelayMainDrumTower" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CountPeopleInMarker" type="function">
+            <params>
+                <param name="teamOrWild">
+                    <desc>[GREEN, COUNT_WILD, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ClearHouseInfoFlag" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TriggerLevelWon" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ConstructBuilding" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="PutPersonInDt" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CallToArms" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="RemoveTimer" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgDeleteOnRmbZoom" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybySetMessage" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMarkerEntry" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="NavCheck" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="attackTarget">
+                    <desc>[ATTACK_PERSON, ATTACK_MARKER, ATTACK_BUILDING]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IHaveOneShot" type="function">
+            <params>
+                <param name="itemType">
+                    <desc>[BuildingType, SpellType]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsShamanIconLeftClicked" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TargetSWarriors" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SendAllPeopleToMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SendShamenDefendersHome" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgTimeout" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GetHeadTriggerCount" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GetNumOneOffSpells" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetSpecialNoBldgPanel" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TurnPush" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="StartReincNow" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetSpellEntry" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetBucketCountForSpell" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgZoomOnLmbOpenDlg" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ClearShamanRightClick" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgOpenDlgOnRmbZoom" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SendBluePeopleToMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GetHeightAtPos" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsBlueShamanSelected" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ClearGuardingFrom" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="EnableUserInputs" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetBucketUsage" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FirewarriorDefend" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BoatPatrol" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="vehicleType">
+                    <desc>[BoatType, BallonType]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GiveUpAndSulk" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="Defend" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GetSpellsCast" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ClearStandingPeople" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CountBlueShapes" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CreateMsgObjective" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsBuildingNear" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetDefenceRadius" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlashButton" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TrackToMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BuildDrumTower" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BuildVehicle" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetAutoHouse" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="IsPlayerInWorldView" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TurnPanelOn" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetAttackVariable" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DisableUserInputs" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybySetEventPos" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgCreateReturnMsgOnRmbZoom" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="BuildAt" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ClearShamanLeftClick" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgId" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TrackShamanToAngle" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="PopulateDrumTower" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DontHouseSpecialists" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybyCreateNew" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgReturnOnOk" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GiveOneShot" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ShamanGetWilds" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="TargetBlueDrumTowers" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybyStop" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DontTargetBlueShaman" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="HouseAPerson" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SendGhosts" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CountBlueWithBuildCommand" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="KillTeamInArea" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DefendBase" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="CreateMsgNarrative" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="PrayAtHead" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybySetEventAngle" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="FlybySetEventTooltip" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SpellAttack" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="ConvertAtMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GivePlayerSpell" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="Sabotage" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="Attack" type="function">
+            <params>
+                <param name="team">
+                    <desc>[GREEN, RED, BLUE, YELLOW, Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="attackTarget">
+                    <desc>[ATTACK_PERSON, ATTACK_MARKER, ATTACK_BUILDING]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="attackMode">
+                    <desc>[ATTACK_NORMAL, ATTACK_BY_BOAT, ATTACK_BY_BALLON]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="GuardAtMarker" type="function">
+            <params>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="field">
+                    <desc>[Variable, Constant, Internal]</desc>
+                </param>
+                <param name="guardType">
+                    <desc>[GUARD_NORMAL, GUARD_WITH_GHOSTS]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="DontTargetSWarriors" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="SetMsgOpenDlgOnRmbDelete" type="function">
+            <params>
+
+            </params>
+            <desc></desc>
+        </keyword>
+        <keyword name="AutoMessages" type="function">
+            <params>
+                <param name="state">
+                    <desc>[on, off]</desc>
+                </param>
+            </params>
+            <desc></desc>
+        </keyword>
+        
+        
+        
+        <!-- CONSTANTS -->
+        <keyword name="COUNT_WILD" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTACK_MARKER" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTACK_BUILDING" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTACK_PERSON" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTACK_NORMAL" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTACK_BY_BOAT" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTACK_BY_BALLON" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="GUARD_NORMAL" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="GUARD_WITH_GHOSTS" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="BLUE" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="RED" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="YELLOW" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+        <keyword name="GREEN" type="constant" returnType="Token">
+            <desc></desc>
+        </keyword>
+
+        <keyword name="GAME_TURN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MY_NUM_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BLUE_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="RED_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="YELLOW_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="GREEN_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MY_NUM_KILLED_BY_HUMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="RED_RED_KILLED_BY_HUMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="YELLOW_RED_KILLED_BY_HUMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="GREEN_RED_KILLED_BY_HUMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="WILD_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BLUE_MANA" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="RED_MANA" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="YELLOW_MANA" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="GREEN_MANA" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_EXPANSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_SPY_TRAINS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_RELIGIOUS_TRAINS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_WARRIOR_TRAINS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_FIREWARRIOR_TRAINS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_SPY_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_RELIGIOUS_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_WARRIOR_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_FIREWARRIOR_PEOPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_MAX_BUILDINGS_ON_GO" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_HOUSE_PERCENTAGE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_AWAY_BRAVE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_AWAY_WARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_AWAY_RELIGIOUS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_DEFENSE_RAD_INCR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_MAX_DEFENSIVE_ACTIONS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_AWAY_SPY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_AWAY_FIREWARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_ATTACK_PERCENTAGE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_AWAY_SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PEOPLE_PER_BOAT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PEOPLE_PER_BALLON" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_DONT_USE_BOATS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_MAX_SPY_ATTACKS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_ENEMY_SPY_MAX_STAND" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_MAX_ATTACKS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_EMPTY_AT_WAYPOING" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_SPY_CHECK_FREQUENCY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_RETREAT_VALUE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_BASE_UNDER_ATTACK_RETREAT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_RANDOM_BUILD_SIDE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_USE_PREACHER_FOR_DEFENSE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_SHAMEN_BLAST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_MAX_TRAIN_AT_ONCE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_GROUP_OPTION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_BOAT_HUTS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_BALLON_HUTS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_BOAT_DRIVERS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_PREF_BALLON_DRIVERS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_FIGHT_STOP_DISTANCE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_SPY_DISCOVER_CHANGE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_COUNT_PREACH_DAMAGE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_DONT_GROUP_AT_DT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_SPELL_DELAY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_DONT_DELETE_USELESS_BOAT_HOUSE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_BOAT_HOUSE_BROKEN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_DONT_AUTO_TRAIN_PREACHERS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ATTR_SPARE_6" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MY_MANA" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_BURN_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_BLAST_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_LIGHTNING_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_WHIRLMIND_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_INSECT_PLAGUE_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_INVISIBILITY_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_HYPNOTISM_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_FIRESTORM_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_GHOST_ARMY_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_EROSION_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_SWAMP_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_LAND_BRIDGE_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_ANGEL_OF_DEAD_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_EARTHQUAKE_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_FLATTEN_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_VOLCANO_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPEll_WRATH_OF_GOD_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_TEPEE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_HUT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_FARM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_DRUM_TOWER" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_TEMPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_SPY_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_WARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_FIREWARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_RECONVERSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_WALL_PIECE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_GATE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_CURR_OE_SLOT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_BOAT_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_BOAT_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_AIRSHIP_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_BUILDING_AIRSHIP_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_TEPEE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_HUT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_FARM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_DRUM_TOWER" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_TEMPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_SPY_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_WARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_FIREWARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_RECONVERSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_WALL_PIECE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_GATE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_CURR_OE_SLOT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_BOAT_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_BOAT_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_AIRSHIP_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_BUILDING_AIRSHIP_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_TEPEE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_HUT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_FARM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_DRUM_TOWER" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_TEMPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_SPY_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_WARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_FIREWARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_RECONVERSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_WALL_PIECE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_GATE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_CURR_OE_SLOT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_BOAT_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_BOAT_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_AIRSHIP_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_BUILDING_AIRSHIP_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_TEPEE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_HUT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_FARM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_DRUM_TOWER" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_TEMPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_SPY_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_WARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_FIREWARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_RECONVERSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_WALL_PIECE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_GATE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_CURR_OE_SLOT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_BOAT_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_BOAT_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_AIRSHIP_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_BUILDING_AIRSHIP_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_TEPEE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_HUT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_FARM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_DRUM_TOWER" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_TEMPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_SPY_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_WARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_FIREWARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_RECONVERSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_WALL_PIECE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_GATE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_CURR_OE_SLOT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_BOAT_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_BOAT_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_AIRSHIP_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_BUILDING_AIRSHIP_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_PERSON_BRAVE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_PERSON_WARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_PERSON_RELIGIOUS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_PERSON_SPY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_PERSON_FIREWARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_PERSON_SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_PERSON_BRAVE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_PERSON_WARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_PERSON_RELIGIOUS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_PERSON_SPY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_PERSON_FIREWARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_PERSON_SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_PERSON_BRAVE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_PERSON_WARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_PERSON_RELIGIOUS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_PERSON_SPY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_PERSON_FIREWARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_PERSON_SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_PERSON_BRAVE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_PERSON_WARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_PERSON_RELIGIOUS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_PERSON_SPY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_PERSON_FIREWARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_PERSON_SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_PERSON_BRAVE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_PERSON_WARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_PERSON_RELIGIOUS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_PERSON_SPY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_PERSON_FIREWARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_PERSON_SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BLUE_KILLED_BY_ME" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="RED_KILLED_BY_ME" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="YELLOW_KILLED_BY_ME" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="GREEN_KILLED_BY_ME" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MY_NUM_KILLED_BY_BLUE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MY_NUM_KILLED_BY_RED" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MY_NUM_KILLED_BY_YELLOW" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MY_NUM_KILLED_BY_GREEN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BURN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BLAST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="LIGHTNING_BOLT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="WHIRLWIND" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="INSECT_PLAGUE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="INVISIBILITY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="HYPNOTISM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="FIRESTORM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="GHOST_ARMY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="EROSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="SWAMP" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="LAND_BRIDGE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="ANGEL_OF_DEAD" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="EARTHQUAKE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="FLATTEN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="VOLCANO" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="WRATH_OF_GOD" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BRAVE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="WARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="RELIGIOUS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="SPY" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="FIREWARRIOR" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="TEPEE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="HUT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="FARM" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="DRUM_TOWER" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="TEMPLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="SPY_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="WARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="FIREWARRIOR_TRAIN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="RECONVERSION" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="WALL_PIECE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="GATE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BOAT_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BOAT_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="AIRSHIP_HUT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="AIRSHIP_HUT_2" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="NO_SPECIFIC_PERSON" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="NO_SPECIFIC_BUILDING" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="NO_SPECIFIC_SPELL" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="TARGET_SHAMAN" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_VEHICLE_BOAT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_VEHICLE_AIRSHIP_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_VEHICLE_BOAT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="B_VEHICLE_AIRSHIP_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_VEHICLE_BOAT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="R_VEHICLE_AIRSHIP_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_VEHICLE_BOAT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="Y_VEHICLE_AIRSHIP_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_VEHICLE_BOAT_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="G_VEHICLE_AIRSHIP_1" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="CP_FREE_ENTRIES" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="RANDOM_100" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="MUM_SHAMEN_DEFENDERS" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="CAMERA_ANGLE" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="CAMERA_X" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="CAMERA_Z" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="M_SPELL_SHIELD_COST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="SHIELD" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="CONVERT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="TELEPORT" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        <keyword name="BLOODLUST" type="constant" returnType="Internal">
+            <desc></desc>
+        </keyword>
+        
+    </keywords>
+</api>
