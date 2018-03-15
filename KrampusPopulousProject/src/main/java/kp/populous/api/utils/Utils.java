@@ -11,17 +11,24 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import kp.populous.api.script.ScriptConstant;
+import kp.populous.api.script.ScriptFunctions;
 import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory;
 import org.fife.ui.rsyntaxtextarea.TokenMakerFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -31,7 +38,7 @@ public final class Utils
 {
     private Utils() {}
     
-    public static final String VERSION = "0.1";
+    public static final String VERSION = "0.1.0.1";
     
     public static final String POP_SCRIPT_TEXT_TYPE = "text/popscript";
     
@@ -121,5 +128,45 @@ public final class Utils
         String name = file.getName();
         int index = name.lastIndexOf('.');
         return index < 0 ? "" : name.substring(index + 1);
+    }
+    
+    
+    private static JSONObject generateDefaultCompletionFunction(String name, String... params)
+    {
+        JSONArray jpars = new JSONArray();
+        for(String param : params)
+            jpars.put(new JSONObject().put("name", param).put("desc", ""));
+        return new JSONObject().put("name", name).put("desc", "").put("relevance", 1).put("params", jpars);
+    }
+    public static final JSONObject generateDefaultCompletions()
+    {
+        JSONArray jconsts = ScriptConstant.generateJsonCompletions();
+        JSONArray jfuncs = ScriptFunctions.generateFunctionsCompletionJson();
+        JSONArray jothers = new JSONArray();
+        
+        jothers.put(new JSONObject().put("name", "if").put("desc", "").put("relevance", 1));
+        jothers.put(new JSONObject().put("name", "else").put("desc", "").put("relevance", 1));
+        jothers.put(new JSONObject().put("name", "every").put("desc", "").put("relevance", 1));
+        
+        jconsts.put(new JSONObject().put("name", "on").put("desc", "").put("relevance", 1));
+        jconsts.put(new JSONObject().put("name", "off").put("desc", "").put("relevance", 1));
+        
+        jfuncs.put(generateDefaultCompletionFunction("set", "var", "value"));
+        jfuncs.put(generateDefaultCompletionFunction("inc", "var", "value"));
+        jfuncs.put(generateDefaultCompletionFunction("dec", "var", "value"));
+        jfuncs.put(generateDefaultCompletionFunction("mul", "var", "operand1", "operand2"));
+        jfuncs.put(generateDefaultCompletionFunction("div", "var", "operand1", "operand2"));
+        
+        return new JSONObject().put("functions", jfuncs).put("constants", jconsts).put("others", jothers);
+    }
+    
+    public static final void printDefaultCompletions(File file)
+    {
+        JSONObject base = generateDefaultCompletions();
+        try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file))))
+        {
+            base.write(bw, 4, 0);
+        }
+        catch(IOException ex) { ex.printStackTrace(System.err); }
     }
 }

@@ -54,6 +54,8 @@ public final class Main
         ScriptFunctions.printXmlCompletions(new File("FunctionCompletions.xml"));
         ScriptConstant.printXmlCompletions(new File("ConstantCompletions.xml"));*/
         
+        //Utils.printDefaultCompletions(new File("PopLangCompletion.json"));
+        
         Utils.useSystemLookAndFeel();
         Utils.initPopScriptLanguage();
         //ScriptEditorTest.main(args);

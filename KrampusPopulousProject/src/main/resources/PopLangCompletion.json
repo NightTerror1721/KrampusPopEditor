@@ -1,0 +1,3352 @@
+{
+    "functions": [
+        {
+            "name": "DefendBase",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "FetchWood",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "BuildOuterDefences",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetAutoHouse",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "GetHeadTriggerCount",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "TrackToMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "IsPrisionOnLevel",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgId",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "FlybyCreateNew",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SpellOffensive",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "TriggerLevelWon",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "MoveShamanToMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "StopCameraRotation",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgZoon",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "CreateMsgObjective",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "IHaveOneShot",
+            "params": [
+                {
+                    "name": "itemType",
+                    "desc": "[SpellType, BuildingType]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "BuildVehicle",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "IsPlayerInWorldView",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "TrackShamanExtraBollocks",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "GetNumPeopleBeingPreached",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "CallToArms",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "EnableUserInputs",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FlybySetEndTarget",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgOpenDlgOnRmbZoom",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "TriggerThing",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "FlashButton",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "state",
+                    "desc": "[on, off]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "TriggerLevelLost",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgAutoOpenDlg",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FlattenBase",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "BringNewPeopleBack",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SendShamenDefendersHome",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FlybySetEventAngle",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetAutoBuild",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "CountPeopleInMarker",
+            "params": [
+                {
+                    "name": "teamOrWild",
+                    "desc": "[YELLOW, RED, BLUE, COUNT_WILD, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "HasBlueKilledAGhost",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "ResetConvertMarker",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "ClearGuardingFrom",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "RemovePlayerThing",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "MarvellousHouseDeath",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "GiveManaToPlayer",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "FlybyStop",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "DontTargetBlueDrumTowers",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SetReincarnation",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "PrayAtHead",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "Sabotage",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "FlybySetEventTooltip",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "DefendShamen",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "TurnPanelOn",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "IsShamanIconRightClicked",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "DeselectAllBluePeople",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "IsShamanInArea",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetConvertMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetBucketUsage",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "DelayMainDrumTower",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SetWoodCollectionRadii",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "FlybySetMessage",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "FetchLostPeople",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetBaseRadius",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetBucketCountForSpell",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetDrumTowerPos",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "FirewarriorDefend",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "KillAllMsgId",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "ConstructBuilding",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "FlybySetEventZoom",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "ResetBaseMarker",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "BuildAt",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgDeleteOnOk",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "GiveOneShot",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "ZoomTo",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "CheckIfPersonPreachedTo",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "ClearAllMsg",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "GetMsgId",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetAttackVariable",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "GetSpellsCast",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetTimerGoing",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SpellAttack",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "TargetSWarriors",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FlybySetEventIntPoint",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetDefenceRadius",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "BuildDrumTower",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "BuildMainDrumTower",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SetSpecialNoBldgPanel",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "IsShamanAvailableForAttack",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SendGhosts",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "BoatPatrol",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "vehicleType",
+                    "desc": "[BallonType, BoatType]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgOkSaveExitDlg",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FetchLostVehicle",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "RemoveHeadAtPos",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "CreateMsgInformationZoon",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "IsBlueShamanSelected",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "GetNumPeopleConverted",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "GivePlayerSpell",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SendAllPeopleToMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "DontHouseSpecialists",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "PartialBuildingCount",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "HasPlayerBeenInEncyc",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "PreachAtMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "CreateMsgInformation",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgTimeout",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "KillTeamInArea",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "CountBlueInHouses",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "CountAngels",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "DeleteSmokeStuff",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetBaseMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "PutPersonInDt",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "GetNumOneOffSpells",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "TargetBlueDrumTowers",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FlybyStart",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "Attack",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "attackTarget",
+                    "desc": "[ATTACK_MARKER, ATTACK_BUILDING, ATTACK_PERSON]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "attackMode",
+                    "desc": "[ATTACK_BY_BOAT, ATTACK_BY_BALLON, ATTACK_NORMAL]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "GuardAtMarker",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "guardType",
+                    "desc": "[GUARD_NORMAL, GUARD_WITH_GHOSTS]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "CameraRotation",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "IsBuildingNear",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "FlybyAllowInterrupt",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "PopulateDrumTower",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SendGhostPeople",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "Defend",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgReturnOnOk",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "GetHeightAtPos",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "ClearShamanLeftClick",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "TargetPlayerDtAndS",
+            "params": [{
+                "name": "team",
+                "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "DontTargetBlueShaman",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "HasHouseInfoBeenShown",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "DisableUserInputs",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "DontTargetSWarriors",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "RemoveTimer",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FlybySetEventPos",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "MarkerEntries",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "TrainPeople",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "Preach",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "TurnPush",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "TrainPeopleNow",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "TrackShamanToAngle",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "IsShamanIconLeftClicked",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "GuardBetweenMarkers",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "guardType",
+                    "desc": "[GUARD_NORMAL, GUARD_WITH_GHOSTS]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "CreateMsgNarrative",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "ClearStandingPeople",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "CountGuardFires",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "AutoMessages",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "ShamanGetWilds",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "OpenDialog",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "OnlyStandAtMarkers",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "GiveUpAndSulk",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "StartReincNow",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SetMarkerEntry",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgOpenDlgOnRmbDelete",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "ClearHouseInfoFlag",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SpellDefense",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "state",
+                    "desc": "[on, off]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "TargetBlueShaman",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "ForceTooltip",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "SetSpellEntry",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "HouseAPerson",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgDeleteOnRmbZoom",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "CountBlueShapes",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetBuildingDirection",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgCreateReturnMsgOnRmbZoom",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "SendBluePeopleToMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetNoBlueReinc",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "ClearShamanRightClick",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "ConvertAtMarker",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "SetMsgZoomOnLmbOpenDlg",
+            "params": [],
+            "desc": ""
+        },
+        {
+            "name": "FixWildInArea",
+            "params": [
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "AutoAttack",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "ExtraWoodCollection",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "NavCheck",
+            "params": [
+                {
+                    "name": "team",
+                    "desc": "[YELLOW, RED, BLUE, GREEN, Variable, Constant, Internal]"
+                },
+                {
+                    "name": "attackTarget",
+                    "desc": "[ATTACK_MARKER, ATTACK_BUILDING, ATTACK_PERSON]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                },
+                {
+                    "name": "field",
+                    "desc": "[Variable, Constant, Internal]"
+                }
+            ],
+            "desc": ""
+        },
+        {
+            "name": "FetchFarVehicle",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "HasTimerReachedZero",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "CountBlueWithBuildCommand",
+            "params": [{
+                "name": "field",
+                "desc": "[Variable, Constant, Internal]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "BuildWalls",
+            "params": [{
+                "name": "state",
+                "desc": "[on, off]"
+            }],
+            "desc": ""
+        },
+        {
+            "name": "set",
+            "params": [
+                {
+                    "name": "var",
+                    "desc": ""
+                },
+                {
+                    "name": "value",
+                    "desc": ""
+                }
+            ],
+            "relevance": 1,
+            "desc": "Set \"value\" value into variable \"var\"."
+        },
+        {
+            "name": "inc",
+            "params": [
+                {
+                    "name": "var",
+                    "desc": ""
+                },
+                {
+                    "name": "value",
+                    "desc": ""
+                }
+            ],
+            "relevance": 1,
+            "desc": "Add \"value\" value into variable \"var\"."
+        },
+        {
+            "name": "dec",
+            "params": [
+                {
+                    "name": "var",
+                    "desc": ""
+                },
+                {
+                    "name": "value",
+                    "desc": ""
+                }
+            ],
+            "relevance": 1,
+            "desc": "Subtract \"value\" value into variable \"var\"."
+        },
+        {
+            "name": "mul",
+            "params": [
+                {
+                    "name": "var",
+                    "desc": ""
+                },
+                {
+                    "name": "operand1",
+                    "desc": ""
+                },
+                {
+                    "name": "operand2",
+                    "desc": ""
+                }
+            ],
+            "relevance": 1,
+            "desc": "Multiply values \"operand1\" and \"operand2\" and save the result in variable \"var\"."
+        },
+        {
+            "name": "div",
+            "params": [
+                {
+                    "name": "var",
+                    "desc": ""
+                },
+                {
+                    "name": "operand1",
+                    "desc": ""
+                },
+                {
+                    "name": "operand2",
+                    "desc": ""
+                }
+            ],
+            "relevance": 1,
+            "desc": "Divide values \"operand1\" and \"operand2\" and save the result in variable \"var\"."
+        }
+    ],
+    "constants": [
+        {
+            "name": "COUNT_WILD",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "ATTACK_MARKER",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "ATTACK_BUILDING",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "ATTACK_PERSON",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "ATTACK_NORMAL",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "ATTACK_BY_BOAT",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "ATTACK_BY_BALLON",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "GUARD_NORMAL",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "GUARD_WITH_GHOSTS",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "BLUE",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "RED",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "YELLOW",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "GREEN",
+            "type": "Token",
+            "desc": ""
+        },
+        {
+            "name": "GAME_TURN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MY_NUM_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BLUE_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "RED_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "YELLOW_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "GREEN_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MY_NUM_KILLED_BY_HUMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "RED_RED_KILLED_BY_HUMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "YELLOW_RED_KILLED_BY_HUMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "GREEN_RED_KILLED_BY_HUMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "WILD_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BLUE_MANA",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "RED_MANA",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "YELLOW_MANA",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "GREEN_MANA",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_EXPANSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_SPY_TRAINS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_RELIGIOUS_TRAINS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_WARRIOR_TRAINS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_FIREWARRIOR_TRAINS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_SPY_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_RELIGIOUS_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_WARRIOR_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_FIREWARRIOR_PEOPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_MAX_BUILDINGS_ON_GO",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_HOUSE_PERCENTAGE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_AWAY_BRAVE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_AWAY_WARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_AWAY_RELIGIOUS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_DEFENSE_RAD_INCR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_MAX_DEFENSIVE_ACTIONS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_AWAY_SPY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_AWAY_FIREWARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_ATTACK_PERCENTAGE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_AWAY_SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PEOPLE_PER_BOAT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PEOPLE_PER_BALLON",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_DONT_USE_BOATS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_MAX_SPY_ATTACKS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_ENEMY_SPY_MAX_STAND",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_MAX_ATTACKS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_EMPTY_AT_WAYPOING",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_SPY_CHECK_FREQUENCY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_RETREAT_VALUE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_BASE_UNDER_ATTACK_RETREAT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_RANDOM_BUILD_SIDE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_USE_PREACHER_FOR_DEFENSE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_SHAMEN_BLAST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_MAX_TRAIN_AT_ONCE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_GROUP_OPTION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_BOAT_HUTS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_BALLON_HUTS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_BOAT_DRIVERS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_PREF_BALLON_DRIVERS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_FIGHT_STOP_DISTANCE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_SPY_DISCOVER_CHANGE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_COUNT_PREACH_DAMAGE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_DONT_GROUP_AT_DT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_SPELL_DELAY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_DONT_DELETE_USELESS_BOAT_HOUSE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_BOAT_HOUSE_BROKEN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_DONT_AUTO_TRAIN_PREACHERS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ATTR_SPARE_6",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MY_MANA",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_BURN_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_BLAST_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_LIGHTNING_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_WHIRLMIND_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_INSECT_PLAGUE_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_INVISIBILITY_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_HYPNOTISM_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_FIRESTORM_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_GHOST_ARMY_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_EROSION_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_SWAMP_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_LAND_BRIDGE_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_ANGEL_OF_DEAD_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_EARTHQUAKE_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_FLATTEN_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_VOLCANO_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPEll_WRATH_OF_GOD_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_SMALL_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_MEDIUM_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_LARGE_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_DRUM_TOWER",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_TEMPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_SPY_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_WARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_FIREWARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_RECONVERSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_WALL_PIECE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_GATE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_CURR_OE_SLOT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_BOAT_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_BOAT_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_AIRSHIP_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_BUILDING_AIRSHIP_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_SMALL_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_MEDIUM_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_LARGE_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_DRUM_TOWER",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_TEMPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_SPY_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_WARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_FIREWARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_RECONVERSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_WALL_PIECE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_GATE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_CURR_OE_SLOT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_BOAT_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_BOAT_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_AIRSHIP_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_BUILDING_AIRSHIP_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_SMALL_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_MEDIUM_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_LARGE_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_DRUM_TOWER",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_TEMPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_SPY_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_WARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_FIREWARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_RECONVERSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_WALL_PIECE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_GATE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_CURR_OE_SLOT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_BOAT_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_BOAT_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_AIRSHIP_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_BUILDING_AIRSHIP_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_SMALL_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_MEDIUM_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_LARGE_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_DRUM_TOWER",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_TEMPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_SPY_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_WARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_FIREWARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_RECONVERSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_WALL_PIECE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_GATE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_CURR_OE_SLOT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_BOAT_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_BOAT_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_AIRSHIP_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_BUILDING_AIRSHIP_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_SMALL_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_MEDIUM_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_LARGE_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_DRUM_TOWER",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_TEMPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_SPY_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_WARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_FIREWARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_RECONVERSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_WALL_PIECE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_GATE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_CURR_OE_SLOT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_BOAT_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_BOAT_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_AIRSHIP_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_BUILDING_AIRSHIP_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_PERSON_BRAVE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_PERSON_WARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_PERSON_RELIGIOUS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_PERSON_SPY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_PERSON_FIREWARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_PERSON_SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_PERSON_BRAVE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_PERSON_WARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_PERSON_RELIGIOUS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_PERSON_SPY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_PERSON_FIREWARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_PERSON_SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_PERSON_BRAVE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_PERSON_WARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_PERSON_RELIGIOUS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_PERSON_SPY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_PERSON_FIREWARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_PERSON_SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_PERSON_BRAVE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_PERSON_WARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_PERSON_RELIGIOUS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_PERSON_SPY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_PERSON_FIREWARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_PERSON_SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_PERSON_BRAVE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_PERSON_WARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_PERSON_RELIGIOUS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_PERSON_SPY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_PERSON_FIREWARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_PERSON_SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BLUE_KILLED_BY_ME",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "RED_KILLED_BY_ME",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "YELLOW_KILLED_BY_ME",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "GREEN_KILLED_BY_ME",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MY_NUM_KILLED_BY_BLUE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MY_NUM_KILLED_BY_RED",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MY_NUM_KILLED_BY_YELLOW",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MY_NUM_KILLED_BY_GREEN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BURN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BLAST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "LIGHTNING_BOLT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "WHIRLWIND",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "INSECT_PLAGUE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "INVISIBILITY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "HYPNOTISM",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "FIRESTORM",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "GHOST_ARMY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "EROSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "SWAMP",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "LAND_BRIDGE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "ANGEL_OF_DEAD",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "EARTHQUAKE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "FLATTEN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "VOLCANO",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "WRATH_OF_GOD",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BRAVE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "WARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "RELIGIOUS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "SPY",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "FIREWARRIOR",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "SMALL_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "MEDIUM_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "LARGE_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "DRUM_TOWER",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "TEMPLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "SPY_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "WARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "FIREWARRIOR_TRAIN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "RECONVERSION",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "WALL_PIECE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "GATE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BOAT_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BOAT_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "AIRSHIP_HUT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "AIRSHIP_HUT_2",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "NO_SPECIFIC_PERSON",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "NO_SPECIFIC_BUILDING",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "NO_SPECIFIC_SPELL",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "TARGET_SHAMAN",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_VEHICLE_BOAT_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_VEHICLE_AIRSHIP_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_VEHICLE_BOAT_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "B_VEHICLE_AIRSHIP_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_VEHICLE_BOAT_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "R_VEHICLE_AIRSHIP_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_VEHICLE_BOAT_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "Y_VEHICLE_AIRSHIP_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_VEHICLE_BOAT_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "G_VEHICLE_AIRSHIP_1",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "CP_FREE_ENTRIES",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "RANDOM_100",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "NUM_SHAMEN_DEFENDERS",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "CAMERA_ANGLE",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "CAMERA_X",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "CAMERA_Z",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "M_SPELL_SHIELD_COST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "SHIELD",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "CONVERT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "TELEPORT",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "BLOODLUST",
+            "type": "Internal",
+            "desc": ""
+        },
+        {
+            "name": "on",
+            "relevance": 1,
+            "desc": "Reserved word for ON token in ALACN's syntax."
+        },
+        {
+            "name": "off",
+            "relevance": 1,
+            "desc": "Reserved word for OFF token in ALACN's syntax."
+        }
+    ],
+    "others": [
+        {
+            "name": "if",
+            "relevance": 1,
+            "desc": ""
+        },
+        {
+            "name": "else",
+            "relevance": 1,
+            "desc": ""
+        },
+        {
+            "name": "every",
+            "relevance": 1,
+            "desc": ""
+        }
+    ]
+}

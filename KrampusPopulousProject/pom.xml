@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>kp.populous</groupId>
     <artifactId>KrampusPopulousProject</artifactId>
-    <version>0.1</version>
+    <version>0.1.0.1</version>
     <packaging>jar</packaging>
     
     <properties>
@@ -28,6 +28,11 @@
             <groupId>com.fifesoft</groupId>
             <artifactId>rstaui</artifactId>
             <version>2.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
         </dependency>
     </dependencies>
     

@@ -29,6 +29,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import kp.populous.api.script.Script.DecompileResult;
 import kp.populous.api.utils.ButtonTabComponent;
+import kp.populous.api.utils.CompletionProviderLoader;
 import kp.populous.api.utils.FileChooser;
 import kp.populous.api.utils.Utils;
 import org.fife.ui.autocomplete.AutoCompletion;
@@ -359,13 +360,15 @@ public class ScriptEditor extends JFrame
     {
         CustomCompletionProvider prov = new CustomCompletionProvider();
         
-        try {
+        /*try {
             prov.loadFromXML("PopLangCompletion.xml");
         }
         catch(IOException ex)
         {
             ex.printStackTrace(System.err);
-        }
+        }*/
+        CompletionProviderLoader cpl = new CompletionProviderLoader(prov);
+        cpl.loadExtern(Utils.openInnerResource("/PopLangCompletion.json"));
         
         return prov;
     }

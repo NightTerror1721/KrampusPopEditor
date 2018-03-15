@@ -13,6 +13,8 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import kp.populous.api.data.UInt16;
 import kp.populous.api.data.UInt32;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -390,6 +392,20 @@ public final class ScriptConstant
             }
             return sb.toString();
         }
+        
+        private static void getJsonCompletions(JSONArray jconsts)
+        {
+            for(Token token : values())
+            {
+                if(!token.isFunction() && token.useCommandNumber)
+                {
+                    jconsts.put(new JSONObject()
+                            .put("name", token.getTokenName())
+                            .put("type", "Token")
+                            .put("desc", ""));
+                }
+            }
+        }
     }
     
     
@@ -482,9 +498,9 @@ public final class ScriptConstant
         M_SPEll_VOLCANO_COST(64),
         M_SPEll_WRATH_OF_GOD_COST(65),
         
-        M_BUILDING_TEPEE(66),
-        M_BUILDING_HUT(67),
-        M_BUILDING_FARM(68),
+        M_BUILDING_SMALL_HUT(66),
+        M_BUILDING_MEDIUM_HUT(67),
+        M_BUILDING_LARGE_HUT(68),
         M_BUILDING_DRUM_TOWER(69),
         M_BUILDING_TEMPLE(70),
         M_BUILDING_SPY_TRAIN(71),
@@ -494,14 +510,14 @@ public final class ScriptConstant
         M_BUILDING_WALL_PIECE(75),
         M_BUILDING_GATE(76),
         M_BUILDING_CURR_OE_SLOT(77),
-        M_BUILDING_BOAT_HUT_1(78),
+        M_BUILDING_BOAT_HUT(78),
         M_BUILDING_BOAT_HUT_2(79),
-        M_BUILDING_AIRSHIP_HUT_1(80),
+        M_BUILDING_AIRSHIP_HUT(80),
         M_BUILDING_AIRSHIP_HUT_2(81),
         
-        B_BUILDING_TEPEE(82),
-        B_BUILDING_HUT(83),
-        B_BUILDING_FARM(84),
+        B_BUILDING_SMALL_HUT(82),
+        B_BUILDING_MEDIUM_HUT(83),
+        B_BUILDING_LARGE_HUT(84),
         B_BUILDING_DRUM_TOWER(85),
         B_BUILDING_TEMPLE(86),
         B_BUILDING_SPY_TRAIN(87),
@@ -511,14 +527,14 @@ public final class ScriptConstant
         B_BUILDING_WALL_PIECE(91),
         B_BUILDING_GATE(92),
         B_BUILDING_CURR_OE_SLOT(93),
-        B_BUILDING_BOAT_HUT_1(94),
+        B_BUILDING_BOAT_HUT(94),
         B_BUILDING_BOAT_HUT_2(95),
-        B_BUILDING_AIRSHIP_HUT_1(96),
+        B_BUILDING_AIRSHIP_HUT(96),
         B_BUILDING_AIRSHIP_HUT_2(97),
         
-        R_BUILDING_TEPEE(98),
-        R_BUILDING_HUT(99),
-        R_BUILDING_FARM(100),
+        R_BUILDING_SMALL_HUT(98),
+        R_BUILDING_MEDIUM_HUT(99),
+        R_BUILDING_LARGE_HUT(100),
         R_BUILDING_DRUM_TOWER(101),
         R_BUILDING_TEMPLE(102),
         R_BUILDING_SPY_TRAIN(103),
@@ -528,14 +544,14 @@ public final class ScriptConstant
         R_BUILDING_WALL_PIECE(107),
         R_BUILDING_GATE(108),
         R_BUILDING_CURR_OE_SLOT(109),
-        R_BUILDING_BOAT_HUT_1(110),
+        R_BUILDING_BOAT_HUT(110),
         R_BUILDING_BOAT_HUT_2(111),
-        R_BUILDING_AIRSHIP_HUT_1(112),
+        R_BUILDING_AIRSHIP_HUT(112),
         R_BUILDING_AIRSHIP_HUT_2(113),
         
-        Y_BUILDING_TEPEE(114),
-        Y_BUILDING_HUT(115),
-        Y_BUILDING_FARM(116),
+        Y_BUILDING_SMALL_HUT(114),
+        Y_BUILDING_MEDIUM_HUT(115),
+        Y_BUILDING_LARGE_HUT(116),
         Y_BUILDING_DRUM_TOWER(117),
         Y_BUILDING_TEMPLE(118),
         Y_BUILDING_SPY_TRAIN(119),
@@ -545,14 +561,14 @@ public final class ScriptConstant
         Y_BUILDING_WALL_PIECE(123),
         Y_BUILDING_GATE(124),
         Y_BUILDING_CURR_OE_SLOT(125),
-        Y_BUILDING_BOAT_HUT_1(126),
+        Y_BUILDING_BOAT_HUT(126),
         Y_BUILDING_BOAT_HUT_2(127),
-        Y_BUILDING_AIRSHIP_HUT_1(128),
+        Y_BUILDING_AIRSHIP_HUT(128),
         Y_BUILDING_AIRSHIP_HUT_2(129),
         
-        G_BUILDING_TEPEE(130),
-        G_BUILDING_HUT(131),
-        G_BUILDING_FARM(132),
+        G_BUILDING_SMALL_HUT(130),
+        G_BUILDING_MEDIUM_HUT(131),
+        G_BUILDING_LARGE_HUT(132),
         G_BUILDING_DRUM_TOWER(133),
         G_BUILDING_TEMPLE(134),
         G_BUILDING_SPY_TRAIN(135),
@@ -562,9 +578,9 @@ public final class ScriptConstant
         G_BUILDING_WALL_PIECE(139),
         G_BUILDING_GATE(140),
         G_BUILDING_CURR_OE_SLOT(141),
-        G_BUILDING_BOAT_HUT_1(142),
+        G_BUILDING_BOAT_HUT(142),
         G_BUILDING_BOAT_HUT_2(143),
-        G_BUILDING_AIRSHIP_HUT_1(144),
+        G_BUILDING_AIRSHIP_HUT(144),
         G_BUILDING_AIRSHIP_HUT_2(145),
         
         M_PERSON_BRAVE(146),
@@ -637,9 +653,9 @@ public final class ScriptConstant
         FIREWARRIOR(205),
         SHAMAN(206),
         
-        TEPEE(207),
-        HUT(208),
-        FARM(209),
+        SMALL_HUT(207),
+        MEDIUM_HUT(208),
+        LARGE_HUT(209),
         DRUM_TOWER(210),
         TEMPLE(211),
         SPY_TRAIN(212),
@@ -648,9 +664,9 @@ public final class ScriptConstant
         RECONVERSION(215),
         WALL_PIECE(216),
         GATE(217),
-        BOAT_HUT_1(215),
+        BOAT_HUT(215),
         BOAT_HUT_2(219),
-        AIRSHIP_HUT_1(220),
+        AIRSHIP_HUT(220),
         AIRSHIP_HUT_2(221),
         
         NO_SPECIFIC_PERSON(222),
@@ -677,7 +693,7 @@ public final class ScriptConstant
         CP_FREE_ENTRIES(236),
         RANDOM_100(237),
         
-        MUM_SHAMEN_DEFENDERS(238),
+        NUM_SHAMEN_DEFENDERS(238),
         
         CAMERA_ANGLE(239),
         CAMERA_X(240),
@@ -758,6 +774,17 @@ public final class ScriptConstant
             }
             return sb.toString();
         }
+        
+        private static void getJsonCompletions(JSONArray jconsts)
+        {
+            for(Internal in : values())
+            {
+                jconsts.put(new JSONObject()
+                        .put("name", in.getInternalName())
+                        .put("type", "Internal")
+                        .put("desc", ""));
+            }
+        }
     }
     
     public static final void printXmlCompletions(File file)
@@ -768,5 +795,13 @@ public final class ScriptConstant
             bw.write(Internal.getXmlCompletions() + "\n");
         }
         catch(IOException ex) { ex.printStackTrace(System.err); }
+    }
+    
+    public static final JSONArray generateJsonCompletions()
+    {
+        JSONArray jconsts = new JSONArray();
+        Token.getJsonCompletions(jconsts);
+        Internal.getJsonCompletions(jconsts);
+        return jconsts;
     }
 }

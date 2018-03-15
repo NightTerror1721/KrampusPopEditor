@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 import kp.populous.api.data.UInt16;
 import kp.populous.api.script.ScriptConstant.Token;
 import static kp.populous.api.script.ScriptConstant.Token.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -310,6 +312,12 @@ public final class ScriptFunctions
                     PARAM_DESC_TAB + "<desc>" + possibleValues() + "</desc>\n" +
                     PARAM_TAB + "</param>";
         }
+        
+        public final JSONObject generateCompletionJson()
+        {
+            String name = Character.toLowerCase(type.charAt(0)) + type.substring(1);
+            return new JSONObject().put("name", name).put("desc", possibleValues());
+        }
     }
     
     
@@ -354,6 +362,22 @@ public final class ScriptFunctions
                     PARAMS_TAB + "<params>\n" + xmlParams() + "\n" + PARAMS_TAB + "</params>\n" +
                     DESC_TAB + "<desc></desc>\n" + FUNC_TAB + "</keyword>";
         }
+        
+        private JSONArray jsonParams()
+        {
+            JSONArray jpars = new JSONArray();
+            for(Parameter par : pars)
+                jpars.put(par.generateCompletionJson());
+            return jpars;
+        }
+        
+        public final JSONObject generateCompletionJson()
+        {
+            return new JSONObject()
+                    .put("name", command.getFunctionName())
+                    .put("params", jsonParams())
+                    .put("desc", "");
+        }
     }
     
     public static final void printXmlCompletions(File file)
@@ -364,6 +388,15 @@ public final class ScriptFunctions
                 bw.write(func.generateCompletionXml() + "\n");
         }
         catch(IOException ex) { ex.printStackTrace(System.err); }
+    }
+    
+    public static final JSONArray generateFunctionsCompletionJson()
+    {
+        JSONArray jfuncs = new JSONArray();
+        FUNCTIONS.values().forEach((func) -> {
+            jfuncs.put(func.generateCompletionJson());
+        });
+        return jfuncs;
     }
     
     private static final String TAB = "    ";
