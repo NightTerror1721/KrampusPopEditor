@@ -11,10 +11,18 @@ package kp.populous.api.script;
  */
 public final class CompilationException extends Exception
 {
+    private final int line;
+    private final String errorMsg;
+    
     public CompilationException(CodeReader code, String message)
     {
         super(msg(code, message));
+        this.line = code.getCurrentLine();
+        this.errorMsg = message;
     }
+    
+    public final int getLine() { return line; }
+    public final String getErrorMessage() { return errorMsg; }
     
     
     private static String msg(CodeReader code, String message)

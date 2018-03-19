@@ -18,6 +18,7 @@ import kp.populous.api.script.ScriptConstant.Internal;
 import kp.populous.api.script.ScriptConstant.Token;
 import kp.populous.api.script.ScriptFunctions.Function;
 import kp.populous.api.script.ScriptFunctions.Parameter;
+import org.fife.ui.rsyntaxtextarea.parser.Parser;
 
 /**
  *
@@ -28,63 +29,93 @@ final class Compiler
     private final CodeReader reader;
     private final CodeManager codes = new CodeManager();
     private final FieldManager fields = new FieldManager();
+    private final CompilationResult result;
     
-    Compiler(InputStream is)
+    Compiler(InputStream is, Parser parser)
     {
         reader = new CodeReader(is);
+        result = new CompilationResult(parser);
     }
-    Compiler(String code)
+    Compiler(String code, Parser parser)
     {
         reader = new CodeReader(code);
+        result = new CompilationResult(parser);
     }
     
-    public final Script compile() throws CompilationException
+    public final CompilationResult compile()
     {
         compileBody(true);
-        codes.add(Token.SCRIPT_END);
+        if(result.hasErrors())
+            return result;
         
         Script script = new Script();
         codes.fillScriptCode(script);
         fields.fillScriptFields(script);
-        return script;
+        result.setScript(script);
+        
+        return result;
     }
     
     @SuppressWarnings("empty-statement")
-    private void compileBody(boolean first) throws CompilationException
+    private void compileBody(boolean first)
     {
-        codes.add(Token.BEGIN);
-        if(!first && checkOneLineBody())
-            compileInstruction(first);
-        else while(!compileInstruction(first));
-        codes.add(Token.END);
+        try
+        {
+            codes.add(Token.BEGIN);
+            if(!first && checkOneLineBody())
+                compileInstruction(first);
+            else while(!compileInstruction(first));
+            codes.add(Token.END);
+            if(first)
+                codes.add(Token.SCRIPT_END);
+        }
+        catch(CompilationException ex)
+        {
+            result.registerError(ex, reader.getCurrentLine());
+            if(!reader.hasNext())
+                return;
+            reader.seekOrEnd('\n');
+        }
     }
     
-    private boolean compileInstruction(boolean allowEnd) throws CompilationException
+    private boolean compileInstruction(boolean allowEnd)
     {
-        SourceToken token = nextToken();
-        if(token == null)
+        int initialLine = reader.getCurrentLine();
+        try
         {
-            if(allowEnd)
-                return true;
-            error("Unexpected end of file. Expected '}'. But not found");
-            return true;
-        }
-        switch(token.toString())
-        {
-            case "}":
+            SourceToken token = nextToken();
+            if(token == null)
+            {
                 if(allowEnd)
-                    error("Unexpected '}' out of any body");
+                    return true;
+                error("Unexpected end of file. Expected '}'. But not found");
                 return true;
-            case "set": compileSetIncDec(Token.SET); break;
-            case "inc": compileSetIncDec(Token.INCREMENT); break;
-            case "dec": compileSetIncDec(Token.DECREMENT); break;
-            case "mul": compileMulDiv(Token.MULTIPLY); break;
-            case "div": compileMulDiv(Token.DIVIDE); break;
-            case "every": compileEvery(); break;
-            case "if": compileIf(); break;
-            default: compileFunction(token);
+            }
+            switch(token.toString())
+            {
+                case "}":
+                    if(allowEnd)
+                        error("Unexpected '}' out of any body");
+                    return true;
+                case "set": compileSetIncDec(Token.SET); break;
+                case "inc": compileSetIncDec(Token.INCREMENT); break;
+                case "dec": compileSetIncDec(Token.DECREMENT); break;
+                case "mul": compileMulDiv(Token.MULTIPLY); break;
+                case "div": compileMulDiv(Token.DIVIDE); break;
+                case "every": compileEvery(); break;
+                case "if": compileIf(); break;
+                default: compileFunction(token);
+            }
+            return false;
         }
-        return false;
+        catch(CompilationException ex)
+        {
+            result.registerError(ex, initialLine);
+            if(!reader.hasNext())
+                return true;
+            reader.seekOrEnd('\n');
+            return false;
+        }
     }
     
     private SourceToken[] extractParameters(String command, int min, int max) throws CompilationException

@@ -18,6 +18,7 @@ import kp.populous.api.IOUtils;
 import kp.populous.api.data.Raw;
 import kp.populous.api.data.SByte;
 import kp.populous.api.data.UInt16;
+import org.fife.ui.rsyntaxtextarea.parser.Parser;
 
 /**
  *
@@ -55,17 +56,34 @@ public final class Script
         return new DecompileResult(dec);
     }
     
-    public static final Script compile(InputStream is) throws CompilationException
+    public static final CompilationResult compile(InputStream is, Parser parser)
     {
-        Compiler cmp = new Compiler(is);
+        Compiler cmp = new Compiler(is, parser);
         return cmp.compile();
     }
-    public static final Script compile(String source) throws CompilationException
+    public static final CompilationResult compile(InputStream is)
     {
-        Compiler cmp = new Compiler(source);
+        Compiler cmp = new Compiler(is, null);
         return cmp.compile();
     }
-    public static final Script compile(File file) throws CompilationException, IOException
+    public static final CompilationResult compile(String source, Parser parser)
+    {
+        Compiler cmp = new Compiler(source, parser);
+        return cmp.compile();
+    }
+    public static final CompilationResult compile(String source)
+    {
+        Compiler cmp = new Compiler(source, null);
+        return cmp.compile();
+    }
+    public static final CompilationResult compile(File file, Parser parser) throws IOException
+    {
+        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file)))
+        {
+            return compile(bis, parser);
+        }
+    }
+    public static final CompilationResult compile(File file) throws CompilationException, IOException
     {
         try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file)))
         {

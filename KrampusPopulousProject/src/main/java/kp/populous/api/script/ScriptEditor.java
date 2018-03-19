@@ -88,6 +88,8 @@ public class ScriptEditor extends JFrame
         TextArea textArea = new TextArea(panel, title);
         textArea.setSyntaxEditingStyle(Utils.POP_SCRIPT_TEXT_TYPE);
         textArea.setCodeFoldingEnabled(true);
+        textArea.addParser(new PopScriptParser());
+        textArea.setParserDelay(500);
         RTextScrollPane sp = new RTextScrollPane(textArea);
         textArea.undoLastAction();
         panel.add(sp);
@@ -231,29 +233,16 @@ public class ScriptEditor extends JFrame
         terminalTabs.setSelectedIndex(0);
         StringBuilder sb = new StringBuilder();
         sb.append("Compile Script \"").append(area.name).append("\" at ").append(new Date()).append(":\n");
-        String log;
-        boolean status;
         long t1 = System.currentTimeMillis();
-        Script script = null;
-        try
-        {
-            script = Script.compile(area.getText());
-            status = true;
-            log = "";
-        }
-        catch(CompilationException ex)
-        {
-            status = false;
-            log = ex.getMessage();
-        }
+        CompilationResult result = Script.compile(area.getText());
         long t2 = System.currentTimeMillis();
-        sb.append("COMPILATION ").append(status ? "SUCCESSFUL" : "FAILED")
+        sb.append("COMPILATION ").append(!result.hasErrors() ? "SUCCESSFUL" : "FAILED")
                 .append(" (total time: ").append(t2 - t1).append("ms)");
-        if(!status)
-            sb.append("\n").append(log);
+        if(result.hasErrors())
+            sb.append("\n").append(result.getErrorLog());
         
         terminal.setText(sb.toString());
-        return status ? script : null;
+        return result.getScript();
     }
     
     
