@@ -20,6 +20,12 @@ public final class CompilationException extends Exception
         this.line = code.getCurrentLine();
         this.errorMsg = message;
     }
+    public CompilationException(int line, String message)
+    {
+        super(msg(line, message));
+        this.line = line;
+        this.errorMsg = message;
+    }
     
     public final int getLine() { return line; }
     public final String getErrorMessage() { return errorMsg; }
@@ -28,5 +34,10 @@ public final class CompilationException extends Exception
     private static String msg(CodeReader code, String message)
     {
         return "Error in line " + code.getCurrentLine() + ": " + message;
+    }
+    
+    private static String msg(int line, String message)
+    {
+        return "Error in line " + line + ": " + message;
     }
 }

@@ -10,12 +10,13 @@ import java.io.EOFException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import kp.populous.api.utils.TokenizerExtractor;
 
 /**
  *
  * @author Marc
  */
-public final class CodeReader
+public final class CodeReader implements TokenizerExtractor
 {
     public final class Line
     {
@@ -253,5 +254,24 @@ public final class CodeReader
             setIndex(idx);
             return false;
         }
+    }
+    
+    @Override
+    public char nextChar()
+    {
+        try { return next(); }
+        catch(EOFException ex) { return TokenizerExtractor.EOF; }
+    }
+    
+    @Override
+    public char peekChar(int idx)
+    {
+        return canPeek(idx) ? peek(idx) : TokenizerExtractor.EOF;
+    }
+    
+    @Override
+    public char peekChar()
+    {
+        return hasNext() ? peek() : TokenizerExtractor.EOF;
     }
 }
