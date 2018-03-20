@@ -1,0 +1,13 @@
+#define TRUE 1
+#define FALSE 0
+
+#define sum(x, y, var_res) \
+	set(var_res, x) \
+	inc(var_res, y)
+
+#define inTurn(turn) if(GAME_TURN == turn)
+
+
+inTurn(0) {
+	sum(20, 25, $test)
+}

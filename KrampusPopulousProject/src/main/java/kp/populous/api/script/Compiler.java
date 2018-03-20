@@ -26,10 +26,11 @@ import org.fife.ui.rsyntaxtextarea.parser.Parser;
  */
 final class Compiler
 {
-    private final CodeReader reader;
+    private CodeReader reader;
     private final CodeManager codes = new CodeManager();
     private final FieldManager fields = new FieldManager();
     private final CompilationResult result;
+    private int cline;
     
     Compiler(InputStream is, Parser parser)
     {
@@ -44,6 +45,7 @@ final class Compiler
     
     public final CompilationResult compile()
     {
+        compilePreprocessor();
         compileBody(true);
         if(result.hasErrors())
             return result;
@@ -54,6 +56,12 @@ final class Compiler
         result.setScript(script);
         
         return result;
+    }
+    
+    private void compilePreprocessor()
+    {
+        ScriptPreprocesor prep = new ScriptPreprocesor(reader, result);
+        reader = prep.compile();
     }
     
     @SuppressWarnings("empty-statement")
@@ -110,7 +118,7 @@ final class Compiler
         }
         catch(CompilationException ex)
         {
-            result.registerError(ex, initialLine);
+            result.registerError(ex, cline);
             if(!reader.hasNext())
                 return true;
             reader.seekOrEnd('\n');
@@ -292,6 +300,7 @@ final class Compiler
     private SourceToken nextToken() throws CompilationException
     {
         SourceTokenBuilder sb = new SourceTokenBuilder();
+        cline = reader.getCurrentLine();
         try
         {
             main_loop:
@@ -310,6 +319,7 @@ final class Compiler
                             reader.move(-1);
                             break main_loop;
                         }
+                        cline = reader.getCurrentLine();
                         break;
                     case '(':
                         if(!sb.isEmpty())
@@ -370,8 +380,10 @@ final class Compiler
                                 } break;
                                 default:
                                     reader.move(-2);
-                                    break OUTER;
+                                    error("Invalid token: '/" + c + "'");
+                                    break;
                             }
+                            break;
                         }
                         error("Invalid token: '" + c + "'");
                     case '=':

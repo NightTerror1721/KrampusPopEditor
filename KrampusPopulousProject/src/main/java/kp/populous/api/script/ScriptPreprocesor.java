@@ -5,6 +5,7 @@
  */
 package kp.populous.api.script;
 
+import java.io.EOFException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -16,19 +17,20 @@ import static kp.populous.api.utils.TokenizerExtractor.EOF;
  *
  * @author Asus
  */
-public final class ScriptPreprocesor
+final class ScriptPreprocesor
 {
     private final HashMap<String, Macro> macros = new HashMap<>();
     private final CompilationResult result;
     private final CodeReader reader;
+    private final LineIterator lines = new LineIterator();
     
-    public ScriptPreprocesor(CodeReader reader, CompilationResult result)
+    ScriptPreprocesor(CodeReader reader, CompilationResult result)
     {
         this.reader = reader;
         this.result = result;
     }
     
-    
+    public final CodeReader compile() { return parseAll(); }
     
     
     
@@ -37,46 +39,88 @@ public final class ScriptPreprocesor
     private CodeReader parseAll()
     {
         StringBuilder parsed = new StringBuilder(512);
-        Tokenizer tokens = new Tokenizer(reader, 0);
-        String token;
-        while((token = tokens.nextToken()) != null)
+        String line;
+        while((line = lines.nextLine()) != null)
         {
-            char c = tokens.peekChar();
-            int line = reader.getCurrentLine();
-            try
+            if(!line.isEmpty())
             {
-                if(token.equals("#"))
+                Tokenizer tokens = new Tokenizer(line, lines.min);
+                //char c = tokens.peekChar();
+                String token = tokens.nextToken();
+                if(token != null)
                 {
-                    String tokenLine = tokens.nextLine();
-                    computeOp(tokenLine, line);
-                }
-                else
-                {
-                    token = parseTokenForMacros(tokens, token);
-                    parsed.append(token);
-                    if(c != EOF)
-                        parsed.append(c);
+                    try
+                    {
+                        if(token.equals("#"))
+                        {
+                            computeOp(tokens);
+                        }
+                        else do {
+                            token = parseTokenForMacros(tokens, token);
+                            if(tokens.befSpaces > 0)
+                                parsed.append(' ');
+                            parsed.append(token);
+                            if(tokens.afSpaces > 0)
+                                parsed.append(' ');
+                            //if(c != EOF)
+                            //    parsed.append(c);
+                        } while((token = tokens.nextToken()) != null);
+                    }
+                    catch(CompilationException ex)
+                    {
+                        lines.registerError(ex);
+                    }
                 }
             }
-            catch(CompilationException ex)
-            {
-                result.registerError(ex, line);
-            }
-            tokens.line = reader.getCurrentLine();
+            int br = lines.max - lines.min;
+            while(br-- > 0)
+                parsed.append('\n');
         }
+        return new CodeReader(parsed.toString());
     }
     
-    private void computeOp(String line, int lineIdx) throws CompilationException
+    private void computeOp(Tokenizer tokens) throws CompilationException
     {
-        Tokenizer tokens = new Tokenizer(line, lineIdx);
         String token = tokens.nextToken();
         if(token == null)
-            throw new CompilationException(lineIdx, "Unexpected Error: Exopected valid Preprocessor operation");
+            throw new CompilationException(tokens.getLine(), "Unexpected Error: Exopected valid Preprocessor operation");
         switch(token)
         {
             case "define":
+                doDefine(tokens);
+                break;
+            case "undef":
+                doUndef(tokens);
+                break;
         }
     }
+    
+    
+    private void doDefine(Tokenizer tokens) throws CompilationException
+    {
+        String name = tokens.nextToken();
+        if(name == null)
+            throw new CompilationException(tokens.getLine(), "Invalid #define command. Require: #define <macro_name> <macro_value>");
+        String[] pars = extractMacroParameters(tokens);
+        String text = tokens.getMacroText();
+        if(text == null)
+            throw new CompilationException(tokens.getLine(), "Invalid #define command. Require: #define <macro_name> <macro_value>");
+        
+        Macro macro = new Macro(tokens.line, name, pars, text);
+        macros.put(macro.name, macro);
+    }
+    
+    private void doUndef(Tokenizer tokens) throws CompilationException
+    {
+        String name = tokens.nextToken();
+        if(name == null)
+            throw new CompilationException(tokens.getLine(), "Invalid #undef command. Require: #undef <macro_name>");
+        
+        macros.remove(name);
+    }
+    
+    
+    
     
     
     private String expandMacro(Tokenizer tokens, Macro macro) throws CompilationException
@@ -98,6 +142,7 @@ public final class ScriptPreprocesor
             return new String[0];
         LinkedList<String> pars = new LinkedList<>();
         boolean afterComma = false;
+        tokens.nextToken(); //skip "(" token
         String token;
         while((token = tokens.nextToken()) != null)
         {
@@ -148,37 +193,55 @@ public final class ScriptPreprocesor
             String token;
             while((token = tokens.nextToken()) != null)
             {
-                char c = tokens.peekChar();
+                //char c = tokens.peekChar();
                 boolean vargs;
                 if((vargs = token.equals("__ARGS__")) || pars.containsKey(token))
                 {
                     if(sb.length() > 0)
                     {
-                        if(c == EOF)
-                            parts.add(MacroPart.text(sb.toString()));
-                        else parts.add(MacroPart.text(sb.append(c).toString()));
+                        if(tokens.befSpaces > 0)
+                            sb.append(' ');
+                        parts.add(MacroPart.text(sb.toString()));
                         sb.delete(0, sb.length());
                     }
                     parts.add(vargs ? MacroPart.VARARGS : MacroPart.parameter(token, pars.get(token)));
-                    sb.append(c);
+                    if(tokens.afSpaces > 0)
+                        sb.append(' ');
                 }
                 else if(macros.containsKey(token))
                 {
                     if(sb.length() > 0)
                     {
-                        if(c == EOF)
-                            parts.add(MacroPart.text(sb.toString()));
-                        else parts.add(MacroPart.text(sb.append(c).toString()));
+                        if(tokens.befSpaces > 0)
+                            sb.append(' ');
+                        parts.add(MacroPart.text(sb.toString()));
                         sb.delete(0, sb.length());
                     }
-                    parts.add(MacroPart.text(expandMacro(tokens, macros.get(token)) + (c == EOF ? "" : Character.toString(c))));
+                    parts.add(MacroPart.text(expandMacro(tokens, macros.get(token))));
+                    if(tokens.afSpaces > 0)
+                        sb.append(' ');
                 }
-                else if(c == EOF)
+                /*else if(c == EOF)
                 {
+                    sb.append(token);
                     if(sb.length() > 0)
                         parts.add(MacroPart.text(sb.toString()));
+                }*/
+                else
+                {
+                    if(tokens.befSpaces > 0)
+                        sb.append(' ');
+                    sb.append(token);
+                    
                 }
-                else sb.append(token).append(c);
+            }
+            if(sb.length() > 0)
+            {
+                if(tokens.befSpaces > 0)
+                    sb.append(' ');
+                parts.add(MacroPart.text(sb.toString()));
+                if(tokens.afSpaces > 0)
+                    sb.append(' ');
             }
         }
         
@@ -263,6 +326,7 @@ public final class ScriptPreprocesor
     private static final class Tokenizer
     {
         private final TokenizerExtractor source;
+        private int afSpaces, befSpaces;
         private int line;
         private char prevChar = EOF;
         
@@ -281,9 +345,10 @@ public final class ScriptPreprocesor
                 }
                 
                 @Override
-                public final char peekChar(int idx)
+                public final char peekChar(int amount)
                 {
-                    return idx < 0 || idx >= chars.length ? EOF : chars[idx];
+                    amount = this.idx + amount;
+                    return amount < 0 || amount >= chars.length ? EOF : chars[amount];
                 }
             };
         }
@@ -310,41 +375,41 @@ public final class ScriptPreprocesor
             return source.nextChar();
         }
         
-        public final String nextLine()
+        public final String getMacroText()
         {
             StringBuilder sb = new StringBuilder(64);
-            
+            boolean start = false;
             char c;
-            main_loop:
+            
             while((c = nextChar()) != EOF)
             {
                 switch(c)
                 {
-                    case '\\':
-                        c = nextChar();
-                        if(c == '\n')
-                        {
-                            sb.append(' ');
-                            break;
-                        }
-                        sb.append('\\');
-                        if(c == EOF)
-                            break main_loop;
-                        sb.append(c);
+                    case '\r':
+                        break;
                     case '\n':
-                        break main_loop;
+                        c = ' ';
+                    case ' ':
+                    case '\t':
+                        if(start)
+                            sb.append(c);
+                        break;
                     default:
+                        if(!start)
+                            start = true;
                         sb.append(c);
                         break;
                 }
             }
+            
             return sb.toString();
         }
         
         public final String nextToken()
         {
             StringBuilder sb = new StringBuilder(64);
-        
+            afSpaces = befSpaces = 0;
+            
             char c;
             while((c = nextChar()) != EOF)
             {
@@ -356,7 +421,11 @@ public final class ScriptPreprocesor
                     case '\t':
                     case '\n':
                         if(sb.length() > 0)
+                        {
+                            afSpaces++;
                             return sb.toString();
+                        }
+                        befSpaces++;
                         break;
                     case ',':
                     case '#':
@@ -391,4 +460,54 @@ public final class ScriptPreprocesor
     
     @FunctionalInterface
     private interface TokenizeAction { void apply(String token, char lastChar); }
+    
+    private final class LineIterator
+    {
+        private int min, max;
+        private final StringBuilder sb = new StringBuilder(128);
+        boolean end = false;
+        
+        public final String nextLine()
+        {
+            min = reader.getCurrentLine();
+            try
+            {
+                main_loop:
+                for(;;)
+                {
+                    char c = reader.next();
+                    switch(c)
+                    {
+                        case '\\':
+                            c = reader.next();
+                            if(c == '\n')
+                            {
+                                sb.append('\n');
+                                break;
+                            }
+                            sb.append('\\');
+                            if(c == EOF)
+                                break main_loop;
+                            sb.append(c);
+                        case '\n':
+                            break main_loop;
+                        default:
+                            sb.append(c);
+                            break;
+                    }
+                }
+            }
+            catch(EOFException ex) { end = true; }
+            max = reader.getCurrentLine();
+            String line = sb.toString();
+            sb.delete(0, sb.length());
+            return end && line.isEmpty() ? null : line;
+        }
+        
+        public final void registerError(CompilationException ex)
+        {
+            for(int i=min;i<=max;i++)
+                result.registerError(ex, i);
+        }
+    }
 }
