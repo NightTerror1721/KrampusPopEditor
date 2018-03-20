@@ -63,9 +63,22 @@ public final class CodeReader implements TokenizerExtractor
         index = 1;
         size = 0;
         source = Arrays.stream(lines).map(bline -> {
-                int old = size;
-                size += bline.length() + 1;
-                return new Line(index++,old,bline.toCharArray());
+            int old = size;
+            size += bline.length() + 1;
+            return new Line(index++,old,bline.toCharArray());
+        }).toArray(len -> new Line[len]);
+        index = -1;
+        start = 0;
+        lcur = null;
+    }
+    public CodeReader(CodeWriter cwriter)
+    {
+        index = 1;
+        size = 0;
+        source = cwriter.stream().map(chline -> {
+            int old = size;
+            size += chline.length + 1;
+            return new Line(index++, old, chline);
         }).toArray(len -> new Line[len]);
         index = -1;
         start = 0;

@@ -34,19 +34,26 @@ public final class CompilationResult
     
     public final void registerError(CompilationException ex, int line)
     {
-        if(lastErrorLine == line)
-            return;
+        //if(lastErrorLine == line)
+            //return;
         lastErrorLine = line;
-        createParserError(ex, line);
+        createParserError(ex.getErrorMessage(), line);
         errors.add(ex.getMessage());
     }
     
-    private void createParserError(CompilationException ex, int line)
+    public final void registerError(String message, int line)
+    {
+        lastErrorLine = line;
+        createParserError(message, line);
+        errors.add("Error in line " + line + ": " + message);
+    }
+    
+    private void createParserError(String message, int line)
     {
         if(parserResult == null)
             return;
         
-        DefaultParserNotice notice = new DefaultParserNotice(parserResult.getParser(), ex.getErrorMessage(), line);
+        DefaultParserNotice notice = new DefaultParserNotice(parserResult.getParser(), message, line);
         parserResult.addNotice(notice);
     }
     

@@ -1,13 +1,16 @@
 #define TRUE 1
 #define FALSE 0
+#define TURN GAME_TURN
 
 #define sum(x, y, var_res) \
-	set(var_res, x) \
+	set(var_res, x)       \
 	inc(var_res, y)
 
-#define inTurn(turn) if(GAME_TURN == turn)
+#define inTurn(turn) if(TURN == turn)
 
+#define op(op_name, ...) op_name(__ARGS__)
 
 inTurn(0) {
 	sum(20, 25, $test)
+	op(dec, $var0, FALSE)
 }
