@@ -1,0 +1,18 @@
+#ifndef STDLIB_H
+#define STDLIB_H
+#echo "using stdlib"
+
+#define TRUE 1
+#define FALSE 0
+
+#define sum(var_res, op0, op1) \
+	set(var_res, op0)		 \
+	inc(var_res, op1)
+
+#define sub(var_res, op0, op1) \
+	set(var_res, op0)		 \
+	dec(var_res, op1)
+
+#else
+#warning "stdlib is including twice"
+#endif

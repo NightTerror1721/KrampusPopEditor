@@ -8,6 +8,7 @@ package kp.populous.api.script;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import org.fife.ui.rsyntaxtextarea.parser.DefaultParseResult;
 import org.fife.ui.rsyntaxtextarea.parser.DefaultParserNotice;
 import org.fife.ui.rsyntaxtextarea.parser.ParseResult;
@@ -21,6 +22,7 @@ public final class CompilationResult
 {
     private final DefaultParseResult parserResult;
     private final LinkedList<String> errors = new LinkedList<>();
+    private final LinkedList<String> messages = new LinkedList<>();
     private int lastErrorLine = -1;
     private Script script;
     
@@ -66,5 +68,19 @@ public final class CompilationResult
     public final String getErrorLog()
     {
         return String.join("\n", errors);
+    }
+    
+    
+    public final void insertMessage(String message)
+    {
+        messages.add(Objects.requireNonNull(message));
+    }
+    
+    public final boolean hasMessages() { return !messages.isEmpty(); }
+    public final List<String> getMessages() { return Collections.unmodifiableList(messages); }
+    
+    public final String getMessageLog()
+    {
+        return String.join("\n", messages);
     }
 }

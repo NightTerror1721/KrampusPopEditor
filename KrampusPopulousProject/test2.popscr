@@ -2,6 +2,8 @@
 #define FALSE 0
 #define TURN GAME_TURN
 
+#include "stdlib"
+
 #define sum(x, y, var_res) \
 	set(var_res, x)       \
 	inc(var_res, y)

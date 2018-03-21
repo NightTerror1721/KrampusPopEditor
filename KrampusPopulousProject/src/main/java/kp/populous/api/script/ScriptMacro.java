@@ -5,8 +5,6 @@
  */
 package kp.populous.api.script;
 
-import java.util.List;
-
 /**
  *
  * @author Asus
@@ -14,7 +12,8 @@ import java.util.List;
 public interface ScriptMacro
 {
     String getName();
-    List<String> getParameters();
-    boolean isVarargs();
-    String expand(String[] args);
+    boolean expandParameter(int index);
+    //List<String> getParameters();
+    //boolean isVarargs();
+    String expand(MacroPool macros, String[] args);
 }

@@ -9,16 +9,16 @@ import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import kp.populous.api.utils.TokenizerExtractor;
 import static kp.populous.api.utils.TokenizerExtractor.EOF;
 
@@ -28,32 +28,37 @@ import static kp.populous.api.utils.TokenizerExtractor.EOF;
  */
 final class ScriptPreprocesor
 {
-    private final Map<String, ScriptMacro> macros;
+    private final MacroPool macros;
     private final CompilationResult result;
     private final CodeReader reader;
     private final LineIterator lines = new LineIterator();
     
-    ScriptPreprocesor(CodeReader reader, CompilationResult result, Collection<ScriptMacro> parentMacros)
+    private ScriptPreprocesor(CodeReader reader, CompilationResult result, MacroPool macros)
     {
         this.reader = reader;
         this.result = result;
-        this.macros = parentMacros == null ? new HashMap<>() : (parentMacros.stream().collect(Collectors.toMap(
-                m -> m.getName(),
-                m -> m)));
+        this.macros = Objects.requireNonNull(macros);
     }
-    ScriptPreprocesor(CodeReader reader, CompilationResult result) { this(reader, result, null); }
+    ScriptPreprocesor(CodeReader reader, CompilationResult result, Collection<ScriptMacro> parentMacros)
+    {
+        this(reader, result);
+        if(parentMacros != null)
+            macros.registerMacros(parentMacros);
+    }
+    ScriptPreprocesor(CodeReader reader, CompilationResult result) { this(reader, result, new MacroPool()); }
     
-    public final CodeReader compile() { return parseAll().toCodeReader(); }
+    public final CodeReader compile() { return parseAll(ParseMode.NORMAL).toCodeReader(); }
     
     
     
     
     
-    private CodeWriter parseAll()
+    private CodeWriter parseAll(ParseMode mode)
     {
         CodeWriter writer = new CodeWriter();
+        boolean state = true;
         String line;
-        while((line = lines.nextLine()) != null)
+        while(state && (line = lines.nextLine()) != null)
         {
             if(!line.isEmpty())
             {
@@ -65,7 +70,7 @@ final class ScriptPreprocesor
                     {
                         if(token.equals("#"))
                         {
-                            computeOp(tokens);
+                            state = computeOp(mode, tokens, writer);
                         }
                         else do {
                             token = parseTokenForMacros(tokens, token);
@@ -84,6 +89,8 @@ final class ScriptPreprocesor
             }
             writer.closeLines(lines.max - lines.min);
         }
+        if(mode != ParseMode.NORMAL && state)
+            lines.registerError("Expected #endif directive but not found");
         return writer;
     }
     
@@ -105,7 +112,7 @@ final class ScriptPreprocesor
         return sb.toString();
     }
     
-    private void computeOp(Tokenizer tokens) throws CompilationException
+    private boolean computeOp(ParseMode mode, Tokenizer tokens, CodeWriter writer) throws CompilationException
     {
         String token = tokens.nextToken();
         if(token == null)
@@ -118,7 +125,40 @@ final class ScriptPreprocesor
             case "undef":
                 doUndef(tokens);
                 break;
+            case "include":
+                doInclude(tokens, writer);
+                break;
+            case "echo":
+                doEcho(tokens);
+                break;
+            case "warning":
+                doWarning(tokens);
+                break;
+            case "error":
+                doError(tokens);
+                break;
+            case "ifdef":
+                doIfdefIfndef(tokens, true);
+                break;
+            case "ifndef":
+                doIfdefIfndef(tokens, false);
+                break;
+            case "else":
+            case "elif":
+                if(mode == ParseMode.ENDIF)
+                {
+                    findConditionalTag("endif");
+                    return false;
+                }
+                throw new CompilationException(tokens.getLine(), token + " directive can only put after ifdef, ifndef, if, else or elif direvtives");
+            case "endif":
+                if(mode == ParseMode.ENDIF)
+                    return false;
+                throw new CompilationException(tokens.getLine(), token + " directive can only put after ifdef, ifndef, if, else or elif direvtives");
+            default:
+                throw new CompilationException(tokens.getLine(), "Invalid preprocessor directive: " + token);
         }
+        return true;
     }
     
     
@@ -133,7 +173,7 @@ final class ScriptPreprocesor
             throw new CompilationException(tokens.getLine(), "Invalid #define command. Require: #define <macro_name> <macro_value>");
         
         Macro macro = new Macro(tokens.line, name, pars, text);
-        macros.put(macro.name, macro);
+        macros.registerMacro(macro, tokens.getLine());
     }
     
     private void doUndef(Tokenizer tokens) throws CompilationException
@@ -142,7 +182,56 @@ final class ScriptPreprocesor
         if(name == null)
             throw new CompilationException(tokens.getLine(), "Invalid #undef command. Require: #undef <macro_name>");
         
-        macros.remove(name);
+        macros.unregisterMacro(name);
+    }
+    
+    private void doInclude(Tokenizer tokens, CodeWriter writer) throws CompilationException
+    {
+        tokens.seek('\"');
+        String text = tokens.getTextUntil('\"');
+        Path path = new File(text).toPath();
+        File file = !path.isAbsolute() ? new File("includes/" + path.toString()) : path.toFile();
+        if(!file.exists() || !file.isFile())
+        {
+            if(file.getName().endsWith(".popscr"))
+                throw new CompilationException(tokens.getLine(), "Included file " + file.getAbsolutePath() + " not found.");
+            file = new File(file.getAbsoluteFile() + ".popscr");
+            if(!file.exists() || !file.isFile())
+                throw new CompilationException(tokens.getLine(), "Included file " + file.getAbsolutePath() + " not found.");
+        }
+        String code = importFile(file);
+        writer.append(code);
+    }
+    
+    private void doEcho(Tokenizer tokens) throws CompilationException
+    {
+        tokens.seek('\"');
+        String text = tokens.getTextUntil('\"');
+        result.insertMessage(parseTextForMacros(text, tokens.getLine()));
+    }
+    
+    private void doWarning(Tokenizer tokens) throws CompilationException
+    {
+        tokens.seek('\"');
+        String text = tokens.getTextUntil('\"');
+        text = "[WARNING]" + parseTextForMacros(text, tokens.getLine());
+        result.insertMessage(text);
+    }
+    
+    private void doError(Tokenizer tokens) throws CompilationException
+    {
+        tokens.seek('\"');
+        String text = tokens.getTextUntil('\"');
+        lines.registerError(parseTextForMacros(text, tokens.getLine()));
+    }
+    
+    private void doIfdefIfndef(Tokenizer tokens, boolean mode) throws CompilationException
+    {
+        String macro = tokens.nextToken();
+        if(macro == null)
+            throw new CompilationException(tokens.getLine(), "Invalid " + (mode ? "#ifdef" : "#ifndef") +
+                    " command. Require: " + (mode ? "#ifdef" : "#ifndef") + " <macro_name>");
+        resolveConditionals(() -> (mode && macros.hasMacro(macro)) || (!mode && !macros.hasMacro(macro)));
     }
     
     
@@ -151,17 +240,88 @@ final class ScriptPreprocesor
         try(FileInputStream fis = new FileInputStream(file))
         {
             CompilationResult cresult = new CompilationResult(null);
-            ScriptPreprocesor prep = new ScriptPreprocesor(new CodeReader(fis), cresult);
-            String ppcode = prep.parseAll().toString();
+            ScriptPreprocesor prep = new ScriptPreprocesor(new CodeReader(fis), cresult, macros);
+            String ppcode = prep.parseAll(ParseMode.NORMAL).toString();
             if(cresult.hasErrors())
                 for(String error : cresult.getErrors())
                     lines.registerError(error);
-            macros.putAll(prep.macros);
+            if(cresult.hasMessages())
+                for(String msg : cresult.getMessages())
+                    result.insertMessage(msg);
             return ppcode;
         }
         catch(IOException ex)
         {
             throw new CompilationException(lines.min, ex.getMessage());
+        }
+    }
+    
+    
+    private String findConditionalTag(String... tags) throws CompilationException
+    {
+        int startLine = lines.max;
+        int br = 0;
+        String line;
+        while((line = lines.nextLine()) != null)
+        {
+            Tokenizer tokens = new Tokenizer(line, lines.min);
+            String token = tokens.nextToken();
+            if(token == null || !token.equals("#"))
+                continue;
+            token = tokens.nextToken();
+            if(token == null)
+                continue;
+            if(br == 0)
+                for(String tag : tags)
+                    if(token.equals(tag))
+                        return line;
+            switch(token)
+            {
+                case "if":
+                //case "else":
+                //case "elif":
+                case "ifdef":
+                case "ifndef":
+                    br++;
+                    break;
+                case "endif":
+                    br--;
+                    break;
+            }
+            if(br < 0)
+                throw new CompilationException(lines.min, "Unexpected #endif directive");
+        }
+        throw new CompilationException(startLine, "Unexpected End of Line");
+    }
+    
+    
+    private void resolveConditionals(BooleanSupplier conds) throws CompilationException
+    {
+        if(conds.getAsBoolean())
+            parseAll(ParseMode.ENDIF);
+        else computeElses(findConditionalTag("else", "elif", "endif"), lines.min);
+    }
+    
+    
+    private void computeElses(String line, int lineIdx) throws CompilationException
+    {
+        Tokenizer tokens = new Tokenizer(line, lineIdx);
+        String token = tokens.nextToken();
+        if(token == null || !token.equals("#"))
+            throw new CompilationException(lineIdx, "Expected \"#\"");
+        token = tokens.nextToken();
+        if(token == null)
+            throw new CompilationException(lineIdx, "Expected #else, #elif or #endif directives");
+        switch(token)
+        {
+            case "endif":
+                return;
+            case "elseif": //TODO: implement
+            case "else":
+                parseAll(ParseMode.ENDIF);
+                break;
+            default:
+                throw new CompilationException(lineIdx, "Expected #else, #elif or #endif directives");
         }
     }
     
@@ -172,15 +332,15 @@ final class ScriptPreprocesor
     
     private String expandMacro(Tokenizer tokens, ScriptMacro macro) throws CompilationException
     {
-        String[] pars = extractInvokationMacroParameters(tokens);
-        return macro.expand(pars);
+        String[] pars = extractInvokationMacroParameters(tokens, macro);
+        return macro.expand(macros, pars);
     }
     
     private String parseTokenForMacros(Tokenizer tokens, String token) throws CompilationException
     {
-        if(!macros.containsKey(token))
+        if(!macros.hasMacro(token))
             return token;
-        return expandMacro(tokens, macros.get(token));
+        return expandMacro(tokens, macros.getMacro(token));
     }
     
     private String[] extractDeclarationMacroParameters(Tokenizer tokens) throws CompilationException
@@ -213,18 +373,20 @@ final class ScriptPreprocesor
         throw new CompilationException(tokens.getLine(), "Unexpected End of File");
     }
     
-    private String[] extractInvokationMacroParameters(Tokenizer tokens) throws CompilationException
+    private String[] extractInvokationMacroParameters(Tokenizer tokens, ScriptMacro macro) throws CompilationException
     {
         if(tokens.peekChar() != '(')
             return new String[0];
         LinkedList<String> pars = new LinkedList<>();
         boolean afterComma = false;
         tokens.nextToken(); //skip "(" token
+        int count = -1;
         String token;
         while((token = tokens.getTextUntil(',', ')')) != null)
         {
+            count++;
             char last = tokens.peekChar();
-            token = parseTextForMacros(token, tokens.getLine());
+            token = macro.expandParameter(count) ? parseTextForMacros(token, tokens.getLine()) : token;
             pars.add(token);
             switch(last)
             {
@@ -279,7 +441,7 @@ final class ScriptPreprocesor
                     if(tokens.afSpaces > 0)
                         sb.append(' ');
                 }
-                else if(macros.containsKey(token))
+                else if(macros.hasMacro(token))
                 {
                     if(sb.length() > 0)
                     {
@@ -288,7 +450,7 @@ final class ScriptPreprocesor
                         parts.add(MacroPart.text(sb.toString()));
                         sb.delete(0, sb.length());
                     }
-                    parts.add(MacroPart.text(expandMacro(tokens, macros.get(token))));
+                    parts.add(MacroPart.text(expandMacro(tokens, macros.getMacro(token))));
                     if(tokens.afSpaces > 0)
                         sb.append(' ');
                 }
@@ -314,13 +476,16 @@ final class ScriptPreprocesor
         public final String getName() { return name; }
         
         @Override
+        public final boolean expandParameter(int index) { return true; }
+        
         public final List<String> getParameters() { return new ArrayList<>(pars.keySet()); }
         
-        @Override
         public final boolean isVarargs() { return varargs; }
         
+        public final String expand(String[] args) { return expand(macros, args); }
+        
         @Override
-        public final String expand(String... args)
+        public final String expand(MacroPool macros, String[] args)
         {
             StringBuilder sb = new StringBuilder(64);
             final int len = pars.size();
@@ -494,6 +659,15 @@ final class ScriptPreprocesor
             throw new CompilationException(line, "Expected " + Arrays.toString(chars) + " characters. But not found. Unexpected End of File");
         }
         
+        public final void seek(char target) throws CompilationException
+        {
+            char c;
+            while((c = nextChar()) != EOF)
+                if(c == target)
+                    return;
+            throw new CompilationException(line, "Expected " + target + " characters. But not found. Unexpected End of File");
+        }
+        
         public final String nextToken() { return nextToken(false); }
         public final String nextToken(boolean catchEOL)
         {
@@ -564,6 +738,7 @@ final class ScriptPreprocesor
     {
         private int min, max;
         private final StringBuilder sb = new StringBuilder(128);
+        private String currentLine;
         boolean end = false;
         
         public final String nextLine()
@@ -600,7 +775,7 @@ final class ScriptPreprocesor
             max = reader.getCurrentLine();
             String line = sb.toString();
             sb.delete(0, sb.length());
-            return end && line.isEmpty() ? null : line;
+            return currentLine = (end && line.isEmpty() ? null : line);
         }
         
         public final void registerError(CompilationException ex)
@@ -614,5 +789,9 @@ final class ScriptPreprocesor
             for(int i=min;i<=max;i++)
                 result.registerError(errorMessage, i);
         }
+        
+        public final String getCurrentLine() { return currentLine; }
     }
+    
+    private static enum ParseMode { NORMAL, ENDIF }
 }

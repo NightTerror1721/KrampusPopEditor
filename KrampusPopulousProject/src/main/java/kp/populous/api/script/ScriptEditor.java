@@ -240,6 +240,8 @@ public class ScriptEditor extends JFrame
                 .append(" (total time: ").append(t2 - t1).append("ms)");
         if(result.hasErrors())
             sb.append("\n").append(result.getErrorLog());
+        if(result.hasMessages())
+            sb.append("\nCompiler messages:\n").append(result.getMessageLog());
         
         terminal.setText(sb.toString());
         return result.getScript();

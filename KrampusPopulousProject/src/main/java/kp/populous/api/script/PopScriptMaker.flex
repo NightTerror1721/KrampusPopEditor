@@ -1,5 +1,5 @@
 /*
- * Generated on 3/13/18 12:15 AM
+ * Generated on 3/21/18 3:04 PM
  */
 package kp.populous.api.script;
 
@@ -236,27 +236,9 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 <YYINITIAL> {
 
 	/* Keywords */
-	"dec" |
-"div" |
-"else" |
-"every" |
-"if" |
-"inc" |
-"mul" |
-"off" |
-"on" |
-"set"		{ addToken(Token.RESERVED_WORD); }
-
-	/* Keywords 2 (just an optional set of keywords colored differently) */
-	"AIRSHIP_HUT_1" |
+	"AIRSHIP_HUT" |
 "AIRSHIP_HUT_2" |
 "ANGEL_OF_DEAD" |
-"ATTACK_BUILDING" |
-"ATTACK_BY_BALLON" |
-"ATTACK_BY_BOAT" |
-"ATTACK_MARKER" |
-"ATTACK_NORMAL" |
-"ATTACK_PERSON" |
 "ATTR_ATTACK_PERCENTAGE" |
 "ATTR_AWAY_BRAVE" |
 "ATTR_AWAY_FIREWARRIOR" |
@@ -307,28 +289,27 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "ATTR_USE_PREACHER_FOR_DEFENSE" |
 "BLAST" |
 "BLOODLUST" |
-"BLUE" |
 "BLUE_KILLED_BY_ME" |
 "BLUE_MANA" |
 "BLUE_PEOPLE" |
-"BOAT_HUT_1" |
+"BOAT_HUT" |
 "BOAT_HUT_2" |
 "BRAVE" |
 "BURN" |
-"B_BUILDING_AIRSHIP_HUT_1" |
+"B_BUILDING_AIRSHIP_HUT" |
 "B_BUILDING_AIRSHIP_HUT_2" |
-"B_BUILDING_BOAT_HUT_1" |
+"B_BUILDING_BOAT_HUT" |
 "B_BUILDING_BOAT_HUT_2" |
 "B_BUILDING_CURR_OE_SLOT" |
 "B_BUILDING_DRUM_TOWER" |
-"B_BUILDING_FARM" |
 "B_BUILDING_FIREWARRIOR_TRAIN" |
 "B_BUILDING_GATE" |
-"B_BUILDING_HUT" |
+"B_BUILDING_LARGE_HUT" |
+"B_BUILDING_MEDIUM_HUT" |
 "B_BUILDING_RECONVERSION" |
+"B_BUILDING_SMALL_HUT" |
 "B_BUILDING_SPY_TRAIN" |
 "B_BUILDING_TEMPLE" |
-"B_BUILDING_TEPEE" |
 "B_BUILDING_WALL_PIECE" |
 "B_BUILDING_WARRIOR_TRAIN" |
 "B_PERSON_BRAVE" |
@@ -343,12 +324,10 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "CAMERA_X" |
 "CAMERA_Z" |
 "CONVERT" |
-"COUNT_WILD" |
 "CP_FREE_ENTRIES" |
 "DRUM_TOWER" |
 "EARTHQUAKE" |
 "EROSION" |
-"FARM" |
 "FIRESTORM" |
 "FIREWARRIOR" |
 "FIREWARRIOR_TRAIN" |
@@ -356,27 +335,24 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "GAME_TURN" |
 "GATE" |
 "GHOST_ARMY" |
-"GREEN" |
 "GREEN_KILLED_BY_ME" |
 "GREEN_MANA" |
 "GREEN_PEOPLE" |
 "GREEN_RED_KILLED_BY_HUMAN" |
-"GUARD_NORMAL" |
-"GUARD_WITH_GHOSTS" |
-"G_BUILDING_AIRSHIP_HUT_1" |
+"G_BUILDING_AIRSHIP_HUT" |
 "G_BUILDING_AIRSHIP_HUT_2" |
-"G_BUILDING_BOAT_HUT_1" |
+"G_BUILDING_BOAT_HUT" |
 "G_BUILDING_BOAT_HUT_2" |
 "G_BUILDING_CURR_OE_SLOT" |
 "G_BUILDING_DRUM_TOWER" |
-"G_BUILDING_FARM" |
 "G_BUILDING_FIREWARRIOR_TRAIN" |
 "G_BUILDING_GATE" |
-"G_BUILDING_HUT" |
+"G_BUILDING_LARGE_HUT" |
+"G_BUILDING_MEDIUM_HUT" |
 "G_BUILDING_RECONVERSION" |
+"G_BUILDING_SMALL_HUT" |
 "G_BUILDING_SPY_TRAIN" |
 "G_BUILDING_TEMPLE" |
-"G_BUILDING_TEPEE" |
 "G_BUILDING_WALL_PIECE" |
 "G_BUILDING_WARRIOR_TRAIN" |
 "G_PERSON_BRAVE" |
@@ -387,13 +363,13 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "G_PERSON_WARRIOR" |
 "G_VEHICLE_AIRSHIP_1" |
 "G_VEHICLE_BOAT_1" |
-"HUT" |
 "HYPNOTISM" |
 "INSECT_PLAGUE" |
 "INVISIBILITY" |
 "LAND_BRIDGE" |
+"LARGE_HUT" |
 "LIGHTNING_BOLT" |
-"MUM_SHAMEN_DEFENDERS" |
+"MEDIUM_HUT" |
 "MY_MANA" |
 "MY_NUM_KILLED_BY_BLUE" |
 "MY_NUM_KILLED_BY_GREEN" |
@@ -401,20 +377,20 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "MY_NUM_KILLED_BY_RED" |
 "MY_NUM_KILLED_BY_YELLOW" |
 "MY_NUM_PEOPLE" |
-"M_BUILDING_AIRSHIP_HUT_1" |
+"M_BUILDING_AIRSHIP_HUT" |
 "M_BUILDING_AIRSHIP_HUT_2" |
-"M_BUILDING_BOAT_HUT_1" |
+"M_BUILDING_BOAT_HUT" |
 "M_BUILDING_BOAT_HUT_2" |
 "M_BUILDING_CURR_OE_SLOT" |
 "M_BUILDING_DRUM_TOWER" |
-"M_BUILDING_FARM" |
 "M_BUILDING_FIREWARRIOR_TRAIN" |
 "M_BUILDING_GATE" |
-"M_BUILDING_HUT" |
+"M_BUILDING_LARGE_HUT" |
+"M_BUILDING_MEDIUM_HUT" |
 "M_BUILDING_RECONVERSION" |
+"M_BUILDING_SMALL_HUT" |
 "M_BUILDING_SPY_TRAIN" |
 "M_BUILDING_TEMPLE" |
-"M_BUILDING_TEPEE" |
 "M_BUILDING_WALL_PIECE" |
 "M_BUILDING_WARRIOR_TRAIN" |
 "M_PERSON_BRAVE" |
@@ -446,28 +422,28 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "NO_SPECIFIC_BUILDING" |
 "NO_SPECIFIC_PERSON" |
 "NO_SPECIFIC_SPELL" |
+"NUM_SHAMEN_DEFENDERS" |
 "RANDOM_100" |
 "RECONVERSION" |
-"RED" |
 "RED_KILLED_BY_ME" |
 "RED_MANA" |
 "RED_PEOPLE" |
 "RED_RED_KILLED_BY_HUMAN" |
 "RELIGIOUS" |
-"R_BUILDING_AIRSHIP_HUT_1" |
+"R_BUILDING_AIRSHIP_HUT" |
 "R_BUILDING_AIRSHIP_HUT_2" |
-"R_BUILDING_BOAT_HUT_1" |
+"R_BUILDING_BOAT_HUT" |
 "R_BUILDING_BOAT_HUT_2" |
 "R_BUILDING_CURR_OE_SLOT" |
 "R_BUILDING_DRUM_TOWER" |
-"R_BUILDING_FARM" |
 "R_BUILDING_FIREWARRIOR_TRAIN" |
 "R_BUILDING_GATE" |
-"R_BUILDING_HUT" |
+"R_BUILDING_LARGE_HUT" |
+"R_BUILDING_MEDIUM_HUT" |
 "R_BUILDING_RECONVERSION" |
+"R_BUILDING_SMALL_HUT" |
 "R_BUILDING_SPY_TRAIN" |
 "R_BUILDING_TEMPLE" |
-"R_BUILDING_TEPEE" |
 "R_BUILDING_WALL_PIECE" |
 "R_BUILDING_WARRIOR_TRAIN" |
 "R_PERSON_BRAVE" |
@@ -480,13 +456,13 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "R_VEHICLE_BOAT_1" |
 "SHAMAN" |
 "SHIELD" |
+"SMALL_HUT" |
 "SPY" |
 "SPY_TRAIN" |
 "SWAMP" |
 "TARGET_SHAMAN" |
 "TELEPORT" |
 "TEMPLE" |
-"TEPEE" |
 "VOLCANO" |
 "WALL_PIECE" |
 "WARRIOR" |
@@ -494,25 +470,24 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "WHIRLWIND" |
 "WILD_PEOPLE" |
 "WRATH_OF_GOD" |
-"YELLOW" |
 "YELLOW_KILLED_BY_ME" |
 "YELLOW_MANA" |
 "YELLOW_PEOPLE" |
 "YELLOW_RED_KILLED_BY_HUMAN" |
-"Y_BUILDING_AIRSHIP_HUT_1" |
+"Y_BUILDING_AIRSHIP_HUT" |
 "Y_BUILDING_AIRSHIP_HUT_2" |
-"Y_BUILDING_BOAT_HUT_1" |
+"Y_BUILDING_BOAT_HUT" |
 "Y_BUILDING_BOAT_HUT_2" |
 "Y_BUILDING_CURR_OE_SLOT" |
 "Y_BUILDING_DRUM_TOWER" |
-"Y_BUILDING_FARM" |
 "Y_BUILDING_FIREWARRIOR_TRAIN" |
 "Y_BUILDING_GATE" |
-"Y_BUILDING_HUT" |
+"Y_BUILDING_LARGE_HUT" |
+"Y_BUILDING_MEDIUM_HUT" |
 "Y_BUILDING_RECONVERSION" |
+"Y_BUILDING_SMALL_HUT" |
 "Y_BUILDING_SPY_TRAIN" |
 "Y_BUILDING_TEMPLE" |
-"Y_BUILDING_TEPEE" |
 "Y_BUILDING_WALL_PIECE" |
 "Y_BUILDING_WARRIOR_TRAIN" |
 "Y_PERSON_BRAVE" |
@@ -522,7 +497,25 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "Y_PERSON_SPY" |
 "Y_PERSON_WARRIOR" |
 "Y_VEHICLE_AIRSHIP_1" |
-"Y_VEHICLE_BOAT_1"		{ addToken(Token.RESERVED_WORD_2); }
+"Y_VEHICLE_BOAT_1"		{ addToken(Token.RESERVED_WORD); }
+
+	/* Keywords 2 (just an optional set of keywords colored differently) */
+	"#define" |
+"#echo" |
+"#elif" |
+"#else" |
+"#endif" |
+"#error" |
+"#ifdef" |
+"#ifndef" |
+"#include" |
+"#undef" |
+"#warning" |
+"else" |
+"every" |
+"if" |
+"off" |
+"on"		{ addToken(Token.RESERVED_WORD_2); }
 
 	/* Data types */
 	/* No data types */
@@ -710,7 +703,12 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 "TriggerThing" |
 "TurnPanelOn" |
 "TurnPush" |
-"ZoomTo"		{ addToken(Token.FUNCTION); }
+"ZoomTo" |
+"dec" |
+"div" |
+"inc" |
+"mul" |
+"set"		{ addToken(Token.FUNCTION); }
 
 	
 
@@ -734,15 +732,25 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 	{Separator2}					{ addToken(Token.IDENTIFIER); }
 
 	/* Operators. */
-	"!=" |
+	"!" |
+"%" |
+"&" |
 "&&" |
+"*" |
+"+" |
 "," |
+"-" |
+"/" |
 "<" |
-"<=" |
+"<<" |
+"=" |
 "==" |
 ">" |
-">=" |
-"||"		{ addToken(Token.OPERATOR); }
+">>" |
+"^" |
+"|" |
+"||" |
+"~"		{ addToken(Token.OPERATOR); }
 
 	/* Numbers */
 	{IntegerLiteral}				{ addToken(Token.LITERAL_NUMBER_DECIMAL_INT); }
