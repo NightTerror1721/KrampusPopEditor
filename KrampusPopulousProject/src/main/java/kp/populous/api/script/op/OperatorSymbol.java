@@ -11,21 +11,21 @@ import java.util.Objects;
  *
  * @author Asus
  */
-public final class OperatorSymbol
+public final class OperatorSymbol extends Token
 {
     /* Binaries */
     public static final OperatorSymbol
-            OR = new OperatorSymbol("||", 0, (op0, op1) -> (op0 != 0 ? op0 : op1 != 0 ? op1 : 0)),
+            OR = new OperatorSymbol("||", 0, (op0, op1) -> (op0 != 0 ? 1 : op1 != 0 ? 1 : 0)),
             
-            AND = new OperatorSymbol("&&", 1, (op0, op1) -> (op0 != 0 && op1 != 0) ? op1 : 0),
+            AND = new OperatorSymbol("&&", 1, (op0, op1) -> (op0 != 0 && op1 != 0) ? 1 : 0),
             
-            EQUALS = new OperatorSymbol("==", 2, (op0, op1) -> (op0 == op1) ? op1 : 0),
-            NOT_EQUALS = new OperatorSymbol("!=", 2, (op0, op1) -> (op0 != op1) ? op1 : 0),
-            GRATER_THAN = new OperatorSymbol(">", 2, (op0, op1) -> (op0 > op1) ? op1 : 0),
+            EQUALS = new OperatorSymbol("==", 2, (op0, op1) -> (op0 == op1) ? 1 : 0),
+            NOT_EQUALS = new OperatorSymbol("!=", 2, (op0, op1) -> (op0 != op1) ? 1 : 0),
+            GREATER_THAN = new OperatorSymbol(">", 2, (op0, op1) -> (op0 > op1) ? 1 : 0),
             LESS_THAN = new OperatorSymbol("<", 2, (op0, op1) -> (op0 < op1) ? op1 : 0),
-            GREATER_EQUALS_THAN = new OperatorSymbol(">=", 2, (op0, op1) -> (op0 >= op1) ? op1 : 0),
-            LESS_EQUALS_THAN = new OperatorSymbol("<=", 2, (op0, op1) -> (op0 <= op1) ? op1 : 0),
-            BIT_COMPARE = new OperatorSymbol("<=>", 5, (op0, op1) -> (op0 < op1 ? -1 : op0 == op1 ? 0 : 1)),
+            GREATER_EQUALS_THAN = new OperatorSymbol(">=", 2, (op0, op1) -> (op0 >= op1) ? 1 : 0),
+            LESS_EQUALS_THAN = new OperatorSymbol("<=", 2, (op0, op1) -> (op0 <= op1) ? 1 : 0),
+            COMPARE = new OperatorSymbol("<=>", 5, (op0, op1) -> (op0 < op1 ? -1 : op0 == 1 ? 0 : 1)),
             
             BIT_OR = new OperatorSymbol("|", 3, (op0, op1) -> (op0 | op1)),
             BIT_AND = new OperatorSymbol("&", 3, (op0, op1) -> (op0 & op1)),
@@ -43,7 +43,7 @@ public final class OperatorSymbol
     
     /* Unaries */
     public static final OperatorSymbol
-            NEGATE = new OperatorSymbol("!", 7, (op0, op1) -> (op0 != 0 ? op0 : 0)),
+            NEGATE = new OperatorSymbol("!", 7, (op0, op1) -> (op0 != 0 ? 1 : 0)),
             BIT_NEGATE = new OperatorSymbol("~", 7, (op0, op1) -> (~op0));
     
     
@@ -65,21 +65,27 @@ public final class OperatorSymbol
     
     public final int comparePriority(OperatorSymbol os) { return Integer.compare(priority, os.priority); }
     
-    public final int apply(String op0, String op1)
+    public final int apply(Operator op0, Operator op1)
     {
-        return action.apply(decodeOperand(op0), decodeOperand(op1));
+        return action.apply(op0.apply(), op1.apply());
     }
     
-    public final int apply(String op0)
+    public final int apply(Operator op0)
     {
-        return action.apply(decodeOperand(op0), 0);
+        return action.apply(op0.apply(), 0);
     }
     
-    private int decodeOperand(String op)
+    static final int decodeOperand(String op)
     {
         try { return Integer.decode(op); }
         catch(NumberFormatException ex) { return 0; }
     }
+    
+    @Override
+    public final String toString() { return symbol; }
+
+    @Override
+    public final boolean isOperator() { return true; }
     
     @FunctionalInterface
     private interface OperatorAction

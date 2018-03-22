@@ -13,6 +13,11 @@
 	set(var_res, op0)		 \
 	dec(var_res, op1)
 
+
+#if TRUE > 0 && (FALSE > 0)
+#echo "test if"
+#endif
+
 #else
 #warning "stdlib is including twice"
 #endif

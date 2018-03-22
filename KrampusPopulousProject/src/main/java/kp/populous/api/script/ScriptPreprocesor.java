@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
+import kp.populous.api.script.op.Operator;
+import kp.populous.api.script.op.OperatorParser;
 import kp.populous.api.utils.TokenizerExtractor;
 import static kp.populous.api.utils.TokenizerExtractor.EOF;
 
@@ -143,6 +145,9 @@ final class ScriptPreprocesor
             case "ifndef":
                 doIfdefIfndef(tokens, false);
                 break;
+            case "if":
+                doIf(tokens);
+                break;
             case "else":
             case "elif":
                 if(mode == ParseMode.ENDIF)
@@ -234,6 +239,13 @@ final class ScriptPreprocesor
         resolveConditionals(() -> (mode && macros.hasMacro(macro)) || (!mode && !macros.hasMacro(macro)));
     }
     
+    private void doIf(Tokenizer tokens) throws CompilationException
+    {
+        String text = parseTextForMacros(tokens.getMacroText(), tokens.getLine());
+        Operator op = OperatorParser.parse(text, tokens.getLine());
+        resolveConditionals(() -> op.apply() != 0);
+    }
+    
     
     private String importFile(File file) throws CompilationException
     {
@@ -315,8 +327,10 @@ final class ScriptPreprocesor
         switch(token)
         {
             case "endif":
-                return;
-            case "elseif": //TODO: implement
+                break;
+            case "elif": //TODO: implement
+                doIf(tokens);
+                break;
             case "else":
                 parseAll(ParseMode.ENDIF);
                 break;
