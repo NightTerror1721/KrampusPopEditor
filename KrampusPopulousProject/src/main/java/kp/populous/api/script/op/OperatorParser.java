@@ -27,8 +27,8 @@ public final class OperatorParser
     
     private static Operator parseOperand(Token token, TokenIterator it) throws CompilationException
     {
-        if(token == Token.OPEN_PARENTHESIS)
-            return generateOperator(it.extractUntil(Token.CLOSE_PARENTHESIS));
+        if(token.isParenthesis())
+            return generateOperator(token.toParenthesis().getTokenIterator());
         if(token.isOperator())
         {
             if(it.hasNext())
@@ -58,7 +58,7 @@ public final class OperatorParser
     }
     
     private static Operator generatePart(TokenIterator it) throws CompilationException
-    {Tu ubicación
+    {
         if(!it.hasNext())
             throw new IllegalStateException();
         Token op1 = it.next();

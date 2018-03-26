@@ -18,6 +18,9 @@ public abstract class Token
     
     public abstract boolean isOperator(); 
     
+    public boolean isParenthesis() { return false; }
+    public ParenthesisToken toParenthesis() { throw new UnsupportedOperationException(); }
+    
     public static final Token identifier(String token) { return new Identifier(token); }
     
     private static class Identifier extends Token

@@ -44,6 +44,20 @@ public final class TokenStream
     private boolean canPeekChar(int index) { return peekChar(index) != EOF; }
     private boolean canPeekChar() { return peekChar(0) != EOF; }
     
+    private String getUntilChar(char end, boolean ignoreFirst) throws CompilationException
+    {
+        if(ignoreFirst)
+            nextChar();
+        int start = it;
+        char c;
+        while((c = nextChar()) != EOF)
+            if(c == end)
+            {
+                return new String(code, start, it - start);
+            }
+        throw new CompilationException(line, "Expected \"" + end + "\" but not found.");
+    }
+    
     public final Token nextToken() throws CompilationException
     {
         StringBuilder sb = new StringBuilder(16);
@@ -185,13 +199,14 @@ public final class TokenStream
                             return OperatorSymbol.LESS_THAN;
                     }
                 case '(':
-                case ')':
                     if(sb.length() > 0)
                     {
                         moveChar(-1);
                         break loop;
                     }
-                    return c == '(' ? Token.OPEN_PARENTHESIS : Token.CLOSE_PARENTHESIS;
+                    return ParenthesisToken.wrap(getUntilChar(')', true), line);
+                case ')':
+                    throw new CompilationException(line, "Unexpected end of parenthesis block \")\"");
                 default:
                     sb.append(c);
                     break;
@@ -207,16 +222,17 @@ public final class TokenStream
         Token token;
         while((token = nextToken()) != null)
             tokens.add(token);
-        return new TokenIterator(tokens.toArray(new Token[tokens.size()]));
+        return new TokenIterator(tokens.toArray(new Token[tokens.size()]), line);
     }
     
     
-    public final class TokenIterator implements Iterator<Token>
+    public static final class TokenIterator implements Iterator<Token>
     {
+        private final int line;
         final Token[] tokens;
         int it = 0;
         
-        public TokenIterator(Token[] tokens) { this.tokens = Objects.requireNonNull(tokens); }
+        public TokenIterator(Token[] tokens, int line) { this.tokens = Objects.requireNonNull(tokens); this.line = line; }
         
         public final int getLine() { return line; }
 
@@ -233,7 +249,7 @@ public final class TokenStream
             {
                 Token token = tokens[it];
                 if(token.equals(end))
-                    return new TokenIterator(list.toArray(new Token[list.size()]));
+                    return new TokenIterator(list.toArray(new Token[list.size()]), line);
                 list.add(token);
             }
             throw new CompilationException(line, "Expected '" + end + "'");
@@ -243,7 +259,7 @@ public final class TokenStream
         {
             Token[] array = new Token[end - start];
             System.arraycopy(tokens, start, array, 0, array.length);
-            return new TokenIterator(array);
+            return new TokenIterator(array, line);
         }
         
         public final int length() { return tokens.length; }

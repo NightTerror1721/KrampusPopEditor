@@ -94,6 +94,8 @@ public class ScriptEditor extends JFrame
         textArea.undoLastAction();
         panel.add(sp);
         
+        textArea.getSyntaxScheme();
+        
         AutoCompletion ac = new AutoCompletion(autoProvider);
         ac.setParameterAssistanceEnabled(true);
         ac.setShowDescWindow(true);
