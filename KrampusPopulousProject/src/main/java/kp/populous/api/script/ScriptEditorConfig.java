@@ -5,7 +5,10 @@
  */
 package kp.populous.api.script;
 
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JDialog;
+import kp.populous.api.utils.Prop;
 import org.fife.ui.rsyntaxtextarea.Style;
 import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rsyntaxtextarea.TokenTypes;
@@ -16,6 +19,7 @@ import org.fife.ui.rsyntaxtextarea.TokenTypes;
  */
 public class ScriptEditorConfig extends JDialog
 {
+    private static final Font DEFAULT_FONT = new Font("monospaced", Font.PLAIN, 13);
     
     public ScriptEditorConfig(ScriptEditor parent)
     {
@@ -25,7 +29,93 @@ public class ScriptEditorConfig extends JDialog
     
     public static final void setDefaultStyleSchema(SyntaxScheme ss)
     {
-        ss.setStyle(TokenTypes.RESERVED_WORD, new Style());
+        ss.restoreDefaults(DEFAULT_FONT, true);
+        style(ss, TokenTypes.RESERVED_WORD, Color.GREEN.darker());
+        style(ss, TokenTypes.RESERVED_WORD_2, Color.BLUE);
+        style(ss, TokenTypes.FUNCTION, new Color(153, 153, 0));
+        style(ss, TokenTypes.IDENTIFIER);
+        style(ss, TokenTypes.SEPARATOR, new Color(255, 102, 0));
+        style(ss, TokenTypes.OPERATOR, new Color(255, 102, 0));
+        style(ss, TokenTypes.LITERAL_NUMBER_DECIMAL_INT, new Color(153, 0, 153));
+        style(ss, TokenTypes.COMMENT_EOL, Color.GRAY);
+        style(ss, TokenTypes.COMMENT_MULTILINE, Color.GRAY);
+    }
+    
+    public static final void restoreDefaultStyles()
+    {
+        
+    }
+    
+    public static final void setStyle(boolean store, StyleToken type, Color color, String fontName, int fontSize, int fontType)
+    {
+        if(type == null || type == StyleToken.UNKNOWN)
+            return;
+        String name = "textarea." + type.getPropertyName();
+        Prop.set(name + ".color", color.getRGB());
+        Prop.set(name + ".font_name", fontName);
+        Prop.set(name + ".font_size", fontSize);
+        Prop.set(name + ".font_type", fontType);
+        if(store)
+            Prop.store();
+    }
+    public static final void setStyle(StyleToken type, Color color, String fontName, int fontSize, int fontType) { setStyle(true, type, color, fontName, fontSize, fontType); }
+    
+    /*public static final Style getStyle(StyleToken type)
+    {
+        
+    }*/
+    
+    
+    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Color bg, Font font, boolean underline)
+    {
+        syntaxScheme.setStyle(styleIdx, new Style(fg, bg, font, underline));
+    }
+    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Color bg, Font font) { style(syntaxScheme, styleIdx, fg, bg, font, false); }
+    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Color bg) { style(syntaxScheme, styleIdx, fg, bg, DEFAULT_FONT, false); }
+    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Font font) { style(syntaxScheme, styleIdx, fg, null, font, false); }
+    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Font font) { style(syntaxScheme, styleIdx, Color.BLACK, null, font, false); }
+    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg) { style(syntaxScheme, styleIdx, fg, null, DEFAULT_FONT, false); }
+    private static void style(SyntaxScheme syntaxScheme, int styleIdx) { style(syntaxScheme, styleIdx, Color.BLACK, null, DEFAULT_FONT, false); }
+    
+    
+    
+    
+    public enum StyleToken
+    {
+        UNKNOWN(TokenTypes.NULL),
+        CONSTANT(TokenTypes.RESERVED_WORD),
+        RESERVED_WORD(TokenTypes.RESERVED_WORD_2),
+        FUNCTION(TokenTypes.FUNCTION),
+        IDENTIFIER(TokenTypes.IDENTIFIER),
+        SEPARATOR(TokenTypes.SEPARATOR),
+        OPERATOR(TokenTypes.OPERATOR),
+        NUMBER(TokenTypes.LITERAL_NUMBER_DECIMAL_INT),
+        COMMENT_SINGLELINE(TokenTypes.COMMENT_EOL),
+        COMMENT_MULTILINE(TokenTypes.COMMENT_MULTILINE);
+        
+        private final int tokenCode;
+        private final String propName;
+        
+        private StyleToken(int tokenCode)
+        {
+            this.tokenCode = tokenCode;
+            this.propName = name().toLowerCase();
+        }
+        
+        public final int getTokenCode() { return tokenCode; }
+        public final String getPropertyName() { return propName; }
+        
+        private static final StyleToken[] VALUES = values();
+        public static final StyleToken decode(int code)
+        {
+            return code < 0 || code >= VALUES.length ? UNKNOWN : VALUES[code];
+        }
+        
+        public static final StyleToken fromPropertyName(String name)
+        {
+            try { return StyleToken.valueOf(name); }
+            catch(IllegalArgumentException ex) { return UNKNOWN; }
+        }
     }
 
     /**

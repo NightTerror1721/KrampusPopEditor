@@ -1,10 +1,19 @@
+//Declare library and set only included once.
 #ifndef STDLIB_H
 #define STDLIB_H
+
+//Print  a simple message in terminal console.
+//Only visible if compile script. Not in parse.
 #echo "using stdlib"
 
+//Declare macros like a normal constant.
 #define TRUE 1
 #define FALSE 0
 
+/* Declare macros with arguments, like functions.
+ * When using these macros,
+ * all the code they contain expands on each "call".
+ */
 #define sum(var_res, op0, op1) \
 	set(var_res, op0)		 \
 	inc(var_res, op1)
@@ -14,10 +23,29 @@
 	dec(var_res, op1)
 
 
-#if TRUE > 0 && (FALSE > 0)
+/* Conditionals with numbers and macros containing numbers.
+ * the "defined(<macro_name>)" operator can be used,
+ * which returns 1 if the macro has been defined, or 0 otherwise.
+ * You can join an "else" with an "if" using the "elif" directive.
+ */
+#if TRUE > 0 && (FALSE >= 0) && defined(FALSE)
 #echo "test if"
 #endif
 
 #else
+/* The #warning directive prints one message per terminal,
+ * with a "[WARNING]" in front.
+ * The #error directive will cause a compilation error
+ * along with the accompanying message.
+ */
 #warning "stdlib is including twice"
 #endif
+
+/* The #import directive can be used to import a script
+ * and use its code (and macros) as if they had been written in it
+ * (Similar to C).
+ * If a relative path is specified, the files will be
+ * searched for the "includes" folder located
+ * in the same folder as the editor executable.
+ */
+ 

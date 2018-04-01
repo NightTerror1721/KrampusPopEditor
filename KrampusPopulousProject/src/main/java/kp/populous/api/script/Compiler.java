@@ -45,6 +45,7 @@ final class Compiler
     
     public final CompilationResult compile()
     {
+        removeComments();
         compilePreprocessor();
         compileBody(true);
         if(result.hasErrors())
@@ -56,6 +57,11 @@ final class Compiler
         result.setScript(script);
         
         return result;
+    }
+    
+    private void removeComments()
+    {
+        reader = ScriptCommentRemover.removeComments(reader);
     }
     
     private void compilePreprocessor()
