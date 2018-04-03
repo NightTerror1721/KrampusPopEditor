@@ -5,13 +5,22 @@
  */
 package kp.populous.api.script;
 
+import io.github.dheid.fontchooser.FontDialog;
 import java.awt.Color;
-import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import kp.populous.api.utils.Prop;
+import javax.swing.JTextField;
+import kp.populous.api.script.ScriptEditorStylePool.StyleToken;
+import kp.populous.api.utils.Utils;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.Style;
 import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
-import org.fife.ui.rsyntaxtextarea.TokenTypes;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 /**
  *
@@ -19,103 +28,160 @@ import org.fife.ui.rsyntaxtextarea.TokenTypes;
  */
 public class ScriptEditorConfig extends JDialog
 {
-    private static final Font DEFAULT_FONT = new Font("monospaced", Font.PLAIN, 13);
+    private static final ScriptEditorStylePool STYLE_POOL = new ScriptEditorStylePool();
+    
+    private final ScriptEditor parent;
+    private DefaultListModel<StyleToken> stylesModel;
+    private final ScriptEditorStylePool styles = STYLE_POOL.copy();
+    private RSyntaxTextArea codeExampleArea;
     
     public ScriptEditorConfig(ScriptEditor parent)
     {
         super(parent, true);
+        this.parent = parent;
         initComponents();
+        init();
     }
     
-    public static final void setDefaultStyleSchema(SyntaxScheme ss)
+    private void init()
     {
-        ss.restoreDefaults(DEFAULT_FONT, true);
-        style(ss, TokenTypes.RESERVED_WORD, Color.GREEN.darker());
-        style(ss, TokenTypes.RESERVED_WORD_2, Color.BLUE);
-        style(ss, TokenTypes.FUNCTION, new Color(153, 153, 0));
-        style(ss, TokenTypes.IDENTIFIER);
-        style(ss, TokenTypes.SEPARATOR, new Color(255, 102, 0));
-        style(ss, TokenTypes.OPERATOR, new Color(255, 102, 0));
-        style(ss, TokenTypes.LITERAL_NUMBER_DECIMAL_INT, new Color(153, 0, 153));
-        style(ss, TokenTypes.COMMENT_EOL, Color.GRAY);
-        style(ss, TokenTypes.COMMENT_MULTILINE, Color.GRAY);
-    }
-    
-    public static final void restoreDefaultStyles()
-    {
+        Utils.focus(this);
+        setResizable(false);
         
+        stylesList.setModel(stylesModel = new DefaultListModel<>());
+        for(StyleToken token : StyleToken.getAvailableTokens())
+            stylesModel.addElement(token);
+        
+        codeExampleArea = new RSyntaxTextArea(loadExampleScript(), 8, 10);
+        codeExampleArea.setSyntaxEditingStyle(Utils.POP_SCRIPT_TEXT_TYPE);
+        codeExampleArea.setEditable(false);
+        codeExampleArea.setCaretPosition(0);
+        codeExampleArea.setSyntaxScheme(generateSyntaxScheme(styles));
+        RTextScrollPane sp = new RTextScrollPane(codeExampleArea);
+        jPanel3.setLayout(new BoxLayout(jPanel3, BoxLayout.X_AXIS));
+        jPanel3.add(sp);
+        
+        pack();
     }
     
-    public static final void setStyle(boolean store, StyleToken type, Color color, String fontName, int fontSize, int fontType)
+    private void apply()
     {
-        if(type == null || type == StyleToken.UNKNOWN)
+        styles.copyTo(STYLE_POOL);
+        STYLE_POOL.save();
+        parent.repaintCurrentScript();
+    }
+    
+    public static final SyntaxScheme generateSyntaxScheme() { return generateSyntaxScheme(STYLE_POOL); }
+    private static SyntaxScheme generateSyntaxScheme(ScriptEditorStylePool styles)
+    {
+        SyntaxScheme scheme = new SyntaxScheme(ScriptEditorStylePool.DEFAULT_FONT);
+        styles.fillScheme(scheme);
+        return scheme;
+    }
+    
+    private void showSyntaxToken()
+    {
+        StyleToken token = stylesList.getSelectedValue();
+        if(token == null)
+        {
+            l_font.setText("");
+            l_fore.setText("");
+            l_back.setText("");
+            
+            fixFieldColor(l_fore, null);
+            fixFieldColor(l_back, null);
+            
+            b_font.setEnabled(false);
+            b_fore.setEnabled(false);
+            b_back.setEnabled(false);
             return;
-        String name = "textarea." + type.getPropertyName();
-        Prop.set(name + ".color", color.getRGB());
-        Prop.set(name + ".font_name", fontName);
-        Prop.set(name + ".font_size", fontSize);
-        Prop.set(name + ".font_type", fontType);
-        if(store)
-            Prop.store();
+        }
+        
+        Style s = styles.getStyle(token);
+        b_font.setEnabled(true);
+        b_fore.setEnabled(true);
+        b_back.setEnabled(true);
+        
+        l_font.setText(s.font.getName() + " " + s.font.getSize());
+        
+        Color color = s.foreground == null ? ScriptEditorStylePool.DEFAULT_FG_COLOR : s.foreground;
+        l_fore.setText(colorToString(color));
+        fixFieldColor(l_fore, color);
+        
+        color = s.background == null ? ScriptEditorStylePool.DEFAULT_BG_COLOR : s.background;
+        l_back.setText(colorToString(color));
+        fixFieldColor(l_back, color);
     }
-    public static final void setStyle(StyleToken type, Color color, String fontName, int fontSize, int fontType) { setStyle(true, type, color, fontName, fontSize, fontType); }
     
-    /*public static final Style getStyle(StyleToken type)
+    
+    private static String colorToString(Color color)
     {
-        
-    }*/
-    
-    
-    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Color bg, Font font, boolean underline)
-    {
-        syntaxScheme.setStyle(styleIdx, new Style(fg, bg, font, underline));
+        if(color == null)
+            return "[r=255, g=255, b=255]"; 
+        return "[r=" + color.getRed() + ", " +
+               "g=" + color.getBlue() + ", " +
+               "b=" + color.getGreen() + "]";
     }
-    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Color bg, Font font) { style(syntaxScheme, styleIdx, fg, bg, font, false); }
-    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Color bg) { style(syntaxScheme, styleIdx, fg, bg, DEFAULT_FONT, false); }
-    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg, Font font) { style(syntaxScheme, styleIdx, fg, null, font, false); }
-    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Font font) { style(syntaxScheme, styleIdx, Color.BLACK, null, font, false); }
-    private static void style(SyntaxScheme syntaxScheme, int styleIdx, Color fg) { style(syntaxScheme, styleIdx, fg, null, DEFAULT_FONT, false); }
-    private static void style(SyntaxScheme syntaxScheme, int styleIdx) { style(syntaxScheme, styleIdx, Color.BLACK, null, DEFAULT_FONT, false); }
     
-    
-    
-    
-    public enum StyleToken
+    private static void fixFieldColor(JTextField field, Color color)
     {
-        UNKNOWN(TokenTypes.NULL),
-        CONSTANT(TokenTypes.RESERVED_WORD),
-        RESERVED_WORD(TokenTypes.RESERVED_WORD_2),
-        FUNCTION(TokenTypes.FUNCTION),
-        IDENTIFIER(TokenTypes.IDENTIFIER),
-        SEPARATOR(TokenTypes.SEPARATOR),
-        OPERATOR(TokenTypes.OPERATOR),
-        NUMBER(TokenTypes.LITERAL_NUMBER_DECIMAL_INT),
-        COMMENT_SINGLELINE(TokenTypes.COMMENT_EOL),
-        COMMENT_MULTILINE(TokenTypes.COMMENT_MULTILINE);
-        
-        private final int tokenCode;
-        private final String propName;
-        
-        private StyleToken(int tokenCode)
+        if(color == null)
         {
-            this.tokenCode = tokenCode;
-            this.propName = name().toLowerCase();
+            field.setBackground(Color.WHITE);
+            field.setForeground(Color.BLACK);
+            return;
         }
+        Color text = getContrastColor(color);
+        field.setBackground(color);
+        field.setForeground(text);
+    }
+    
+    private static  Color getContrastColor(Color color)
+    {
+        double y = (299 * color.getRed() + 587 * color.getGreen() + 114 * color.getBlue()) / 1000;
+        return y > 128 ? Color.black : Color.white;
+    }
+    
+    private void chooseColor(boolean foreground)
+    {
+        StyleToken token = stylesList.getSelectedValue();
+        if(token == null)
+            return;
+        Style s = styles.getStyle(token);
+        if(s == null)
+            return;
         
-        public final int getTokenCode() { return tokenCode; }
-        public final String getPropertyName() { return propName; }
+        Color color = foreground
+                ? s.foreground == null ? ScriptEditorStylePool.DEFAULT_FG_COLOR : s.foreground
+                : s.background == null ? ScriptEditorStylePool.DEFAULT_BG_COLOR : s.background;
         
-        private static final StyleToken[] VALUES = values();
-        public static final StyleToken decode(int code)
+        color = JColorChooser.showDialog(this, "Color Chooser", color);
+        if(color == null)
+            return;
+        
+        if(foreground)
+            s.foreground = color;
+        else s.background = color;
+        showSyntaxToken();
+        codeExampleArea.repaint();
+    }
+    
+    private static String loadExampleScript()
+    {
+        StringBuilder sb = new StringBuilder(128);
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(Utils.openInnerResource("/kp/populous/api/script/PopScriptExample.popscr"))))
         {
-            return code < 0 || code >= VALUES.length ? UNKNOWN : VALUES[code];
+            char[] buffer = new char[128];
+            int len;
+            while((len = br.read(buffer)) > 0)
+                sb.append(buffer, 0, len);
         }
-        
-        public static final StyleToken fromPropertyName(String name)
+        catch(IOException ex)
         {
-            try { return StyleToken.valueOf(name); }
-            catch(IllegalArgumentException ex) { return UNKNOWN; }
+            ex.printStackTrace(System.err);
+            return "";
         }
+        return sb.toString();
     }
 
     /**
@@ -127,23 +193,274 @@ public class ScriptEditorConfig extends JDialog
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        stylesList = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        l_font = new javax.swing.JTextField();
+        l_fore = new javax.swing.JTextField();
+        l_back = new javax.swing.JTextField();
+        b_font = new javax.swing.JButton();
+        b_fore = new javax.swing.JButton();
+        b_back = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("ScriptEditor - Properties");
+
+        stylesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        stylesList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                stylesListValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(stylesList);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Properties", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        jLabel1.setText("Font:");
+
+        jLabel2.setText("Foreground:");
+
+        jLabel3.setText("Background:");
+
+        l_font.setEditable(false);
+
+        l_fore.setEditable(false);
+
+        l_back.setEditable(false);
+
+        b_font.setText("...");
+        b_font.setEnabled(false);
+        b_font.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_fontActionPerformed(evt);
+            }
+        });
+
+        b_fore.setText("...");
+        b_fore.setEnabled(false);
+        b_fore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_foreActionPerformed(evt);
+            }
+        });
+
+        b_back.setText("...");
+        b_back.setEnabled(false);
+        b_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_backActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l_back, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                    .addComponent(l_fore, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(l_font, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(b_font, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(b_fore, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(b_back, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(l_font, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_font))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(l_fore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_fore))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(l_back, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_back))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Preview", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 176, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Syntax", jPanel1);
+
+        jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Apply");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Accept");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void stylesListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_stylesListValueChanged
+        showSyntaxToken();
+    }//GEN-LAST:event_stylesListValueChanged
+
+    private void b_fontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_fontActionPerformed
+        StyleToken token = stylesList.getSelectedValue();
+        if(token == null)
+            return;
+        
+        Style s = styles.getStyle(token);
+        if(s == null)
+            return;
+        FontDialog dialog = new FontDialog(this, "Font Chooser", true);
+        Utils.focus(dialog);
+        dialog.setDefaultCloseOperation(FontDialog.DISPOSE_ON_CLOSE);
+        dialog.setSelectedFont(s.font);
+        dialog.setVisible(true);
+        
+        if(!dialog.isCancelSelected())
+        {
+            s.font = dialog.getSelectedFont();
+            showSyntaxToken();
+            codeExampleArea.repaint();
+        }
+    }//GEN-LAST:event_b_fontActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        apply();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        apply();
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void b_foreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_foreActionPerformed
+        chooseColor(true);
+    }//GEN-LAST:event_b_foreActionPerformed
+
+    private void b_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_backActionPerformed
+        chooseColor(false);
+    }//GEN-LAST:event_b_backActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_back;
+    private javax.swing.JButton b_font;
+    private javax.swing.JButton b_fore;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField l_back;
+    private javax.swing.JTextField l_font;
+    private javax.swing.JTextField l_fore;
+    private javax.swing.JList<StyleToken> stylesList;
     // End of variables declaration//GEN-END:variables
 }

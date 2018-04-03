@@ -11,8 +11,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -116,16 +118,33 @@ public final class Prop
             case BOOLEAN: value = (T) (Boolean) base.optBoolean(path[path.length - 1]); break;
             case LIST: {
                 JSONArray temp = base.optJSONArray(path[path.length - 1]);
-                value = temp == null ? defaultValue : (T) temp.toList();
+                value = temp == null ? defaultValue : (T) toList(temp);
             } break;
             case MAP: {
                 JSONObject temp = base.optJSONObject(path[path.length - 1]);
-                value = temp == null ? defaultValue : (T) temp.toMap();
+                value = temp == null ? defaultValue : (T) toMap(temp);
             } break;
         }
         return value == null ? defaultValue : value;
     }
     private static <T> T get(String name, T defaultValue, Type type) { return get(splitPath(name), defaultValue, type); }
+    
+    private static List<?> toList(JSONArray array)
+    {
+        ArrayList<Object> list = new ArrayList<>(array.length());
+        int len = array.length();
+        for(int i=0;i<len;i++)
+            list.add(array.opt(i));
+        return list;
+    }
+    
+    private static Map<String, ?> toMap(JSONObject object)
+    {
+        HashMap<String, Object> map = new HashMap<>();
+        for(String key : object.keySet())
+            map.put(key, object.opt(key));
+        return map;
+    }
     
     
     public static final String getString(String name, String defaultValue) { return get(name, defaultValue, Type.STRING); }
@@ -146,11 +165,11 @@ public final class Prop
     public static final double getDouble(String name, double defaultValue) { return get(name, defaultValue, Type.DOUBLE); }
     public static final double getDouble(String name) { return get(name, 0D, Type.DOUBLE); }
     
-    public static final List<Object> getList(String name, List<Object> defaultValue) { return get(name, defaultValue, Type.LIST); }
-    public static final List<Object> getList(String name) { return get(name, Collections.emptyList(), Type.LIST); }
+    public static final List<?> getList(String name, List<Object> defaultValue) { return get(name, defaultValue, Type.LIST); }
+    public static final List<?> getList(String name) { return get(name, Collections.emptyList(), Type.LIST); }
     
-    public static final Map<String, Object> getMap(String name, Map<String, Object> defaultValue) { return get(name, defaultValue, Type.MAP); }
-    public static final Map<String, Object> getMap(String name) { return get(name, Collections.emptyMap(), Type.MAP); }
+    public static final Map<String, ?> getMap(String name, Map<String, Object> defaultValue) { return get(name, defaultValue, Type.MAP); }
+    public static final Map<String, ?> getMap(String name) { return get(name, Collections.emptyMap(), Type.MAP); }
     
     public static final List<String> getStringList(String name)
     {

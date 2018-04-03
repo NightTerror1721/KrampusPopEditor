@@ -1,0 +1,22 @@
+#include "stdlib"
+
+#ifndef EXAMPLE_SCR
+#define EXAMPLE_SCR
+
+/*
+ * This is a multiline comment
+ */
+set($var, 50) //A function
+
+if($var != 4) {
+    every(256, 4) { SetNoBlueReinc() }
+}
+
+if(GAME_TURN == 0) {
+	ShamanGetWilds(off)
+	Sabotage(off)
+} else if(GAME_TURN < 30) {
+	SetSpecialNoBldgPanel(on)
+} else TargetBlueDrumTowers()
+
+#endif //EXAMPLE_SCR

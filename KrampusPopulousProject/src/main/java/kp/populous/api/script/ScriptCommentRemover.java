@@ -71,7 +71,6 @@ public final class ScriptCommentRemover
         catch(EOFException ex) {}
         
         writer.closeLine();
-        System.out.println(writer.toString());
         return writer.toCodeReader();
     }
 }

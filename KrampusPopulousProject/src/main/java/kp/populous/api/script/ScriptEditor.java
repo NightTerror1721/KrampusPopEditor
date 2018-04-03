@@ -94,7 +94,7 @@ public class ScriptEditor extends JFrame
         textArea.undoLastAction();
         panel.add(sp);
         
-        ScriptEditorConfig.setDefaultStyleSchema(textArea.getSyntaxScheme());
+        textArea.setSyntaxScheme(ScriptEditorConfig.generateSyntaxScheme());
         
         textArea.getSyntaxScheme();
         
@@ -402,6 +402,13 @@ public class ScriptEditor extends JFrame
     }
     private int getTextAreaCount() { return pages.getTabCount(); }
     
+    public final void repaintCurrentScript()
+    {
+        TextArea area = getSelectedTextArea();
+        if(area != null)
+            area.repaint();
+    }
+    
     private final class TextArea extends RSyntaxTextArea
     {
         private final JPanel base;
@@ -565,6 +572,8 @@ public class ScriptEditor extends JFrame
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -751,6 +760,15 @@ public class ScriptEditor extends JFrame
         jMenu1.add(jMenuItem5);
         jMenu1.add(jSeparator3);
 
+        jMenuItem15.setText("Properties");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem15);
+        jMenu1.add(jSeparator7);
+
         jMenuItem6.setText("Exit");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -913,6 +931,11 @@ public class ScriptEditor extends JFrame
         compileAndExport();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        ScriptEditorConfig config = new ScriptEditorConfig(this);
+        config.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<CompletionInfo> constsInfoList;
@@ -928,6 +951,7 @@ public class ScriptEditor extends JFrame
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -952,6 +976,7 @@ public class ScriptEditor extends JFrame
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JToolBar jToolBar1;

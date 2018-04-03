@@ -1,0 +1,74 @@
+{"scripteditor": {"styles": [
+    {
+        "fg": -16731648,
+        "bg": -1,
+        "font_size": 13,
+        "name": "constant",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -16776961,
+        "bg": -1,
+        "font_size": 13,
+        "name": "reserved_word",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -6711040,
+        "bg": -1,
+        "font_size": 13,
+        "name": "function",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -16777216,
+        "bg": -1,
+        "font_size": 13,
+        "name": "identifier",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -39424,
+        "bg": -1,
+        "font_size": 13,
+        "name": "separator",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -39424,
+        "bg": -1,
+        "font_size": 13,
+        "name": "operator",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -6750055,
+        "bg": -1,
+        "font_size": 13,
+        "name": "number",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -8355712,
+        "bg": -1,
+        "font_size": 13,
+        "name": "comment_line",
+        "font_style": 0,
+        "font_name": "monospaced"
+    },
+    {
+        "fg": -8355712,
+        "bg": -1,
+        "font_size": 13,
+        "name": "comment_multiline",
+        "font_style": 0,
+        "font_name": "monospaced"
+    }
+]}}
