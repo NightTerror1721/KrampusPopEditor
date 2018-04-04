@@ -19,35 +19,56 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import kp.populous.api.script.Script.DecompileResult;
 import kp.populous.api.utils.ButtonTabComponent;
 import kp.populous.api.utils.CompletionProviderLoader;
 import kp.populous.api.utils.FileChooser;
+import kp.populous.api.utils.FilterListModel;
 import kp.populous.api.utils.Utils;
+import org.fife.rsta.ui.CollapsibleSectionPanel;
+import org.fife.rsta.ui.GoToDialog;
+import org.fife.rsta.ui.SizeGripIcon;
+import org.fife.rsta.ui.search.FindDialog;
+import org.fife.rsta.ui.search.FindToolBar;
+import org.fife.rsta.ui.search.ReplaceDialog;
+import org.fife.rsta.ui.search.ReplaceToolBar;
+import org.fife.rsta.ui.search.SearchEvent;
+import org.fife.rsta.ui.search.SearchListener;
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.FunctionCompletion;
 import org.fife.ui.autocomplete.VariableCompletion;
+import org.fife.ui.rsyntaxtextarea.ErrorStrip;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
+import org.fife.ui.rtextarea.SearchContext;
+import org.fife.ui.rtextarea.SearchEngine;
+import org.fife.ui.rtextarea.SearchResult;
 
 /**
  *
  * @author Marc
  */
-public class ScriptEditor extends JFrame
+public class ScriptEditor extends JFrame implements SearchListener
 {
     private CustomCompletionProvider autoProvider;
+    private FindDialog findDialog;
+    private ReplaceDialog replaceDialog;
+    private FindToolBar findToolBar;
+    private ReplaceToolBar replaceToolBar;
+    private StatusBar statusBar;
     
     private ScriptEditor()
     {
@@ -67,6 +88,13 @@ public class ScriptEditor extends JFrame
         initInfoList(othersInfoList);
         initInfos();
         
+        findDialog = new FindDialog(this, this);
+        replaceDialog = new ReplaceDialog(this, this);
+        
+        SearchContext context = findDialog.getSearchContext();
+        replaceDialog.setSearchContext(context);
+        context.setMarkAll(false);
+        
         //createNewPage("NewScript");
     }
     
@@ -83,11 +111,15 @@ public class ScriptEditor extends JFrame
     
     private TextArea createNewPage(String title)
     {
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel contentPane = new JPanel(new BorderLayout());
+        CollapsibleSectionPanel panel = new CollapsibleSectionPanel(true);
+        contentPane.add(panel);
+        
 
         TextArea textArea = new TextArea(panel, title);
         textArea.setSyntaxEditingStyle(Utils.POP_SCRIPT_TEXT_TYPE);
         textArea.setCodeFoldingEnabled(true);
+        textArea.setMarkOccurrences(true);
         textArea.addParser(new PopScriptParser());
         textArea.setParserDelay(500);
         RTextScrollPane sp = new RTextScrollPane(textArea);
@@ -96,14 +128,15 @@ public class ScriptEditor extends JFrame
         
         textArea.setSyntaxScheme(ScriptEditorConfig.generateSyntaxScheme());
         
-        textArea.getSyntaxScheme();
+        ErrorStrip errorStrip = new ErrorStrip(textArea);
+        contentPane.add(errorStrip, BorderLayout.EAST);
         
         AutoCompletion ac = new AutoCompletion(autoProvider);
         ac.setParameterAssistanceEnabled(true);
         ac.setShowDescWindow(true);
         ac.install(textArea);
         
-        pages.addTab(title, panel);
+        pages.addTab(title, contentPane);
         pages.setTabComponentAt(pages.getTabCount() - 1, textArea.tabButton = new ButtonTabComponent(pages, panel, () -> {
             askSave(textArea);
             ac.uninstall();
@@ -365,14 +398,17 @@ public class ScriptEditor extends JFrame
         CompletionProviderLoader cpl = new CompletionProviderLoader(prov);
         cpl.loadExtern(Utils.openInnerResource("/PopLangCompletion.json"));
         
+        prov.sortCompletions();
+        //prov.printAllCompletions();
+        
         return prov;
     }
     
     private void initInfos()
     {
-        DefaultListModel<CompletionInfo> funcs = (DefaultListModel<CompletionInfo>) funcsInfoList.getModel();
-        DefaultListModel<CompletionInfo> consts = (DefaultListModel<CompletionInfo>) constsInfoList.getModel();
-        DefaultListModel<CompletionInfo> others = (DefaultListModel<CompletionInfo>) othersInfoList.getModel();
+        FilterListModel<CompletionInfo> funcs = (FilterListModel<CompletionInfo>) funcsInfoList.getModel();
+        FilterListModel<CompletionInfo> consts = (FilterListModel<CompletionInfo>) constsInfoList.getModel();
+        FilterListModel<CompletionInfo> others = (FilterListModel<CompletionInfo>) othersInfoList.getModel();
         autoProvider.getCompletions().forEach((c) -> {
             CompletionInfo info = new CompletionInfo(c);
             if(c instanceof FunctionCompletion)
@@ -382,6 +418,14 @@ public class ScriptEditor extends JFrame
             else if(c instanceof BasicCompletion)
                 others.addElement(info);
         });
+        
+        funcs.sort();
+        consts.sort();
+        others.sort();
+        
+        funcs.unfilter();
+        consts.unfilter();
+        others.unfilter();
     }
     
     private TextArea getTextArea(int index)
@@ -391,14 +435,14 @@ public class ScriptEditor extends JFrame
         Component c = pages.getComponentAt(index);
         if(c == null)
             return null;
-        return (TextArea) ((RTextScrollPane)((JPanel) c).getComponent(0)).getTextArea();
+        return (TextArea) ((RTextScrollPane)(((CollapsibleSectionPanel)((JPanel) c).getComponent(0))).getComponent(0)).getTextArea();
     }
     private TextArea getSelectedTextArea()
     {
         Component c = pages.getSelectedComponent();
         if(c == null)
             return null;
-        return (TextArea) ((RTextScrollPane)((JPanel) c).getComponent(0)).getTextArea();
+        return (TextArea) ((RTextScrollPane)(((CollapsibleSectionPanel)((JPanel) c).getComponent(0))).getComponent(0)).getTextArea();
     }
     private int getTextAreaCount() { return pages.getTabCount(); }
     
@@ -411,13 +455,13 @@ public class ScriptEditor extends JFrame
     
     private final class TextArea extends RSyntaxTextArea
     {
-        private final JPanel base;
+        private final CollapsibleSectionPanel base;
         private ButtonTabComponent tabButton;
         private boolean hasChanges;
         private String name;
         private File fromFile;
         
-        private TextArea(JPanel base, String name)
+        private TextArea(CollapsibleSectionPanel base, String name)
         {
             super(20, 60);
             super.getDocument().addDocumentListener(new DocumentListener()
@@ -454,6 +498,7 @@ public class ScriptEditor extends JFrame
             });
             this.base = base;
             this.name = name;
+            //super.
         }
         
         public final void destroy() { tabButton.push(); }
@@ -497,6 +542,22 @@ public class ScriptEditor extends JFrame
     private static final class CustomCompletionProvider extends DefaultCompletionProvider
     {
         public final List<Completion> getCompletions() { return Collections.unmodifiableList(completions); }
+        
+        public final void sortCompletions()
+        {
+            completions.sort((c0, c1) -> {
+                if(c0 == c1)
+                    return 0;
+                return String.CASE_INSENSITIVE_ORDER.compare(c0.getInputText(), c1.getInputText());
+            });
+        }
+        
+        public final void printAllCompletions()
+        {
+            StringBuilder sb = new StringBuilder(1024);
+            getCompletions().forEach((c) -> sb.append(c).append('\n'));
+            Utils.printStringToFile(new File("completions.txt"), sb.toString());
+        }
     }
     
     private static final class CompletionInfo
@@ -514,7 +575,7 @@ public class ScriptEditor extends JFrame
     
     private void initInfoList(JList<CompletionInfo> list)
     {
-        DefaultListModel<CompletionInfo> model = new DefaultListModel<>();
+        FilterListModel<CompletionInfo> model = new FilterListModel<>();
         list.setModel(model);
         list.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
@@ -527,6 +588,88 @@ public class ScriptEditor extends JFrame
                 helpTerminal.setCaretPosition(0);
             }
         });
+    }
+    
+    private void doSearch()
+    {
+        FilterListModel<CompletionInfo> funcs = (FilterListModel<CompletionInfo>) funcsInfoList.getModel();
+        FilterListModel<CompletionInfo> consts = (FilterListModel<CompletionInfo>) constsInfoList.getModel();
+        FilterListModel<CompletionInfo> others = (FilterListModel<CompletionInfo>) othersInfoList.getModel();
+        String text = t_search.getText();
+        
+        funcs.filter(text);
+        consts.filter(text);
+        others.filter(text);
+    }
+    
+    @Override
+    public final void searchEvent(SearchEvent e)
+    {
+        TextArea area = getSelectedTextArea();
+        if(area == null)
+            return;
+        
+        
+        SearchEvent.Type type = e.getType();
+        SearchContext context = e.getSearchContext();
+        SearchResult result;
+        
+        switch(type)
+        {
+            default:
+            case MARK_ALL:
+                result = SearchEngine.markAll(area, context);
+                break;
+            case FIND:
+                result = SearchEngine.find(area, context);
+                if(!result.wasFound())
+                    UIManager.getLookAndFeel().provideErrorFeedback(area);
+                break;
+            case REPLACE:
+                result = SearchEngine.replace(area, context);
+                if(!result.wasFound())
+                    UIManager.getLookAndFeel().provideErrorFeedback(area);
+                break;
+            case REPLACE_ALL:
+                result = SearchEngine.replaceAll(area, context);
+                JOptionPane.showMessageDialog(null, result.getCount() + " occurrences replaced.");
+                break;
+        }
+        
+        String text = null;
+        if(result.wasFound())
+            text = "Text found; occurrences marked: " + result.getMarkedCount();
+        else if(type == SearchEvent.Type.MARK_ALL)
+        {
+            if(result.getMarkedCount() > 0)
+                text = "Occurrences marked" + result.getMarkedCount();
+            else text = "";
+        }
+        else text = "Text not found";
+    }
+    
+    @Override
+    public final String getSelectedText()
+    {
+        TextArea area = getSelectedTextArea();
+        if(area == null)
+            return "";
+        return area.getSelectedText();
+    }
+    
+    private static final class StatusBar extends JPanel
+    {
+        private final JLabel label;
+
+        public StatusBar()
+        {
+            label = new JLabel("Ready");
+            setLayout(new BorderLayout());
+            add(label, BorderLayout.LINE_START);
+            add(new JLabel(new SizeGripIcon()), BorderLayout.LINE_END);
+        }
+        
+        public final void setLabel(String label) { this.label.setText(label); }
     }
 
     /**
@@ -542,6 +685,7 @@ public class ScriptEditor extends JFrame
         jSplitPane1 = new javax.swing.JSplitPane();
         jSplitPane2 = new javax.swing.JSplitPane();
         pages = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
         infoTabs = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -552,6 +696,8 @@ public class ScriptEditor extends JFrame
         jPanel1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         othersInfoList = new javax.swing.JList<>();
+        jPanel7 = new javax.swing.JPanel();
+        t_search = new javax.swing.JTextField();
         terminalTabs = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -584,6 +730,10 @@ public class ScriptEditor extends JFrame
         jMenuItem13 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -617,7 +767,7 @@ public class ScriptEditor extends JFrame
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         infoTabs.addTab("Functions", jPanel5);
@@ -633,7 +783,7 @@ public class ScriptEditor extends JFrame
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         infoTabs.addTab("Constants", jPanel6);
@@ -650,12 +800,51 @@ public class ScriptEditor extends JFrame
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         infoTabs.addTab("Others", jPanel1);
 
-        jSplitPane2.setLeftComponent(infoTabs);
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Search"));
+
+        t_search.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                t_searchFocusLost(evt);
+            }
+        });
+        t_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                t_searchKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(t_search)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(t_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(infoTabs)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(infoTabs))
+        );
+
+        jSplitPane2.setLeftComponent(jPanel2);
 
         jSplitPane1.setTopComponent(jSplitPane2);
 
@@ -834,6 +1023,37 @@ public class ScriptEditor extends JFrame
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Search");
+
+        jMenuItem16.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem16.setText("Find...");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem16);
+
+        jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem17.setText("Replace...");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem17);
+
+        jMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem18.setText("Go to line...");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem18);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -936,6 +1156,54 @@ public class ScriptEditor extends JFrame
         config.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
+    private void t_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_searchKeyReleased
+        doSearch();
+    }//GEN-LAST:event_t_searchKeyReleased
+
+    private void t_searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_t_searchFocusLost
+        doSearch();
+    }//GEN-LAST:event_t_searchFocusLost
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        TextArea area = getSelectedTextArea();
+        if(area == null)
+            return;
+        
+        if(findDialog != null && findDialog.isVisible())
+            findDialog.setVisible(false);
+        if(replaceDialog != null && replaceDialog.isVisible())
+            replaceDialog.setVisible(false);
+        
+        GoToDialog dialog = new GoToDialog(this);
+        dialog.setMaxLineNumberAllowed(area.getLineCount());
+        dialog.setVisible(true);
+        int line = dialog.getLineNumber();
+        if(line < 1)
+            return;
+        try { area.setCaretPosition(area.getLineStartOffset(line - 1)); }
+        catch(BadLocationException ex)
+        {
+            UIManager.getLookAndFeel().provideErrorFeedback(area);
+            ex.printStackTrace(System.err);
+        }
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        if(findDialog == null)
+            return;
+        if(replaceDialog != null && replaceDialog.isVisible())
+            replaceDialog.setVisible(false);
+        findDialog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        if(replaceDialog == null)
+            return;
+        if(findDialog != null && findDialog.isVisible())
+            findDialog.setVisible(false);
+        replaceDialog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<CompletionInfo> constsInfoList;
@@ -944,6 +1212,7 @@ public class ScriptEditor extends JFrame
     private javax.swing.JTabbedPane infoTabs;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -952,6 +1221,9 @@ public class ScriptEditor extends JFrame
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -961,10 +1233,12 @@ public class ScriptEditor extends JFrame
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -982,6 +1256,7 @@ public class ScriptEditor extends JFrame
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JList<CompletionInfo> othersInfoList;
     private javax.swing.JTabbedPane pages;
+    private javax.swing.JTextField t_search;
     private javax.swing.JTextPane terminal;
     private javax.swing.JTabbedPane terminalTabs;
     // End of variables declaration//GEN-END:variables

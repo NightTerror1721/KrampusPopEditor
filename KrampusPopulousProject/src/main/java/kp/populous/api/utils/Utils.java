@@ -27,6 +27,8 @@ import kp.populous.api.script.ScriptConstant;
 import kp.populous.api.script.ScriptFunctions;
 import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory;
 import org.fife.ui.rsyntaxtextarea.TokenMakerFactory;
+import org.fife.ui.rsyntaxtextarea.folding.CurlyFoldParser;
+import org.fife.ui.rsyntaxtextarea.folding.FoldParserManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -53,8 +55,10 @@ public final class Utils
     
     public static final void initPopScriptLanguage()
     {
-        AbstractTokenMakerFactory atmf = (AbstractTokenMakerFactory)TokenMakerFactory.getDefaultInstance();
+        AbstractTokenMakerFactory atmf = (AbstractTokenMakerFactory) TokenMakerFactory.getDefaultInstance();
         atmf.putMapping(POP_SCRIPT_TEXT_TYPE, "kp.populous.api.script.PopScriptMaker");
+        
+        FoldParserManager.get().addFoldParserMapping(POP_SCRIPT_TEXT_TYPE, new CurlyFoldParser(true, false));
     }
     
     public static final void useSystemLookAndFeel()
@@ -168,5 +172,17 @@ public final class Utils
             base.write(bw, 4, 0);
         }
         catch(IOException ex) { ex.printStackTrace(System.err); }
+    }
+    
+    public static final void printStringToFile(File file, String text)
+    {
+        try(OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file)))
+        {
+            osw.write(text);
+        }
+        catch(IOException ex)
+        {
+            ex.printStackTrace(System.err);
+        }
     }
 }

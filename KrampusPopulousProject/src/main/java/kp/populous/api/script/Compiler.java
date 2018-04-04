@@ -697,9 +697,15 @@ final class Compiler
         UInt16 index = fields.registerConstant(SourceToken.ZERO);
         return new Operator(token, op, new Operand(index));
     }
-    private Operator unaryOperator(UInt16 index, boolean negate) throws CompilationException { return unaryOperator(new Operand(index), negate); }
+    //private Operator unaryOperator(UInt16 index, boolean negate) throws CompilationException { return unaryOperator(new Operand(index), negate); }
     
-    private Operation fieldOperand(SourceToken token) throws CompilationException { return new Operand(fields.register(token)); }
+    private Operation fieldOperand(SourceToken token) throws CompilationException
+    {
+        UInt16 index = fields.register(token);
+        if(index == null)
+            error("Expected valid field (variable, constant or internal). But found: " + token);
+        return new Operand(fields.register(token));
+    }
     
     private Operation parseOperand(SourceToken token, TokenIterator it) throws CompilationException
     {
