@@ -292,7 +292,7 @@ public final class ScriptFunctions
             return tokens.toString();
         }
         
-        private String possibleValues()
+        public final String possibleValues()
         {
             if(tokens == null)
                 return field ? "[Variable, Constant, Internal]" : "[]";

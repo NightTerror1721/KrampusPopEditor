@@ -43,4 +43,10 @@ public class Raw
     
     public final void write(OutputStream os, int off, int len) throws IOException { os.write(data, off, len); }
     public final void write(OutputStream os) throws IOException { os.write(data); }
+    
+    public final void copyFrom(Raw other)
+    {
+        int len = Math.min(data.length, other.data.length);
+        System.arraycopy(other.data, 0, data, 0, len);
+    }
 }

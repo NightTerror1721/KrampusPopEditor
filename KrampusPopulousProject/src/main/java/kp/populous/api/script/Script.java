@@ -26,8 +26,8 @@ import org.fife.ui.rsyntaxtextarea.parser.Parser;
  */
 public final class Script
 {
-    final ScriptCodeData codes = new ScriptCodeData();
-    final ScriptFieldData fields = new ScriptFieldData();
+    public final ScriptCodeData codes = new ScriptCodeData();
+    public final ScriptFieldData fields = new ScriptFieldData();
     
     public final void read(InputStream is) throws IOException
     {
@@ -91,7 +91,7 @@ public final class Script
         }
     }
     
-    static final class ScriptCodeData
+    public static final class ScriptCodeData
     {
         private final Raw data = new Raw(ScriptConstant.MAX_CODES * 2);
         public final int length = data.length();
@@ -116,9 +116,12 @@ public final class Script
             data.signedByte(1, SByte.ZERO);
         }
         public final int getVersion() { return data.signedByte(0).toByte(); }
+        
+        public final void copyFrom(ScriptCodeData other) { data.copyFrom(other.data); }
+        public final void copyFrom(Raw rawCode) { data.copyFrom(rawCode); }
     }
     
-    static final class ScriptFieldData
+    public static final class ScriptFieldData
     {
         private final Field[] data = new Field[ScriptConstant.MAX_FIELDS];
         public final int length = data.length;
