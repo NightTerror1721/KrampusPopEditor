@@ -63,7 +63,10 @@ public final class SpecialToken implements UnparsedToken, ParsedToken
     @Override
     public void compile(CodePool code, FieldPool fields) throws CompilationError
     {
-        
+        code.addCode(token);
     }
+    
+    @Override
+    public final DataType getReturnType() throws CompilationError { return DataType.specialToken(token); }
     
 }

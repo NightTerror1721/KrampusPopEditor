@@ -40,4 +40,7 @@ public final class Constant implements UnparsedToken, ParsedToken
     {
         code.addCode(fields.registerConstant(this));
     }
+
+    @Override
+    public final DataType getReturnType() { return DataType.INTEGER; }
 }

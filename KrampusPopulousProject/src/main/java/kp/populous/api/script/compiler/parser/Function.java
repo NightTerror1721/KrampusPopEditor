@@ -52,17 +52,22 @@ public final class Function implements UnparsedToken, ParsedToken
         {
             ScriptFunctions.Parameter refPar = ref.getParameter(i);
             ParsedToken par = pars[i];
-            switch(par.getTokenType())
+            DataType type = par.getReturnType();
+            if(type.isInteger())
             {
-                case CONSTANT:
-                case VARIABLE:
-                case INTERNAL:
-                    if(!refPar.allowField())
-                        throw new CompilationError("Expected " + refPar.possibleValues() + " for parameter " + i + " in function " + id);
-                    break;
-                //case 
+                if(!refPar.allowField())
+                    throw new CompilationError("Expected " + refPar.possibleValues() + " for parameter " + i + " in function " + id);
             }
+            else if(type.isSpecialToken())
+            {
+                if(!refPar.isValidToken(type.getSpecialToken()))
+                    throw new CompilationError("Expected " + refPar.possibleValues() + " for parameter " + i + " in function " + id);
+            }
+            else throw new CompilationError("Expected " + refPar.possibleValues() + " for parameter " + i + " in function " + id);
         }
         return new Function(ref, pars);
     }
+
+    @Override
+    public final DataType getReturnType() throws CompilationError { return DataType.VOID; }
 }

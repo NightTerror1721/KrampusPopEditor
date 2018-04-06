@@ -41,4 +41,7 @@ public final class Internal implements UnparsedToken, ParsedToken
     {
         code.addCode(fields.registerInternal(this));
     }
+    
+    @Override
+    public final DataType getReturnType() { return DataType.INTEGER; }
 }

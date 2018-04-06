@@ -16,4 +16,5 @@ import kp.populous.api.script.compiler.FieldPool;
 public interface ParsedToken extends SourceToken
 {
     void compile(CodePool code, FieldPool fields) throws CompilationError;
+    DataType getReturnType() throws CompilationError;
 }

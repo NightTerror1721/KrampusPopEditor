@@ -41,4 +41,7 @@ public final class Variable implements UnparsedToken, ParsedToken
     {
         code.addCode(fields.registerVariable(this));
     }
+    
+    @Override
+    public final DataType getReturnType() { return DataType.INTEGER; }
 }
