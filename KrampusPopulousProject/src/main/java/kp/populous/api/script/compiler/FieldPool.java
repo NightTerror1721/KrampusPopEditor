@@ -15,6 +15,7 @@ import kp.populous.api.script.Script;
 import kp.populous.api.script.ScriptConstant;
 import kp.populous.api.script.compiler.parser.Constant;
 import kp.populous.api.script.compiler.parser.Internal;
+import kp.populous.api.script.compiler.parser.SpecialToken;
 import kp.populous.api.script.compiler.parser.Variable;
 import kp.populous.api.utils.Pair;
 
@@ -26,6 +27,7 @@ public final class FieldPool
 {
     private final FieldAllocator fields = new FieldAllocator();
     private final VariableAllocator varAllocator = new VariableAllocator();
+    private final FieldStack stack = new FieldStack(varAllocator);
     private final HashMap<Integer, UInt16> constants = new HashMap<>();
     private final HashMap<ScriptConstant.Internal, UInt16> internals = new HashMap<>();
     private final HashMap<String, UInt16> variables = new HashMap<>();
@@ -60,8 +62,20 @@ public final class FieldPool
         return field.right;
     }
     
-    public final UInt16 pushInStack() throws CompilationError { return varAllocator.pushInStack(); }
-    public final UInt16 popFromStack() { return varAllocator.popFromStack(); }
+    /* Stack */
+    //public final FieldStack getStack() { return stack; }
+    
+    public final UInt16 pushVariable(Variable variable) throws CompilationError { return stack.pushField(registerVariable(variable)); }
+    public final UInt16 pushConstant(Constant constant) throws CompilationError { return stack.pushField(registerConstant(constant)); }
+    public final UInt16 pushInternal(Internal internal) throws CompilationError { return stack.pushField(registerInternal(internal)); }
+    public final UInt16 pushSpecialToken(SpecialToken token) throws CompilationError { return stack.pushSpecialToken(token.getToken()); }
+    public final UInt16 pushVolatile() throws CompilationError { return stack.pushVolatile(); }
+    
+    public final UInt16 peek() throws CompilationError { return stack.peek(); }
+    
+    public final UInt16 pop() throws CompilationError { return stack.pop(); }
+    
+    /* End stack */
 
     public final void fillScriptFields(Script script) { fields.fillScriptFields(script); }
     
@@ -109,7 +123,7 @@ public final class FieldPool
         }
     }
     
-    private final class VariableAllocator
+    final class VariableAllocator
     {
         private final HashSet<UInt16> allocated = new HashSet<>();
         
@@ -117,6 +131,11 @@ public final class FieldPool
         private final HashSet<UInt16> deletedSet = new HashSet<>();
         
         private final LinkedList<UInt16> stack = new LinkedList<>();
+        
+        public final boolean hasAllocated(UInt16 index)
+        {
+            return allocated.contains(index);
+        }
         
         public final UInt16 allocate() throws CompilationError
         {
@@ -141,22 +160,6 @@ public final class FieldPool
                 throw new IllegalStateException();
             deleted.add(index);
             deletedSet.add(index);
-        }
-        
-        public final UInt16 pushInStack() throws CompilationError
-        {
-            UInt16 index = allocate();
-            stack.addFirst(index);
-            return index;
-        }
-        
-        public final UInt16 popFromStack()
-        {
-            if(stack.isEmpty())
-                throw new IllegalStateException("Empty stack");
-            UInt16 index = stack.removeFirst();
-            deallocate(index);
-            return index;
         }
     }
 }

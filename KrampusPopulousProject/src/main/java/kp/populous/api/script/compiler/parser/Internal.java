@@ -15,7 +15,7 @@ import kp.populous.api.script.compiler.FieldPool;
  *
  * @author Asus
  */
-public final class Internal implements UnparsedToken, ParsedToken
+public final class Internal implements UnparsedOperand, Operand
 {
     private final ScriptConstant.Internal value;
     
@@ -35,13 +35,21 @@ public final class Internal implements UnparsedToken, ParsedToken
     }
     
     public static final boolean isValidInternal(String token) { return ScriptConstant.Internal.decode(token) != null; }
-
-    @Override
-    public final void compile(CodePool code, FieldPool fields) throws CompilationError
-    {
-        code.addCode(fields.registerInternal(this));
-    }
     
     @Override
-    public final DataType getReturnType() { return DataType.INTEGER; }
+    public final void resolve(CodePool code, FieldPool fields, Environment env) throws CompilationError
+    {
+        switch(env)
+        {
+            case SUPERFICIAL: throw new CompilationError("Cannot put Internal here");
+            case DEEP: fields.pushInternal(this); break;
+            case COND_SUPERFICIAL:
+                code.addCode(ScriptConstant.Token.NOT_EQUAL_TO);
+                code.addCode(fields.registerInternal(this));
+                code.addCode(fields.registerConstant(Constant.ZERO));
+                break;
+            case COND_DEEP: code.addCode(fields.registerInternal(this)); break;
+            default: throw new IllegalStateException();
+        }
+    }
 }

@@ -7,6 +7,7 @@ package kp.populous.api.script.compiler.parser;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
+import kp.populous.api.script.ScriptConstant;
 import kp.populous.api.script.compiler.CodePool;
 import kp.populous.api.script.compiler.CompilationError;
 import kp.populous.api.script.compiler.FieldPool;
@@ -15,8 +16,10 @@ import kp.populous.api.script.compiler.FieldPool;
  *
  * @author Asus
  */
-public final class Constant implements UnparsedToken, ParsedToken
+public final class Constant implements UnparsedOperand, Operand
 {
+    public static final Constant ZERO = new Constant(0);
+    
     private final Integer value;
     
     private Constant(Integer value) { this.value = Objects.requireNonNull(value); }
@@ -36,11 +39,19 @@ public final class Constant implements UnparsedToken, ParsedToken
     public static final boolean isValidConstant(String token) { return PAT.matcher(token).matches(); }
 
     @Override
-    public final void compile(CodePool code, FieldPool fields) throws CompilationError
+    public final void resolve(CodePool code, FieldPool fields, Environment env) throws CompilationError
     {
-        code.addCode(fields.registerConstant(this));
+        switch(env)
+        {
+            case SUPERFICIAL: throw new CompilationError("Cannot put Constant here");
+            case DEEP: fields.pushConstant(this); break;
+            case COND_SUPERFICIAL:
+                code.addCode(ScriptConstant.Token.NOT_EQUAL_TO);
+                code.addCode(fields.registerConstant(this));
+                code.addCode(fields.registerConstant(ZERO));
+                break;
+            case COND_DEEP: code.addCode(fields.registerConstant(this)); break;
+            default: throw new IllegalStateException();
+        }
     }
-
-    @Override
-    public final DataType getReturnType() { return DataType.INTEGER; }
 }

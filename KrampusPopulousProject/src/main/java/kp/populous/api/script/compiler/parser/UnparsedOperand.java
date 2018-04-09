@@ -9,7 +9,7 @@ package kp.populous.api.script.compiler.parser;
  *
  * @author Asus
  */
-public interface UnparsedToken extends SourceToken
+public interface UnparsedOperand extends SourceToken
 {
     
 }

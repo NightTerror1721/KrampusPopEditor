@@ -7,6 +7,7 @@ package kp.populous.api.script.compiler.parser;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
+import kp.populous.api.script.ScriptConstant;
 import kp.populous.api.script.compiler.CodePool;
 import kp.populous.api.script.compiler.CompilationError;
 import kp.populous.api.script.compiler.FieldPool;
@@ -15,7 +16,7 @@ import kp.populous.api.script.compiler.FieldPool;
  *
  * @author Asus
  */
-public final class Variable implements UnparsedToken, ParsedToken
+public final class Variable implements UnparsedOperand, Operand
 {
     private final String name;
     
@@ -35,13 +36,21 @@ public final class Variable implements UnparsedToken, ParsedToken
     
     private static final Pattern PAT = Pattern.compile("\\$[_a-zA-Z0-9]+");
     public static final boolean isValidVariable(String token) { return PAT.matcher(token).matches(); }
-
-    @Override
-    public final void compile(CodePool code, FieldPool fields) throws CompilationError
-    {
-        code.addCode(fields.registerVariable(this));
-    }
     
     @Override
-    public final DataType getReturnType() { return DataType.INTEGER; }
+    public final void resolve(CodePool code, FieldPool fields, Environment env) throws CompilationError
+    {
+        switch(env)
+        {
+            case SUPERFICIAL: throw new CompilationError("Cannot put Variable here");
+            case DEEP: fields.pushVariable(this); break;
+            case COND_SUPERFICIAL:
+                code.addCode(ScriptConstant.Token.NOT_EQUAL_TO);
+                code.addCode(fields.registerVariable(this));
+                code.addCode(fields.registerConstant(Constant.ZERO));
+                break;
+            case COND_DEEP: code.addCode(fields.registerVariable(this)); break;
+            default: throw new IllegalStateException();
+        }
+    }
 }

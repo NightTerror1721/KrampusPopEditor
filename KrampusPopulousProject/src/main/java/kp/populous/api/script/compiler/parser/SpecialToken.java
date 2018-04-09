@@ -15,7 +15,7 @@ import kp.populous.api.script.compiler.FieldPool;
  *
  * @author Asus
  */
-public final class SpecialToken implements UnparsedToken, ParsedToken
+public final class SpecialToken implements UnparsedOperand, Operand
 {
     private final ScriptConstant.Token token;
     
@@ -36,9 +36,12 @@ public final class SpecialToken implements UnparsedToken, ParsedToken
     public static final boolean isValidSpecialToken(String token)
     {
         ScriptConstant.Token value = ScriptConstant.Token.decode(token);
-        if(value == null || value.isFunction())
-            return false;
-        switch(value)
+        return value != null && !value.isFunction() && isValidSpecialToken(value);
+    }
+    
+    public static final boolean isValidSpecialToken(ScriptConstant.Token token)
+    {
+        switch(token)
         {
             case ON:
             case OFF:
@@ -59,14 +62,18 @@ public final class SpecialToken implements UnparsedToken, ParsedToken
             default: return false;
         }
     }
-
+    
     @Override
-    public void compile(CodePool code, FieldPool fields) throws CompilationError
+    public final void resolve(CodePool code, FieldPool fields, Environment env) throws CompilationError
     {
-        code.addCode(token);
+        switch(env)
+        {
+            case SUPERFICIAL: throw new CompilationError("Cannot put Internal here");
+            case DEEP: fields.pushSpecialToken(this); break;
+            case COND_SUPERFICIAL:
+            case COND_DEEP:
+                throw new CompilationError("Cannot put Special Token in conditional environment");
+            default: throw new IllegalStateException();
+        }
     }
-    
-    @Override
-    public final DataType getReturnType() throws CompilationError { return DataType.specialToken(token); }
-    
 }
