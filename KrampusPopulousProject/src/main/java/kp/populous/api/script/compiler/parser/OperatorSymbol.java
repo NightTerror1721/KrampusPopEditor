@@ -6,7 +6,9 @@
 package kp.populous.api.script.compiler.parser;
 
 import java.util.Objects;
+import kp.populous.api.data.UInt16;
 import kp.populous.api.script.ScriptConstant;
+import kp.populous.api.script.ScriptConstant.Token;
 import kp.populous.api.script.compiler.CodePool;
 import kp.populous.api.script.compiler.CompilationError;
 import kp.populous.api.script.compiler.FieldPool;
@@ -21,15 +23,13 @@ public final class OperatorSymbol implements UnparsedOperand
     private final String symbol;
     private final int priority;
     private final int operandCount;
-    private final boolean conditionMode;
     private final OperatorAction action;
     
-    private OperatorSymbol(String symbol, int priority, int operandCount, boolean conditionMode, OperatorAction action)
+    private OperatorSymbol(String symbol, int priority, int operandCount, OperatorAction action)
     {
         this.symbol = Objects.requireNonNull(symbol);
         this.priority = priority;
         this.operandCount = operandCount;
-        this.conditionMode = conditionMode;
         this.action = Objects.requireNonNull(action);
     }
     
@@ -39,10 +39,6 @@ public final class OperatorSymbol implements UnparsedOperand
     
     public final void resolve(CodePool code, FieldPool fields, Environment env, Operand... operands) throws CompilationError
     {
-        if(this.conditionMode && !env.isConditional())
-            throw new CompilationError("Cannot use non conditional operators in conditional environment");
-        if(!this.conditionMode && env.isConditional())
-            throw new CompilationError("Cannot use conditional operators in non conditional environment");
         if(operands == null)
             throw new NullPointerException();
         if(operands.length != operandCount)
@@ -55,21 +51,77 @@ public final class OperatorSymbol implements UnparsedOperand
     
     
     public static final OperatorSymbol
-            OR = new OperatorSymbol("||", 0, 2, true, (code, fields, env, ops) -> {
-                code.addCode(ScriptConstant.Token.OR);
-                ops[0].resolve(code, fields, Environment.COND_DEEP);
-                ops[1].resolve(code, fields, Environment.COND_DEEP);
-            }),
+            OR = new OperatorSymbol("||", 1, 2, conditionalAction(Token.OR)),
             
-            AND = new OperatorSymbol("&&", 1, 2, true, (code, fields, env, ops) -> {
-                code.addCode(ScriptConstant.Token.AND);
-                ops[0].resolve(code, fields, Environment.COND_DEEP);
-                ops[1].resolve(code, fields, Environment.COND_DEEP);
-            });
+            AND = new OperatorSymbol("&&", 2, 2, conditionalAction(Token.AND)),
+            
+            EQUALS = new OperatorSymbol("==", 3, 2, conditionalAction(Token.EQUAL_TO)),
+            NOT_EQUALS = new OperatorSymbol("!=", 3, 2, conditionalAction(Token.NOT_EQUAL_TO)),
+            GREATER_THAN = new OperatorSymbol(">", 3, 2, conditionalAction(Token.GREATER_THAN)),
+            LESS_THAN = new OperatorSymbol("<", 3, 2, conditionalAction(Token.LESS_THAN)),
+            GREATER_EQUALS_THAN = new OperatorSymbol(">=", 3, 2, conditionalAction(Token.GREATER_THAN_EQUAL_TO)),
+            EQULESS_EQUALS_THANALS = new OperatorSymbol("<=", 3, 2, conditionalAction(Token.LESS_THAN_EQUAL_TO))
+            ;
     
     @FunctionalInterface
     private interface OperatorAction
     {
         void apply(CodePool code, FieldPool fields, Environment env, Operand[] operands) throws CompilationError;
+    }
+    
+    private static OperatorAction conditionalAction(Token token)
+    {
+        return (code, fields, env, ops) -> {
+            if(ops[0].isCompatibleWithConditionals() && ops[1].isCompatibleWithConditionals())
+            {
+                code.addCode(token);
+                ops[0].resolve(code, fields, Environment.COND_DEEP);
+                ops[1].resolve(code, fields, Environment.COND_DEEP);
+            }
+            else
+            {
+                ops[0].resolve(code, fields, Environment.DEEP);
+                ops[1].resolve(code, fields, Environment.DEEP);
+                
+                CondBlock cond = CondBlock.create(code);
+                cond.add(token);
+                code.addParametersFromStack(fields, 2);
+                
+                UInt16 index = fields.pushVolatile();
+                
+                cond.If()
+                        .add(Token.SET)
+                        .add(index)
+                        .add(fields.registerConstant(Constant.ONE))
+                    .Else()
+                        .add(Token.SET)
+                        .add(index)
+                        .add(fields.registerConstant(Constant.ZERO))
+                    .end();
+            }
+        };
+    }
+    
+    
+    private static final class CondBlock
+    {
+        private final CodePool code;
+        
+        private CondBlock(CodePool code) { this.code = code; }
+        
+        public static final CondBlock create(CodePool code) throws CompilationError
+        {
+            CondBlock cb = new CondBlock(code);
+            code.addCode(ScriptConstant.Token.IF);
+            return cb;
+        }
+        
+        public final CondBlock add(UInt16 code) throws CompilationError { this.code.addCode(code); return this; }
+        public final CondBlock add(ScriptConstant.Internal internal) throws CompilationError { code.addCode(internal); return this; }
+        public final CondBlock add(Token token) throws CompilationError { code.addCode(token); return this; }
+        
+        public final CondBlock If() throws CompilationError { return add(Token.BEGIN); }
+        public final CondBlock Else() throws CompilationError { return add(Token.END).add(Token.ELSE).add(Token.BEGIN); }
+        public final CondBlock end() throws CompilationError { return add(Token.END).add(Token.ENDIF); }
     }
 }

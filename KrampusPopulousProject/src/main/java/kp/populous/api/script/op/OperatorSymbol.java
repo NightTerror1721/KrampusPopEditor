@@ -25,7 +25,7 @@ public final class OperatorSymbol extends Token
             LESS_THAN = new OperatorSymbol("<", 2, (op0, op1) -> (op0 < op1) ? op1 : 0),
             GREATER_EQUALS_THAN = new OperatorSymbol(">=", 2, (op0, op1) -> (op0 >= op1) ? 1 : 0),
             LESS_EQUALS_THAN = new OperatorSymbol("<=", 2, (op0, op1) -> (op0 <= op1) ? 1 : 0),
-            COMPARE = new OperatorSymbol("<=>", 5, (op0, op1) -> (op0 < op1 ? -1 : op0 == 1 ? 0 : 1)),
+            COMPARE = new OperatorSymbol("<=>", 2, (op0, op1) -> (op0 < op1 ? -1 : op0 == 1 ? 0 : 1)),
             
             BIT_OR = new OperatorSymbol("|", 3, (op0, op1) -> (op0 | op1)),
             BIT_AND = new OperatorSymbol("&", 3, (op0, op1) -> (op0 & op1)),

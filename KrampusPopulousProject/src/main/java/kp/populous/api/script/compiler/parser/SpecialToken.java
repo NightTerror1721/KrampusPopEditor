@@ -76,4 +76,7 @@ public final class SpecialToken implements UnparsedOperand, Operand
             default: throw new IllegalStateException();
         }
     }
+    
+    @Override
+    public boolean isCompatibleWithConditionals() { return true; }
 }

@@ -40,6 +40,15 @@ public final class CodePool
     public final void addCode(ScriptConstant.Token token) throws CompilationError { addCode(token.getCode()); }
     public final void addCode(ScriptConstant.Internal internal) throws CompilationError { addCode(internal.getCode()); }
     
+    public final void addParametersFromStack(FieldPool fields, int amount) throws CompilationError
+    {
+        UInt16[] aux = new UInt16[amount];
+        for(int i=aux.length-1;i>=0;i--)
+            aux[i] = fields.pop();
+        for(UInt16 idx : aux)
+            addCode(idx);
+    }
+    
     public final void fillScriptCode(Script script)
     {
         script.codes.copyFrom(data);

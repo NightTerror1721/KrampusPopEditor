@@ -16,6 +16,7 @@ import kp.populous.api.script.compiler.FieldPool;
 public interface Operand extends SourceToken
 {
     void resolve(CodePool code, FieldPool fields, Environment env) throws CompilationError;
+    boolean isCompatibleWithConditionals();
     
     public enum Environment
     {

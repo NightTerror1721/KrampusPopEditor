@@ -19,6 +19,7 @@ import kp.populous.api.script.compiler.FieldPool;
 public final class Constant implements UnparsedOperand, Operand
 {
     public static final Constant ZERO = new Constant(0);
+    public static final Constant ONE = new Constant(1);
     
     private final Integer value;
     
@@ -54,4 +55,7 @@ public final class Constant implements UnparsedOperand, Operand
             default: throw new IllegalStateException();
         }
     }
+
+    @Override
+    public boolean isCompatibleWithConditionals() { return true; }
 }

@@ -53,4 +53,7 @@ public final class Variable implements UnparsedOperand, Operand
             default: throw new IllegalStateException();
         }
     }
+    
+    @Override
+    public boolean isCompatibleWithConditionals() { return true; }
 }

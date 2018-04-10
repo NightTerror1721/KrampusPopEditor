@@ -82,4 +82,6 @@ public final class Function implements UnparsedOperand, Operand
         return new Function(ref, pars);
     }
     
+    @Override
+    public boolean isCompatibleWithConditionals() { return false; }
 }
