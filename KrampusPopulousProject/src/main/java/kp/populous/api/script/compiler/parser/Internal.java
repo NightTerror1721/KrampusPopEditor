@@ -55,4 +55,9 @@ public final class Internal implements UnparsedOperand, Operand
     
     @Override
     public boolean isCompatibleWithConditionals() { return true; }
+    
+    public static final boolean isSetteableInternal(ScriptConstant.Internal internal)
+    {
+        return internal.name().startsWith("ATTR_");
+    }
 }

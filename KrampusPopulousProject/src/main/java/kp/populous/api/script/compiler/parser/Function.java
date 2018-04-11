@@ -6,7 +6,6 @@
 package kp.populous.api.script.compiler.parser;
 
 import java.util.Objects;
-import kp.populous.api.data.UInt16;
 import kp.populous.api.script.ScriptConstant;
 import kp.populous.api.script.ScriptFunctions;
 import kp.populous.api.script.compiler.CodePool;
@@ -45,13 +44,9 @@ public final class Function implements UnparsedOperand, Operand
             throw new CompilationError("Function " + ref.getCommandToken().getFunctionName() + " cannot return any value");
         for(Operand par : parameters)
             par.resolve(code, fields, Environment.DEEP);
-        UInt16[] indices = new UInt16[parameters.length];
-        for(int i=indices.length-1;i>=0;i--)
-            indices[i] = fields.pop();
         code.addCode(ScriptConstant.Token.DO);
         code.addCode(ref.getCommandToken());
-        for(UInt16 index : indices)
-            code.addCode(index);
+        code.addParametersFromStack(fields, parameters.length);
     }
     
     public static final Function parse(ScriptConstant.Token id, Operand[] pars) throws CompilationError

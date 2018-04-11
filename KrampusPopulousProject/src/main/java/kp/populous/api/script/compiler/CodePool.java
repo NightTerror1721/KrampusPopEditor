@@ -10,6 +10,7 @@ import kp.populous.api.data.SByte;
 import kp.populous.api.data.UInt16;
 import kp.populous.api.script.Script;
 import kp.populous.api.script.ScriptConstant;
+import kp.populous.api.script.compiler.FieldStack.StackValue;
 
 /**
  *
@@ -39,14 +40,15 @@ public final class CodePool
     }
     public final void addCode(ScriptConstant.Token token) throws CompilationError { addCode(token.getCode()); }
     public final void addCode(ScriptConstant.Internal internal) throws CompilationError { addCode(internal.getCode()); }
+    public final void addCode(StackValue value) throws CompilationError { addCode(value.index); }
     
     public final void addParametersFromStack(FieldPool fields, int amount) throws CompilationError
     {
-        UInt16[] aux = new UInt16[amount];
+        StackValue[] aux = new StackValue[amount];
         for(int i=aux.length-1;i>=0;i--)
             aux[i] = fields.pop();
-        for(UInt16 idx : aux)
-            addCode(idx);
+        for(StackValue value : aux)
+            addCode(value.index);
     }
     
     public final void fillScriptCode(Script script)

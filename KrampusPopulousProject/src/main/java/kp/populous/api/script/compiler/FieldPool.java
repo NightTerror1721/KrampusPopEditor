@@ -13,6 +13,7 @@ import kp.populous.api.data.UInt16;
 import kp.populous.api.script.Field;
 import kp.populous.api.script.Script;
 import kp.populous.api.script.ScriptConstant;
+import kp.populous.api.script.compiler.FieldStack.StackValue;
 import kp.populous.api.script.compiler.parser.Constant;
 import kp.populous.api.script.compiler.parser.Internal;
 import kp.populous.api.script.compiler.parser.SpecialToken;
@@ -27,7 +28,7 @@ public final class FieldPool
 {
     private final FieldAllocator fields = new FieldAllocator();
     private final VariableAllocator varAllocator = new VariableAllocator();
-    private final FieldStack stack = new FieldStack(varAllocator);
+    private final FieldStack stack = new FieldStack(this, varAllocator);
     private final HashMap<Integer, UInt16> constants = new HashMap<>();
     private final HashMap<ScriptConstant.Internal, UInt16> internals = new HashMap<>();
     private final HashMap<String, UInt16> variables = new HashMap<>();
@@ -65,15 +66,16 @@ public final class FieldPool
     /* Stack */
     //public final FieldStack getStack() { return stack; }
     
-    public final UInt16 pushVariable(Variable variable) throws CompilationError { return stack.pushField(registerVariable(variable)); }
-    public final UInt16 pushConstant(Constant constant) throws CompilationError { return stack.pushField(registerConstant(constant)); }
-    public final UInt16 pushInternal(Internal internal) throws CompilationError { return stack.pushField(registerInternal(internal)); }
-    public final UInt16 pushSpecialToken(SpecialToken token) throws CompilationError { return stack.pushSpecialToken(token.getToken()); }
-    public final UInt16 pushVolatile() throws CompilationError { return stack.pushVolatile(); }
+    public final StackValue pushVariable(Variable variable) throws CompilationError { return stack.pushVariable(variable); }
+    public final StackValue pushConstant(Constant constant) throws CompilationError { return stack.pushConstant(constant); }
+    public final StackValue pushInternal(Internal internal) throws CompilationError { return stack.pushInternal(internal); }
+    public final StackValue pushSpecialToken(SpecialToken token) throws CompilationError { return stack.pushSpecialToken(token); }
+    public final StackValue pushVolatile() throws CompilationError { return stack.pushVolatile(); }
+    public final StackValue pushStackValue(StackValue value) throws CompilationError { return stack.pushStackValue(value); }
     
-    public final UInt16 peek() throws CompilationError { return stack.peek(); }
+    public final StackValue peek() throws CompilationError { return stack.peek(); }
     
-    public final UInt16 pop() throws CompilationError { return stack.pop(); }
+    public final StackValue pop() throws CompilationError { return stack.pop(); }
     
     /* End stack */
 

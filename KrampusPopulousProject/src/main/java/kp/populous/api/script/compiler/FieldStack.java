@@ -8,71 +8,107 @@ package kp.populous.api.script.compiler;
 import java.util.LinkedList;
 import java.util.Objects;
 import kp.populous.api.data.UInt16;
-import kp.populous.api.script.ScriptConstant.Token;
 import kp.populous.api.script.compiler.FieldPool.VariableAllocator;
+import kp.populous.api.script.compiler.parser.Constant;
+import kp.populous.api.script.compiler.parser.Internal;
 import kp.populous.api.script.compiler.parser.SpecialToken;
+import kp.populous.api.script.compiler.parser.Variable;
 
 public final class FieldStack
 {
     private final VariableAllocator vars;
-    private final LinkedList<Entry> stack;
+    private final FieldPool fields;
+    private final LinkedList<StackValue> stack;
     
-    FieldStack(VariableAllocator vars)
+    FieldStack(FieldPool fields, VariableAllocator vars)
     {
         this.vars = Objects.requireNonNull(vars);
+        this.fields = Objects.requireNonNull(fields);
         this.stack = new LinkedList<>();
     }
     
-    public final UInt16 pushVolatile() throws CompilationError
+    public final StackValue pushVolatile() throws CompilationError
     {
         UInt16 index = vars.allocate();
-        stack.addFirst(new Entry(index, true));
-        return index;
-    }
-    public final UInt16 pushField(UInt16 index) throws CompilationError
-    {
-        if(!vars.hasAllocated(index))
-            throw new CompilationError("Unallocated index: " + index);
-        stack.addFirst(new Entry(index, false));
-        return index;
-    }
-    public final UInt16 pushSpecialToken(Token token) throws CompilationError
-    {
-        if(!SpecialToken.isValidSpecialToken(token))
-            throw new CompilationError("Invalid special token: " + token.getTokenName());
-        UInt16 code = token.getCode();
-        stack.addFirst(new Entry(code, false));
-        return code;
+        StackValue e = new StackValue(index, VOLATILE);
+        stack.addFirst(e);
+        return e;
     }
     
-    public final UInt16 peek() throws CompilationError
+    private StackValue pushField(UInt16 index, int type)
+    {
+        StackValue e = new StackValue(index, type);
+        stack.addFirst(e);
+        return e;
+    }
+    public final StackValue pushVariable(Variable variable) throws CompilationError { return pushField(fields.registerVariable(variable), VARIABLE); }
+    public final StackValue pushInternal(Internal internal) throws CompilationError { return pushField(fields.registerInternal(internal), INTERNAL); }
+    public final StackValue pushConstant(Constant constant) throws CompilationError { return pushField(fields.registerConstant(constant), CONSTANT); }
+    
+    public final StackValue pushSpecialToken(SpecialToken token) throws CompilationError
+    {
+        if(!SpecialToken.isValidSpecialToken(token.getToken()))
+            throw new CompilationError("Invalid special token: " + token.getToken().getTokenName());
+        UInt16 code = token.getToken().getCode();
+        StackValue e = new StackValue(code, SPTOKEN);
+        stack.addFirst(e);
+        return e;
+    }
+    
+    public final StackValue pushStackValue(StackValue value) throws CompilationError
+    {
+        value.checkStack(this);
+        if(value.isVolatile())
+            throw new CompilationError("Expected valid (Internal, SpecialToken or Variable) but found operator result");
+        stack.addFirst(value);
+        return value;
+    }
+    
+    public final StackValue peek() throws CompilationError
     {
         if(stack.isEmpty())
             throw new CompilationError("Empty stack");
-        Entry e = stack.peekFirst();
-        return e.index;
+        return stack.peekFirst();
     }
     
-    public final UInt16 pop() throws CompilationError
+    public final StackValue pop() throws CompilationError
     {
         if(stack.isEmpty())
             throw new CompilationError("Empty stack");
-        Entry e = stack.removeFirst();
-        if(e.isVolatile)
+        StackValue e = stack.removeFirst();
+        if(e.isVolatile())
             vars.deallocate(e.index);
-        return e.index;
+        return e;
     }
     
     
-    private static final class Entry
+    public final class StackValue
     {
-        private final UInt16 index;
-        private final boolean isVolatile;
+        public final UInt16 index;
+        private final int type;
         
-        private Entry(UInt16 index, boolean isVolatile)
+        private StackValue(UInt16 index, int type)
         {
             this.index = Objects.requireNonNull(index);
-            this.isVolatile = isVolatile;
+            this.type = type;
         }
+        
+        private void checkStack(FieldStack stack)
+        {
+            if(FieldStack.this != stack)
+                throw new IllegalStateException();
+        }
+        
+        public final boolean isVolatile() { return type == VOLATILE; }
+        public final boolean isVariable() { return type == VARIABLE; }
+        public final boolean isInternal() { return type == INTERNAL; }
+        public final boolean isConstant() { return type == CONSTANT; }
+        public final boolean isSpecialToken() { return type == SPTOKEN; }
     }
+    
+    private static final int VOLATILE = 0;
+    private static final int VARIABLE = 1;
+    private static final int INTERNAL = 2;
+    private static final int CONSTANT = 3;
+    private static final int SPTOKEN = 4;
 }
