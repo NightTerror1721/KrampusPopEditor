@@ -5,10 +5,16 @@
  */
 package kp.populous.api.script.compiler.parser;
 
+import kp.populous.api.script.compiler.CodePool;
+import kp.populous.api.script.compiler.FieldPool;
+
 /**
  *
  * @author Asus
  */
-public class Instruction {
+public abstract class Instruction
+{
+    public abstract InstructionId getInstructionId();
     
+    public abstract void compile(CodePool code, FieldPool fields);
 }

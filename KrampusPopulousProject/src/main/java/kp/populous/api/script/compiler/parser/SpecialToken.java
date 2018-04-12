@@ -33,6 +33,13 @@ public final class SpecialToken implements UnparsedOperand, Operand
         return new SpecialToken(ScriptConstant.Token.decode(token));
     }
     
+    public static final SpecialToken parseOrNull(String token)
+    {
+        if(!isValidSpecialToken(token))
+            return null;
+        return new SpecialToken(ScriptConstant.Token.decode(token));
+    }
+    
     public static final boolean isValidSpecialToken(String token)
     {
         ScriptConstant.Token value = ScriptConstant.Token.decode(token);

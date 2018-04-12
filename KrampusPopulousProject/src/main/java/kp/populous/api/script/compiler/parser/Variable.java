@@ -34,6 +34,13 @@ public final class Variable implements UnparsedOperand, Operand
         return new Variable(token);
     }
     
+    public static final Variable parseOrNull(String token)
+    {
+        if(!isValidVariable(token))
+            return null;
+        return new Variable(token);
+    }
+    
     private static final Pattern PAT = Pattern.compile("\\$[_a-zA-Z0-9]+");
     public static final boolean isValidVariable(String token) { return PAT.matcher(token).matches(); }
     

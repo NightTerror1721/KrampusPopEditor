@@ -34,6 +34,14 @@ public final class Internal implements UnparsedOperand, Operand
         return new Internal(value);
     }
     
+    public static final Internal parseOrNull(String token)
+    {
+        ScriptConstant.Internal value = ScriptConstant.Internal.decode(token);
+        if(value == null)
+            return null;
+        return new Internal(value);
+    }
+    
     public static final boolean isValidInternal(String token) { return ScriptConstant.Internal.decode(token) != null; }
     
     @Override

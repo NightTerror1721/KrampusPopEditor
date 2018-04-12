@@ -9,9 +9,22 @@ package kp.populous.api.script.compiler.parser;
  *
  * @author Asus
  */
-public enum InstructionId
+public final class InstructionId implements UnparsedOperand
 {
-    OPERATION,
-    IF,
-    EVERY
+    private InstructionId() {}
+    
+    @Override
+    public TokenType getTokenType() { return TokenType.INSTRUCTION_ID; }
+    
+    public static final InstructionId
+            OPERATION = new InstructionId(),
+            SET = new InstructionId(),
+            INC = new InstructionId(),
+            DEC = new InstructionId(),
+            MUL = new InstructionId(),
+            DIV = new InstructionId(),
+            IF = new InstructionId(),
+            ELSE = new InstructionId(),
+            EVERY = new InstructionId(),
+            SCOPE = new InstructionId();
 }

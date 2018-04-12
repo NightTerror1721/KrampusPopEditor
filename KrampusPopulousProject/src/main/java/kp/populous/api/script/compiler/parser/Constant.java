@@ -36,6 +36,12 @@ public final class Constant implements UnparsedOperand, Operand
         catch(NumberFormatException ex) { throw new CompilationError("Invalid constant: " + token); }
     }
     
+    public static final Constant parseOrNull(String token)
+    {
+        try { return new Constant(Integer.decode(token)); }
+        catch(NumberFormatException ex) { return null; }
+    }
+    
     private static final Pattern PAT = Pattern.compile("[+-]?(0[xX])?[0-9]+");
     public static final boolean isValidConstant(String token) { return PAT.matcher(token).matches(); }
 

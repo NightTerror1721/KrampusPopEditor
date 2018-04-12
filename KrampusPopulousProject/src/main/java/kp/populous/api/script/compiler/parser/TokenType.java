@@ -17,9 +17,9 @@ public enum TokenType
     VARIABLE,
     SPECIAL_TOKEN,
     PARENTHESIS,
-    SCOPE,
     CONTROL,
-    SEPARATOR,
+    STOP_CHAR,
+    INSTRUCTION_ID,
     OPERATOR_SYMBOL,
     OPERATOR;
 }
