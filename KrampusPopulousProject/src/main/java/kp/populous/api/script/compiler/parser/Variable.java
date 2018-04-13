@@ -63,4 +63,26 @@ public final class Variable implements UnparsedOperand, Operand
     
     @Override
     public boolean isCompatibleWithConditionals() { return true; }
+    
+    @Override
+    public final String toString() { return name; }
+    
+    @Override
+    public final boolean equals(Object o)
+    {
+        if(o instanceof Variable)
+        {
+            Variable v = (Variable) o;
+            return name.equals(v.name);
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
 }

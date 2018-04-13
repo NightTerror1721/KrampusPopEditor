@@ -64,6 +64,28 @@ public final class Internal implements UnparsedOperand, Operand
     @Override
     public boolean isCompatibleWithConditionals() { return true; }
     
+    @Override
+    public final String toString() { return value.getInternalName(); }
+    
+    @Override
+    public final boolean equals(Object o)
+    {
+        if(o instanceof Internal)
+        {
+            Internal i = (Internal) o;
+            return value.equals(i.value);
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.value);
+        return hash;
+    }
+    
     public static final boolean isSetteableInternal(ScriptConstant.Internal internal)
     {
         return internal.name().startsWith("ATTR_");

@@ -86,4 +86,26 @@ public final class SpecialToken implements UnparsedOperand, Operand
     
     @Override
     public boolean isCompatibleWithConditionals() { return true; }
+    
+    @Override
+    public final String toString() { return token.getTokenName(); }
+    
+    @Override
+    public final boolean equals(Object o)
+    {
+        if(o instanceof SpecialToken)
+        {
+            SpecialToken sp = (SpecialToken) o;
+            return token.equals(sp.token);
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 5;
+        hash = 13 * hash + Objects.hashCode(this.token);
+        return hash;
+    }
 }

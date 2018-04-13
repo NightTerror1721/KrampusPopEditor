@@ -5,6 +5,7 @@
  */
 package kp.populous.api.script.compiler.parser;
 
+import java.util.Arrays;
 import java.util.Objects;
 import kp.populous.api.script.ScriptConstant;
 import kp.populous.api.script.ScriptFunctions;
@@ -79,4 +80,41 @@ public final class Function implements UnparsedOperand, Operand
     
     @Override
     public boolean isCompatibleWithConditionals() { return false; }
+    
+    @Override
+    public final String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ref.getCommandToken().getFunctionName()).append('(');
+        if(parameters.length > 0)
+        {
+            for(Operand arg : parameters)
+                sb.append(arg).append(", ");
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        sb.append(')');
+        return sb.toString();
+    }
+    
+    @Override
+    public final boolean equals(Object o)
+    {
+        if(o instanceof Function)
+        {
+            Function f = (Function) o;
+            if(ref.getCommandToken() != f.ref.getCommandToken())
+                return false;
+            return Arrays.equals(parameters, f.parameters);
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.ref);
+        hash = 67 * hash + Arrays.deepHashCode(this.parameters);
+        return hash;
+    }
 }

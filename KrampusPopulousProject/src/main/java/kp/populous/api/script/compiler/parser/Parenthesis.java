@@ -9,18 +9,7 @@ package kp.populous.api.script.compiler.parser;
  *
  * @author Asus
  */
-public enum TokenType
+public final class Parenthesis implements Operand
 {
-    CONSTANT,
-    INTERNAL,
-    FUNCTION,
-    VARIABLE,
-    SPECIAL_TOKEN,
-    PARENTHESIS,
-    ARGUMENT_LIST,
-    CONTROL,
-    STOP_CHAR,
-    INSTRUCTION_ID,
-    OPERATOR_SYMBOL,
-    OPERATOR;
+    
 }

@@ -5,6 +5,7 @@
  */
 package kp.populous.api.script.compiler.parser;
 
+import java.util.Arrays;
 import java.util.Objects;
 import kp.populous.api.script.compiler.CodePool;
 import kp.populous.api.script.compiler.CompilationError;
@@ -46,4 +47,27 @@ public final class Operator implements Operand
 
     @Override
     public boolean isCompatibleWithConditionals() { return symbol.isConditionalSymbol(); }
+    
+    @Override
+    public final String toString() { return symbol.toStringOperator(operands); }
+    
+    @Override
+    public final boolean equals(Object o)
+    {
+        if(o instanceof Operator)
+        {
+            Operator op = (Operator) o;
+            return symbol.equals(op.symbol) && Arrays.equals(operands, op.operands);
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.symbol);
+        hash = 17 * hash + Arrays.deepHashCode(this.operands);
+        return hash;
+    }
 }

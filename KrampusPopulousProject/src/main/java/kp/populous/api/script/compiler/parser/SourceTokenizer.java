@@ -26,7 +26,7 @@ public final class SourceTokenizer
         this.source = Objects.requireNonNull(source);
     }
     
-    public final UnparsedOperand nextToken() throws EOFException
+    public final UnparsedOperand nextToken() throws EOFException, CompilationError
     {
         if(!source.hasNext())
             return null;
@@ -93,6 +93,19 @@ public final class SourceTokenizer
     private Function parseFunction(ScriptFunctions.Function ref)
     {
         
+    }
+    
+    private UnparsedOperand[] parseArgumentList() throws EOFException, CompilationError
+    {
+        if(!checkNextToken(StopChar.LEFT_PARENTHESIS))
+            throw new CompilationError("Expected '(' before arguments list '(<argument_list>)'");
+        
+    }
+    
+    private boolean checkNextToken(UnparsedOperand token) throws EOFException, CompilationError
+    {
+        UnparsedOperand next = nextToken();
+        return next != null && next.equals(token);
     }
     
     

@@ -64,4 +64,26 @@ public final class Constant implements UnparsedOperand, Operand
 
     @Override
     public boolean isCompatibleWithConditionals() { return true; }
+    
+    @Override
+    public final String toString() { return value.toString(); }
+    
+    @Override
+    public final boolean equals(Object o)
+    {
+        if(o instanceof Constant)
+        {
+            Constant c = (Constant) o;
+            return value.equals(c.value);
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.value);
+        return hash;
+    }
 }

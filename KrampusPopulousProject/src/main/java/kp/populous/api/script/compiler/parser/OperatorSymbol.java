@@ -5,6 +5,7 @@
  */
 package kp.populous.api.script.compiler.parser;
 
+import java.util.Arrays;
 import java.util.Objects;
 import kp.populous.api.data.UInt16;
 import kp.populous.api.script.ScriptConstant;
@@ -50,8 +51,35 @@ public final class OperatorSymbol implements UnparsedOperand
         action.apply(code, fields, env, operands);
     }
     
+    public final String toStringOperator(Operand[] operands)
+    {
+        switch(operandCount)
+        {
+            default: return toString() + " " + Arrays.toString(operands);
+            case 1: return toString() + operands[0];
+            case 2: return operands[0] + " " + toString() + " " + operands[1];
+        }
+    }
+    
     @Override
     public final TokenType getTokenType() { return TokenType.OPERATOR_SYMBOL; }
+    
+    @Override
+    public final String toString() { return symbol; }
+    
+    @Override
+    public final boolean equals(Object o) { return this == o; }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.symbol);
+        hash = 79 * hash + this.priority;
+        hash = 79 * hash + this.operandCount;
+        hash = 79 * hash + (this.conditional ? 1 : 0);
+        return hash;
+    }
     
     
     public static final OperatorSymbol

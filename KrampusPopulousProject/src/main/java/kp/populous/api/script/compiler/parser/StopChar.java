@@ -20,6 +20,28 @@ public final class StopChar implements UnparsedOperand
     @Override
     public final TokenType getTokenType() { return TokenType.STOP_CHAR; }
     
+    @Override
+    public final String toString() { return Character.toString(symbol); }
+    
+    @Override
+    public final boolean equals(Object o)
+    {
+        if(o instanceof StopChar)
+        {
+            StopChar sc = (StopChar) o;
+            return symbol == sc.symbol;
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int hash = 3;
+        hash = 31 * hash + this.symbol;
+        return hash;
+    }
+    
     public static final StopChar
             COMMA = new StopChar(','),
             OPERATION_END = new StopChar(';'),

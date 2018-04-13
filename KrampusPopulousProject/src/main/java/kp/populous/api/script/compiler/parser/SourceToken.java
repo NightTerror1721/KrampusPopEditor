@@ -47,4 +47,7 @@ public interface SourceToken
     
     @Override
     String toString();
+    
+    @Override
+    boolean equals(Object o);
 }
